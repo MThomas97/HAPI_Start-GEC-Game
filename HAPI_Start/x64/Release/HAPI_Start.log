@@ -1,0 +1,31 @@
+﻿  main.cpp
+u:\year 2\game engine construction\hapi_start milestone 2\hapi_start\main.cpp(106): warning C4715: 'LoadTexture': not all control paths return a value
+     Creating library U:\Year 2\Game Engine Construction\HAPI_Start Milestone 2\x64\Release\HAPI_Start.lib and object U:\Year 2\Game Engine Construction\HAPI_Start Milestone 2\x64\Release\HAPI_Start.exp
+  Generating code
+  10 of 2171 functions ( 0.5%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    14 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+HAPI64.lib(Movie.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(Movie.obj)' or at 'U:\Year 2\Game Engine Construction\HAPI_Start Milestone 2\x64\Release\SfeMovie.pdb'; linking object as if no debug info
+HAPI64.lib(MovieImpl.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(MovieImpl.obj)' or at 'U:\Year 2\Game Engine Construction\HAPI_Start Milestone 2\x64\Release\SfeMovie.pdb'; linking object as if no debug info
+HAPI64.lib(Demuxer.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(Demuxer.obj)' or at 'U:\Year 2\Game Engine Construction\HAPI_Start Milestone 2\x64\Release\SfeMovie.pdb'; linking object as if no debug info
+HAPI64.lib(Log.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(Log.obj)' or at 'U:\Year 2\Game Engine Construction\HAPI_Start Milestone 2\x64\Release\SfeMovie.pdb'; linking object as if no debug info
+HAPI64.lib(Utilities.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(Utilities.obj)' or at 'U:\Year 2\Game Engine Construction\HAPI_Start Milestone 2\x64\Release\SfeMovie.pdb'; linking object as if no debug info
+HAPI64.lib(VideoStream.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(VideoStream.obj)' or at 'U:\Year 2\Game Engine Construction\HAPI_Start Milestone 2\x64\Release\SfeMovie.pdb'; linking object as if no debug info
+HAPI64.lib(Timer.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(Timer.obj)' or at 'U:\Year 2\Game Engine Construction\HAPI_Start Milestone 2\x64\Release\SfeMovie.pdb'; linking object as if no debug info
+HAPI64.lib(Stream.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(Stream.obj)' or at 'U:\Year 2\Game Engine Construction\HAPI_Start Milestone 2\x64\Release\SfeMovie.pdb'; linking object as if no debug info
+HAPI64.lib(SubtitleStream.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(SubtitleStream.obj)' or at 'U:\Year 2\Game Engine Construction\HAPI_Start Milestone 2\x64\Release\SfeMovie.pdb'; linking object as if no debug info
+HAPI64.lib(AudioStream.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(AudioStream.obj)' or at 'U:\Year 2\Game Engine Construction\HAPI_Start Milestone 2\x64\Release\SfeMovie.pdb'; linking object as if no debug info
+HAPI64.lib(TimerPriorities.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(TimerPriorities.obj)' or at 'U:\Year 2\Game Engine Construction\HAPI_Start Milestone 2\x64\Release\SfeMovie.pdb'; linking object as if no debug info
+HAPI64.lib(Error.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(Error.obj)' or at 'U:\Year 2\Game Engine Construction\HAPI_Start Milestone 2\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
+HAPI64.lib(HapiCore.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(HapiCore.obj)' or at 'U:\Year 2\Game Engine Construction\HAPI_Start Milestone 2\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
+HAPI64.lib(HapiMain.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(HapiMain.obj)' or at 'U:\Year 2\Game Engine Construction\HAPI_Start Milestone 2\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
+HAPI64.lib(HapiOsSFML.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(HapiOsSFML.obj)' or at 'U:\Year 2\Game Engine Construction\HAPI_Start Milestone 2\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
+HAPI64.lib(HapiRendererSFML.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(HapiRendererSFML.obj)' or at 'U:\Year 2\Game Engine Construction\HAPI_Start Milestone 2\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
+HAPI64.lib(HapiSoundSFML.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(HapiSoundSFML.obj)' or at 'U:\Year 2\Game Engine Construction\HAPI_Start Milestone 2\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
+HAPI64.lib(HapiXInput.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(HapiXInput.obj)' or at 'U:\Year 2\Game Engine Construction\HAPI_Start Milestone 2\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
+HAPI64.lib(PerfCounters.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(PerfCounters.obj)' or at 'U:\Year 2\Game Engine Construction\HAPI_Start Milestone 2\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
+HAPI64.lib(SFMLFontManager.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(SFMLFontManager.obj)' or at 'U:\Year 2\Game Engine Construction\HAPI_Start Milestone 2\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
+HAPI64.lib(stdafx.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(stdafx.obj)' or at 'U:\Year 2\Game Engine Construction\HAPI_Start Milestone 2\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
+HAPI64.lib(Utility.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(Utility.obj)' or at 'U:\Year 2\Game Engine Construction\HAPI_Start Milestone 2\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
+  HAPI_Start.vcxproj -> U:\Year 2\Game Engine Construction\HAPI_Start Milestone 2\x64\Release\HAPI_Start.exe
