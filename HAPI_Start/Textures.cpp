@@ -9,12 +9,16 @@
 // HAPI itself is wrapped in the HAPISPACE namespace
 using namespace HAPISPACE;
 
-
 Textures::Textures()
 {
 }
 
-
-Textures::~Textures()
+bool Textures::LoadTexture(const std::string &filename, BYTE** data, int & width, int & height)
 {
+	int textureWidth, textureHeight;
+	if (!HAPI.LoadTexture(filename, data, textureWidth, textureHeight))
+	{
+		HAPI.UserMessage("File Not Found!", "Error");
+		return false;
+	}
 }

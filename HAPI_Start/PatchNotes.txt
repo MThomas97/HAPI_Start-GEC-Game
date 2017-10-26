@@ -1,35 +1,33 @@
 Michael Thomas
-Milestone 1 <Version 1> and <06/11/2017>
+Milestone 2 <Version 2> and <06/11/2017>
 --------------------------------
 
 New Functionality
 -----------------
 
-Clear screen to a specific colour
-Set pixels on the screen 1280 x 720
-Create stars and set them to a random position on the screen
-Each pixel is set a random colour
-Renders the stars on the screen
-Movement of the stars via ‘WASD’ & mouse scroll wheel
-Shows FPS counter
+Loads textures
+Blitting with alpha transparency
+Blitting with no alpha
+WASD keys move alphaThing sprite(up, down left, right)
 
 Code Additions
 --------------
 
 Added: 
-Functions: ClearToColour, SetPixels, CreateStars, RenderStars, UpdateStars
-Structs: Star(containing position & colour of stars)
-< A list of major additions e.g. classes, functions > 
+classes: Graphics, Textures, Start
+functions: LoadTexture, Blit, BlitNoAlpha
+
 
 Tests
 -----
 
-Tested the movement of WASD & scroll wheel extensively.
-Set amount of stars on screen to 10 million which it doesn’t crash it still works but at low FPS (as expected)
+Tested the movement of WASD extensively.
+Set resolution to different sizes to see if it breaks or not (doesn't)
+Added parameters so the sprite can't go off screen and crash the program and tested it
 A lot of tests have been done to make sure the milestone has been met to the right standard.
 
 Notes
 -----
 
-Add movement for dragging the mouse on the screen so the stars move.
+Make texture class variables not public for anyone to change and see
 Optimise the code more to gain more FPS.
