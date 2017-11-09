@@ -24,7 +24,7 @@ public:
 
 	void ClearToColour(BYTE* screen, int width, int height, HAPI_TColour colour);
 
-	bool CreateSprite(const std::string &name, const std::string &filename, int width, int height);
+	bool CreateSprite(const std::string &name, const std::string &filename);
 
 	void RenderSprite(const std::string &name, int posX, int posY);
 

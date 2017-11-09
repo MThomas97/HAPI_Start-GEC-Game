@@ -13,11 +13,7 @@ using namespace HAPISPACE;
 
 class Rectangle;
 
-Sprite::Sprite()
-{
-}
-
-bool Sprite::Load(const std::string &filename, int width, int height)
+bool Sprite::Load(const std::string &filename)
 {
 	if (!HAPI.LoadTexture(filename, &texturePnter, width, height))
 	{
@@ -25,7 +21,7 @@ bool Sprite::Load(const std::string &filename, int width, int height)
 		return false;
 	}
 	m_textureRect = Rectangle(width, height);
-	//m_frameRect = Rectangle(m_textureRect.width(), m_textureRect.height());
+	//m_frameRect = Rectangle(m_textureRect.width() / numFrames, m_textureRect.height());
 	return true;
 }
 
@@ -33,22 +29,16 @@ void Sprite::Render(BYTE* screen, const Rectangle &screenRect, int posX, int pos
 {
 	Rectangle clippedRect(m_textureRect);
 
-	//int endOfLineScreenIncrement = (screenRect.width() - clippedRect.width()) * 4;
 	clippedRect.Translate(posX, posY);
 
 	if (!clippedRect.CompletelyOutside(screenRect))
 		return;
 
 	if (clippedRect.CompletelyInside(screenRect))
-	{
-		
-
 		clippedRect.ClipTo(screenRect);
 
-		
-	}
-
 	clippedRect.Translate(-posX, -posY);
+
 	if (posX < 0)
 	posX = 0;
 
@@ -89,7 +79,6 @@ void Sprite::Render(BYTE* screen, const Rectangle &screenRect, int posX, int pos
 			tempText += 4;
 			tempScreen += 4;
 		}
-
 		tempScreen += endOfLineScreenIncrement;
 		tempText += endOfLineTextureIncrement;
 	}
@@ -100,21 +89,16 @@ void Sprite::RenderNoAlpha(BYTE* screen, const Rectangle &screenRect, int posX, 
 {
 	Rectangle clippedRect(m_textureRect);
 
-	//int endOfLineScreenIncrement = (screenRect.width() - sourceRect.width()) * 4;
 	clippedRect.Translate(posX, posY);
 
 	if (!clippedRect.CompletelyOutside(screenRect))
 		return;
 
-
 	if (clippedRect.CompletelyInside(screenRect))
-	{
-		
 		clippedRect.ClipTo(screenRect);
-	}
 
 	clippedRect.Translate(-posX, -posY);
-	
+
 	if (posX < 0)
 		posX = 0;
 
@@ -131,15 +115,16 @@ void Sprite::RenderNoAlpha(BYTE* screen, const Rectangle &screenRect, int posX, 
 
 	for (int y = 0; y < clippedRect.height(); y++)
 	{
-		tempScreen = screen + (posX + posY * screenRect.width()) * 4 + (y*screenRect.width() * 4);
-		tempText = texturePnter + (clippedRect.left + clippedRect.top * m_textureRect.width()) * 4 + (y*m_textureRect.width()) * 4;
 
-		
-			memcpy(tempScreen, tempText, clippedRect.width() * 4);
-	
-		
-			//tempScreen += endOfLineScreenIncrement;
-			//tempText += endOfLineTextureIncrement;
+		for (int x = 0; x < clippedRect.width(); x++)
+		{	
+			memcpy(tempScreen, tempText, 4);
+					
+			tempText += 4;
+			tempScreen += 4;
+		}
+		tempScreen += endOfLineScreenIncrement;
+		tempText += endOfLineTextureIncrement;
 	}
 }
 

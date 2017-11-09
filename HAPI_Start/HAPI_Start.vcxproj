@@ -27,8 +27,8 @@
     </ClCompile>
     <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="Sprite.cpp" />
-    <ClCompile Include="Start.cpp" />
     <ClCompile Include="Visualisation.cpp" />
+    <ClCompile Include="WorldModel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="PatchNotes.txt" />
@@ -36,8 +36,8 @@
   <ItemGroup>
     <ClInclude Include="Rectangle.h" />
     <ClInclude Include="Sprite.h" />
-    <ClInclude Include="Start.h" />
     <ClInclude Include="Visualisation.h" />
+    <ClInclude Include="WorldModel.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

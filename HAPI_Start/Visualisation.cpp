@@ -20,19 +20,19 @@ void Visualisation::ClearToColour(BYTE* screen, int width, int height, HAPI_TCol
 	{
 		for (int x = 0; x < width; x++)
 		{
-			memcpy(screen + (y*width + x) * 4, &colour, 4);
+			memcpy(screen + (y*width + x) * 4, &colour,4);
 		}
 	}
 }
 
-bool Visualisation::CreateSprite(const std::string & name, const  std::string & filename, int width, int height)
+bool Visualisation::CreateSprite(const std::string & name, const  std::string & filename)
 {
 	if (m_spritemap.find(name) != m_spritemap.end()) // Checks if there isnt a sprite already
 		std::cerr << "Already exists" << name << std::endl;
 
 	Sprite *newSprite = new Sprite;
-
-	if (!newSprite->Load(filename, width, height))
+	
+	if (!newSprite->Load(filename))
 	{
 		return false;
 	}

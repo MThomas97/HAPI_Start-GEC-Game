@@ -16,11 +16,9 @@ class Rectangle;
 class Sprite
 {
 public:
-	Sprite();
-
 	~Sprite();
 
-	bool Load(const std::string &filename, int width, int height);
+	bool Load(const std::string &filename);
 
 	void Render(BYTE* screen, const Rectangle &screenRect, int posX, int posY);
 
@@ -30,7 +28,9 @@ private:
 	BYTE *texturePnter{ nullptr };
 	Rectangle m_textureRect;
 	Rectangle m_frameRect;
-	int numFrames{ 1 };
+	int numFrames{ 11 };
 	bool HasAlpha = true;
+	int width; 
+	int height;
 };
 
