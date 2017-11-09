@@ -13,9 +13,13 @@ using namespace HAPISPACE;
 class Start
 {
 public:
-	Start();
 
 	void Play(int width, int height, std::string name);
+
+private:
+	int posX = { 0 };
+
+	int posY = { 0 };
 	
 };
 

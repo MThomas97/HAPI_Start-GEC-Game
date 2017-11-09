@@ -1,7 +1,2 @@
-﻿  Start.cpp
-  Graphics.cpp
-  Generating Code...
-  Skipping... (no relevant changes detected)
-  main.cpp
-  HAPI_Start.vcxproj -> C:\Users\Michael\Documents\GitHub\HAPI-Milestone-2\x64\Debug\HAPI_Start.exe
-  HAPI_Start.vcxproj -> C:\Users\Michael\Documents\GitHub\HAPI-Milestone-2\x64\Debug\HAPI_Start.pdb (Partial PDB)
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\VC\VCTargets\Microsoft.CppClean.targets(86,5): error MSB3491: Could not write lines to file "x64\Debug\HAPI_Start.Build.CppClean.log". There is not enough space on the disk.
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\VC\VCTargets\Microsoft.CppClean.targets(86,5): error MSB3491: 

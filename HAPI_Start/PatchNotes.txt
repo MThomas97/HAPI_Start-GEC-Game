@@ -1,21 +1,44 @@
 Michael Thomas
-Milestone 2 <Version 2> and <06/11/2017>
+Milestone 3 <Version 3> and <09/11/2017>
 --------------------------------
 
 New Functionality
 -----------------
 
-Loads textures
+Loads sprites
 Blitting with alpha transparency
 Blitting with no alpha
 WASD keys move alphaThing sprite(up, down left, right)
+Controller analog stick moves sprite (up, down, left, right)
+Multiple sprites can be rendered by using the same file that was loaded
 
 Code Additions
 --------------
 
 Added: 
-classes: Graphics, Textures, Start
-functions: LoadTexture, Blit, BlitNoAlpha
+Visualisation Class:
+	-initialise() creates a widow that is displayed
+	-ClearToColour() clears the screen to a colour for each frame
+	-RenderSprite() renders the sprite 
+	-RenderNoAlphaSprite() renders the sprite to the screen
+	
+Sprite Class:
+	-Load() Loads the sprite onto the screen and checks if the file is found, if not a error message appears
+	-Render() blits the sprite to the screen and sets alpha blending to true so the sprite can blend
+	-RenderNoAlphaSprite() blits the sprite to the screen and sets alpha blending to false (faster performance for sprites that don't need alpha blending)
+	
+Rectangle Class
+	-Translate() translates the clipped rectangle to the screen space by posX and posY
+
+	-ClipTo() clips and checks the texture against the screen
+
+	-CompletelyOutside() returns true or false whether the sprite is completely outside the screen or not
+
+	-CompletelyInside() returns true or false whether the sprite is completely inside the screen or not
+
+	int left, right, top, bottom;
+	int width() const { return right - left; }
+	int height() const { return bottom - top; }
 
 
 Tests
@@ -23,11 +46,13 @@ Tests
 
 Tested the movement of WASD extensively.
 Set resolution to different sizes to see if it breaks or not (doesn't)
-Added parameters so the sprite can't go off screen and crash the program and tested it
+Added parameters so the sprite clips efficently when it goes off screen and is crash free
 A lot of tests have been done to make sure the milestone has been met to the right standard.
+Tested multiple sprites on screen
+Tested whether an error will appear if texture isnt loaded correctly
 
 Notes
 -----
 
-Make texture class variables not public for anyone to change and see
+Make Start class posX, posY variables not public for anyone to change and see
 Optimise the code more to gain more FPS.

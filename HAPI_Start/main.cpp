@@ -33,8 +33,7 @@ void HAPI_Main()
 {
 	Start start;
 
-	start.Play(600, 600, "Intergalactic Space");
+	start.Play(600, 600, "Killin Zone");
 	
-
 }
 

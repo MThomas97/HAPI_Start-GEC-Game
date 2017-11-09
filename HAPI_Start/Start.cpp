@@ -1,6 +1,5 @@
 #include "Start.h"
-#include "Textures.h"
-#include "Graphics.h"
+#include "Visualisation.h"
 #include <HAPI_lib.h>
 
 #if defined(DEBUG) | defined(_DEBUG)
@@ -11,67 +10,82 @@
 // HAPI itself is wrapped in the HAPISPACE namespace
 using namespace HAPISPACE;
 
-Start::Start()
-{
-}
-
 void Start::Play(int width, int height, std::string name)
 {
-	if (!HAPI.Initialise(width, height, name))
+	Visualisation visual;
+
+	if (!visual.initialise(width, height, name))
 		return;
 
-	const HAPI_TKeyboardData & keyData = HAPI.GetKeyboardData();
+	//Sets the FPS counter on screen
+	HAPI.SetShowFPS(true, 0, 0, HAPI_TColour::GREEN);
+	const HAPI_TKeyboardData &keyData = HAPI.GetKeyboardData();
+	const HAPI_TControllerData &controllerData = HAPI.GetControllerData(0);
 
-	BYTE *BYTEtexture{ nullptr };
+	if (!visual.CreateSprite("Background", "Data\\Background.tga", 256, 256))
+		return;
 
-	BYTE *BYTEbackground{ nullptr };
-
-	Textures textures;
-	
-	textures.LoadTexture("Data\\alphaThing.tga", &BYTEtexture, textures.TextureWidth, textures.TextureHeight);
-	
-	textures.LoadTexture("Data\\starBackground.png", &BYTEbackground, textures.BackgroundWidth, textures.BackgroundHeight);
-	
-	Graphics graphics;
+	if (!visual.CreateSprite("player", "Data\\playerSprite.tga", 64, 64))
+		return;
 
 	while (HAPI.Update()) //Game loop
 	{	//calls functions from classes
-		graphics.ClearToColour(HAPI.GetScreenPointer(), width, height, HAPI_TColour(0, 0, 0));
 
-		graphics.BlitNoAlpha(HAPI.GetScreenPointer(), width, BYTEbackground, textures.BackgroundWidth, textures.BackgroundHeight, 0, 0);
+		const HAPI_TControllerData &controllerData = HAPI.GetControllerData(0);
 
-		graphics.Blit(HAPI.GetScreenPointer(), width, BYTEtexture, textures.TextureWidth, textures.TextureHeight, textures.texturePosX, textures.texturePosY);
+		visual.ClearToColour(HAPI.GetScreenPointer(), width, height, HAPI_TColour(0, 0, 0));
 
-		if (textures.texturePosY > 0) { //Moves sprite with WASD keys
+		visual.RenderSprite("Background", 0, 0);
+		visual.RenderSprite("player", posX, posY);
+		//Moves sprite with WASD keys
 
-			if (keyData.scanCode['W'])
-				textures.texturePosY -= 1;
-		}
+		if (keyData.scanCode['W'])
+			posY--;
 
-		if (textures.texturePosY < height - textures.TextureHeight)
+
+		if (keyData.scanCode['S'])
+			posY++;
+
+
+		if (keyData.scanCode['A'])
+			posX--;
+
+
+		if (keyData.scanCode['D'])
+			posX++;
+
+
+		if (posY < height - 200 && posX < width - 200 && posY > 200 && posX > 200)
 		{
-			if (keyData.scanCode['S'])
-				textures.texturePosY += 1;
+			HAPI.SetControllerRumble(0, 40000, 40000);
 		}
-
-		if (textures.texturePosX > 0)
+		else
 		{
-			if (keyData.scanCode['A'])
-				textures.texturePosX -= 1;
+			HAPI.SetControllerRumble(0, 0, 0);
 		}
 
-		if (textures.texturePosX < width - textures.TextureWidth)
+
+		if (controllerData.isAttached)
 		{
-			if (keyData.scanCode['D'])
-				textures.texturePosX += 1;
+			int LeftThumbX = controllerData.analogueButtons[HK_ANALOGUE_LEFT_THUMB_X];
+			int LeftThumbY = controllerData.analogueButtons[HK_ANALOGUE_LEFT_THUMB_Y];
+			int Deadzone = controllerData.analogueButtons[HK_GAMEPAD_LEFT_THUMB_DEADZONE];
+			
+			
+			if (Deadzone + 7849 < LeftThumbX)
+				posX++;
+
+			if (Deadzone + 7849 < LeftThumbY)
+				posY--;
+
+			if (Deadzone - 7849 > LeftThumbX)
+				posX--;
+
+			if (Deadzone - 7849 > LeftThumbY)
+				posY++;
+
 		}
-
-
 	}
-	delete[] BYTEtexture;
-	delete[] BYTEbackground;
-
-	
 }
 
 
