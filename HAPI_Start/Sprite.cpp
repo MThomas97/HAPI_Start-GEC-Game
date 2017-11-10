@@ -13,31 +13,34 @@ using namespace HAPISPACE;
 
 class Rectangle;
 
-bool Sprite::Load(const std::string &filename)
+bool Sprite::Load(const std::string &filename, int numFrames)
 {
 	if (!HAPI.LoadTexture(filename, &texturePnter, width, height))
 	{
 		HAPI.UserMessage("File Not Found!", "Error");
 		return false;
 	}
-	m_textureRect = Rectangle(width, height);
-	//m_frameRect = Rectangle(m_textureRect.width() / numFrames, m_textureRect.height());
+
+	m_textureRect = Rectangle(width, height); //gets the width and height of the texture
+	m_frameRect = Rectangle(m_textureRect.width() / numFrames, m_textureRect.height() / 3);
 	return true;
 }
 
-void Sprite::Render(BYTE* screen, const Rectangle &screenRect, int posX, int posY)
+void Sprite::Render(BYTE* screen, const Rectangle &screenRect, int posX, int posY, int curFrame)
 {
-	Rectangle clippedRect(m_textureRect);
+	Rectangle clippedRect(m_frameRect);
 
-	clippedRect.Translate(posX, posY);
+	clippedRect.Translate(posX, posY); //Translates clippedRect into screen space by adding posX and posY
 
-	if (!clippedRect.CompletelyOutside(screenRect))
+	if (!clippedRect.CompletelyOutside(screenRect))  //Checks if completely outside the screen and exits the code if true
 		return;
 
-	if (clippedRect.CompletelyInside(screenRect))
-		clippedRect.ClipTo(screenRect);
+	if (clippedRect.CompletelyInside(screenRect)) //Checks if completely contained if so then don't clipTo
+		clippedRect.ClipTo(screenRect); //clip rectangle is clipped against screen rectangle
 
-	clippedRect.Translate(-posX, -posY);
+	clippedRect.Translate(-posX, -posY); //Translates clippedRect back into screen space by subtracting
+
+	clippedRect.Translate(m_frameRect.width() * curFrame, 0); //Translates to the curFrame e.g 2 would be the second frame thats rendered
 
 	if (posX < 0)
 	posX = 0;
@@ -89,15 +92,15 @@ void Sprite::RenderNoAlpha(BYTE* screen, const Rectangle &screenRect, int posX, 
 {
 	Rectangle clippedRect(m_textureRect);
 
-	clippedRect.Translate(posX, posY);
+	clippedRect.Translate(posX, posY); //Translates clippedRect into screen space by adding posX and posY
 
-	if (!clippedRect.CompletelyOutside(screenRect))
+	if (!clippedRect.CompletelyOutside(screenRect)) //Checks if completely outside the screen and exits the code if true
 		return;
 
-	if (clippedRect.CompletelyInside(screenRect))
-		clippedRect.ClipTo(screenRect);
+	if (clippedRect.CompletelyInside(screenRect)) //Checks if completely contained if so then don't clipTo
+		clippedRect.ClipTo(screenRect); //clip rectangle is clipped against screen rectangle
 
-	clippedRect.Translate(-posX, -posY);
+	clippedRect.Translate(-posX, -posY); //Translates clippedRect back into screen space by subtracting
 
 	if (posX < 0)
 		posX = 0;

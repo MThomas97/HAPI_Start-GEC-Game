@@ -25,21 +25,20 @@ void Visualisation::ClearToColour(BYTE* screen, int width, int height, HAPI_TCol
 	}
 }
 
-bool Visualisation::CreateSprite(const std::string & name, const  std::string & filename)
+bool Visualisation::CreateSprite(const std::string & name, const  std::string & filename, int numFrames)
 {
 	if (m_spritemap.find(name) != m_spritemap.end()) // Checks if there isnt a sprite already
 		std::cerr << "Already exists" << name << std::endl;
 
 	Sprite *newSprite = new Sprite;
 	
-	if (!newSprite->Load(filename))
+	if (!newSprite->Load(filename, numFrames))
 	{
 		return false;
 	}
 	m_spritemap[name] = newSprite;
 	return true;
 }
-
 
 bool Visualisation::initialise(int width, int height, std::string name)
 {
@@ -54,12 +53,9 @@ bool Visualisation::initialise(int width, int height, std::string name)
 	return true;
 }
 
-
-void Visualisation::RenderSprite(const std::string &name, int posX, int posY)
+void Visualisation::RenderSprite(const std::string &name, int posX, int posY, int curFrame)
 {
-
-	m_spritemap.at(name)->Render(this->m_screenPnter, this->m_screenRect, posX, posY);
-
+	m_spritemap.at(name)->Render(this->m_screenPnter, this->m_screenRect, posX, posY, curFrame);
 }
 
 void Visualisation::RenderNoAlphaSprite(const std::string &name, int posX, int posY)

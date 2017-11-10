@@ -24,9 +24,9 @@ public:
 
 	void ClearToColour(BYTE* screen, int width, int height, HAPI_TColour colour);
 
-	bool CreateSprite(const std::string &name, const std::string &filename);
+	bool CreateSprite(const std::string &name, const std::string &filename, int numFrames);
 
-	void RenderSprite(const std::string &name, int posX, int posY);
+	void RenderSprite(const std::string &name, int posX, int posY, int curFrame);
 
 	void RenderNoAlphaSprite(const std::string & name, int posX, int posY);
 
@@ -35,10 +35,6 @@ private:
 
 	Rectangle m_screenRect;
 
-	//Rectangle m_textureRect;
-
 	BYTE *m_screenPnter;
-
-	//BYTE *m_texturePnter;
 };
 

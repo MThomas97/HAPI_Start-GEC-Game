@@ -27,7 +27,7 @@
     <ClCompile Include="Visualisation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WorldModel.cpp">
+    <ClCompile Include="World.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,7 +44,7 @@
     <ClInclude Include="Visualisation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WorldModel.h">
+    <ClInclude Include="World.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

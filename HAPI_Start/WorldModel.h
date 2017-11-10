@@ -17,5 +17,11 @@ private:
 	int playerPosX = { 0 };
 
 	int playerPosY = { 0 };
+
+	int ChessFrame = { 0 };
+
+	int MaxFrame = { 6 };
+
+	int numFrames = { 5 };
 };
 

@@ -15,7 +15,7 @@
 
 // Include the HAPI header to get access to all of HAPIs interfaces
 #include <HAPI_lib.h>
-#include "WorldModel.h"
+#include "World.h"
 
 
 #if defined(DEBUG) | defined(_DEBUG)
@@ -31,9 +31,8 @@ using namespace HAPISPACE;
 
 void HAPI_Main()
 {
-	WorldModel world;
+	World world;
 
-	world.Play(600, 800, "Killin Zone");
-	
+	world.Update(600, 800, "Intergalactic War");
 }
 

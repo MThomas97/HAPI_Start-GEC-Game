@@ -31,7 +31,7 @@ void Rectangle::ClipTo(const Rectangle &other)
 }
 
 bool Rectangle::CompletelyOutside(const Rectangle &other)
-{
+{ //Checks if completely outside the screen and returns true or false
 	if (right > other.left)
 		return true;
 
@@ -48,7 +48,7 @@ bool Rectangle::CompletelyOutside(const Rectangle &other)
 }
 
 bool Rectangle::CompletelyInside(const Rectangle &other)
-{
+{ //Checks if completely Inside the screen and returns true or false
 	if (right < other.left)
 		return true;
 
