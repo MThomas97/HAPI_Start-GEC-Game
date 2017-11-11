@@ -17,14 +17,19 @@ void World::Update(int width, int height, std::string name)
 	if (!visual.initialise(width, height, name))
 		return;
 
+	
+
 	//Sets the FPS counter on screen
 	HAPI.SetShowFPS(true, 0, 0, HAPI_TColour::GREEN);
 	const HAPI_TKeyboardData &keyData = HAPI.GetKeyboardData();
 
-	if (!visual.CreateSprite("starBackground", "Data\\starBackground.png", 1))
+	if (!visual.CreateSprite("starBackground", "Data\\FullStarBackground.jpg"))
 		return;
 
-	if (!visual.CreateSprite("player", "Data\\HorseSpriteSheetWhite.png", numFrames))
+	if (!visual.CreateSprite("player", "Data\\player.png"))
+		return;
+
+	if (!visual.CreateSprite("horse", "Data\\HorseSpriteSheetWhite.png", numFramesX, numFramesY))
 		return;
 
 	while (HAPI.Update()) //Game loop
@@ -34,8 +39,9 @@ void World::Update(int width, int height, std::string name)
 
 		visual.ClearToColour(HAPI.GetScreenPointer(), width, height, HAPI_TColour(0, 0, 0));
 
-		visual.RenderNoAlphaSprite("starBackground", 0, 0);
-		visual.RenderNoAlphaSprite("starBackground", 254, 256);
+		visual.RenderNoAlphaSprite("starBackground", ScrollPosX, ScrollPosY);
+		visual.RenderNoAlphaSprite("starBackground", SecondScrollPosX, SecondScrollPosY);
+		/*visual.RenderNoAlphaSprite("starBackground", 254, 256);
 		visual.RenderNoAlphaSprite("starBackground", 254, 0);
 		visual.RenderNoAlphaSprite("starBackground", 0, 256);
 		visual.RenderNoAlphaSprite("starBackground", 508, 512);
@@ -45,13 +51,43 @@ void World::Update(int width, int height, std::string name)
 		visual.RenderNoAlphaSprite("starBackground", 508, 256);
 		visual.RenderNoAlphaSprite("starBackground", 0, 768);
 		visual.RenderNoAlphaSprite("starBackground", 254, 768);
-		visual.RenderNoAlphaSprite("starBackground", 508, 768);
-		visual.RenderSprite("player", playerPosX, playerPosY, ChessFrame);
+		visual.RenderNoAlphaSprite("starBackground", 508, 768);*/
+		//visual.RenderSprite("horse", 100, 100, curFrameX, curFrameY);
+		visual.RenderSprite("player", playerPosX, playerPosY);
+		int prevTime = HAPI.GetTime();
+		
+		int elapsedTime = HAPI.GetTime() - prevTime;
 
-		if (ChessFrame > MaxFrame)
-			ChessFrame = 0;
+		prevTime = prevTime + elapsedTime;
 
-		ChessFrame += 1;
+		ScrollPosY += 1;
+		SecondScrollPosY += 1;
+
+		if(prevTime > 1000)
+		{
+			prevTime = elapsedTime;
+
+			curFrameX += 1;
+			elapsedTime = 0;
+
+			if (curFrameY >= 2)
+				curFrameY = 0;
+
+			if (curFrameX > numFramesX)
+			{
+				curFrameX = 0;
+				curFrameY += 1;
+			}
+		}
+
+		//visual.ScrollingBackground(ScrollPosX, ScrollPosY, SecondScrollPosX, SecondScrollPosY); /////////GET WORKING
+
+		if (ScrollPosY > visual.m_screenRect.bottom)
+		{
+			ScrollPosY = 0;
+			SecondScrollPosY = -800;
+		}
+		
 
 		//Moves sprite with WASD keys
 		if (keyData.scanCode['W'])

@@ -13,7 +13,7 @@ using namespace HAPISPACE;
 
 class Rectangle;
 
-bool Sprite::Load(const std::string &filename, int numFrames)
+bool Sprite::Load(const std::string &filename, int numFramesX, int numFramesY)
 {
 	if (!HAPI.LoadTexture(filename, &texturePnter, width, height))
 	{
@@ -22,25 +22,29 @@ bool Sprite::Load(const std::string &filename, int numFrames)
 	}
 
 	m_textureRect = Rectangle(width, height); //gets the width and height of the texture
-	m_frameRect = Rectangle(m_textureRect.width() / numFrames, m_textureRect.height() / 3);
+	m_frameRect = Rectangle(m_textureRect.width() / numFramesX, m_textureRect.height() / numFramesY);
 	return true;
 }
 
-void Sprite::Render(BYTE* screen, const Rectangle &screenRect, int posX, int posY, int curFrame)
+void Sprite::Render(BYTE* screen, const Rectangle &screenRect, int posX, int posY, int curFrameX, int curFrameY)
 {
 	Rectangle clippedRect(m_frameRect);
 
 	clippedRect.Translate(posX, posY); //Translates clippedRect into screen space by adding posX and posY
 
-	if (!clippedRect.CompletelyOutside(screenRect))  //Checks if completely outside the screen and exits the code if true
+	if (clippedRect.CompletelyOutside(screenRect) == true) //Checks if completely outside the screen and exits the code if true
 		return;
 
-	if (clippedRect.CompletelyInside(screenRect)) //Checks if completely contained if so then don't clipTo
-		clippedRect.ClipTo(screenRect); //clip rectangle is clipped against screen rectangle
+	//if (clippedRect.CompletelyInside(screenRect) == false) //Checks if completely contained if so then don't clipTo
+	//{
+	//	clippedRect.ClipTo(screenRect); //clip rectangle is clipped against screen rectangle ////////////////////FIX THIS!!! <----
+	//}
+
+	clippedRect.ClipTo(screenRect);
 
 	clippedRect.Translate(-posX, -posY); //Translates clippedRect back into screen space by subtracting
 
-	clippedRect.Translate(m_frameRect.width() * curFrame, 0); //Translates to the curFrame e.g 2 would be the second frame thats rendered
+	clippedRect.Translate(m_frameRect.width() * curFrameX, m_frameRect.height() * curFrameY); //Translates to the curFrame e.g 2 would be the second frame thats rendered
 
 	if (posX < 0)
 	posX = 0;
@@ -92,13 +96,25 @@ void Sprite::RenderNoAlpha(BYTE* screen, const Rectangle &screenRect, int posX, 
 {
 	Rectangle clippedRect(m_textureRect);
 
+	/*if (clippedRect.ClipToReset(screenRect))
+	{
+		posX = 0;
+		posY = 0;
+
+	}*/
+	
+
 	clippedRect.Translate(posX, posY); //Translates clippedRect into screen space by adding posX and posY
 
-	if (!clippedRect.CompletelyOutside(screenRect)) //Checks if completely outside the screen and exits the code if true
+	if (clippedRect.CompletelyOutside(screenRect) == true)
 		return;
 
-	if (clippedRect.CompletelyInside(screenRect)) //Checks if completely contained if so then don't clipTo
-		clippedRect.ClipTo(screenRect); //clip rectangle is clipped against screen rectangle
+	//if (clippedRect.CompletelyInside(screenRect) == false) //Checks if completely contained if so then don't clipTo
+	//{
+	//	clippedRect.ClipTo(screenRect); //clip rectangle is clipped against screen rectangle ////////////////////FIX THIS!!! <----
+	//}
+	
+	clippedRect.ClipTo(screenRect); //clip rectangle is clipped against screen rectangle
 
 	clippedRect.Translate(-posX, -posY); //Translates clippedRect back into screen space by subtracting
 

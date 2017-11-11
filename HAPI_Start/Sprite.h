@@ -18,9 +18,9 @@ class Sprite
 public:
 	~Sprite();
 
-	bool Load(const std::string &filename, int numFrames);
+	bool Load(const std::string &filename, int numFramesX, int numFramesY);
 
-	void Render(BYTE* screen, const Rectangle &screenRect, int posX, int posY, int curFrame);
+	void Render(BYTE* screen, const Rectangle &screenRect, int posX, int posY, int curFrameX, int curFrameY);
 
 	void RenderNoAlpha(BYTE* screen, const Rectangle &screenRect, int posX, int posY);
 
@@ -28,9 +28,10 @@ private:
 	BYTE *texturePnter{ nullptr };
 	Rectangle m_textureRect;
 	Rectangle m_frameRect;
-	//int numFrames{ 5 };
 	bool HasAlpha = true;
 	int width; 
 	int height;
+
+	
 };
 

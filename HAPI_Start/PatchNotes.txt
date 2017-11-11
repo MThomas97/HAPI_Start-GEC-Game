@@ -1,44 +1,26 @@
 Michael Thomas
-Milestone 3 <Version 3> and <09/11/2017>
+GEC ICA <Version 4> and <11/11/2017>
 --------------------------------
 
 New Functionality
 -----------------
+Added animation to visualisation class
+Added Scrolling background to World class
+Fixed CompletelyOutside() function
 
-Loads sprites
-Blitting with alpha transparency
-Blitting with no alpha
-WASD keys move alphaThing sprite(up, down left, right)
-Controller analog stick moves sprite (up, down, left, right)
-Multiple sprites can be rendered by using the same file that was loaded
 
 Code Additions
 --------------
 
 Added: 
 Visualisation Class:
-	-initialise() creates a widow that is displayed
-	-ClearToColour() clears the screen to a colour for each frame
-	-RenderSprite() renders the sprite 
-	-RenderNoAlphaSprite() renders the sprite to the screen
+	
 	
 Sprite Class:
-	-Load() Loads the sprite onto the screen and checks if the file is found, if not a error message appears
-	-Render() blits the sprite to the screen and sets alpha blending to true so the sprite can blend
-	-RenderNoAlphaSprite() blits the sprite to the screen and sets alpha blending to false (faster performance for sprites that don't need alpha blending)
+
 	
 Rectangle Class
-	-Translate() translates the clipped rectangle to the screen space by posX and posY
-
-	-ClipTo() clips and checks the texture against the screen
-
-	-CompletelyOutside() returns true or false whether the sprite is completely outside the screen or not
-
-	-CompletelyInside() returns true or false whether the sprite is completely inside the screen or not
-
-	int left, right, top, bottom;
-	int width() const { return right - left; }
-	int height() const { return bottom - top; }
+	
 
 
 Tests
@@ -54,5 +36,6 @@ Tested whether an error will appear if texture isnt loaded correctly
 Notes
 -----
 
+Need to set a clock tick to animations
 Make Start class posX, posY variables not public for anyone to change and see
 Optimise the code more to gain more FPS.

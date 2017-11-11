@@ -23,6 +23,8 @@ public:
 
 	void ClipTo(const Rectangle &other);
 
+	bool ClipToReset(const Rectangle & other);
+
 	bool CompletelyOutside(const Rectangle &other);
 
 	bool CompletelyInside(const Rectangle &other);

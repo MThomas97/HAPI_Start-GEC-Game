@@ -24,16 +24,20 @@ public:
 
 	void ClearToColour(BYTE* screen, int width, int height, HAPI_TColour colour);
 
-	bool CreateSprite(const std::string &name, const std::string &filename, int numFrames);
+	bool CreateSprite(const std::string &name, const std::string &filename, int numFramesX = 1, int numFramesY = 1);
 
-	void RenderSprite(const std::string &name, int posX, int posY, int curFrame);
+	void RenderSprite(const std::string &name, int posX, int posY, int curFrameX = 0, int curFrameY = 0);
 
 	void RenderNoAlphaSprite(const std::string & name, int posX, int posY);
+
+	void ScrollingBackground(int FirstTexturePosX, int FirstTexturePosY, int SecondTexturePosX, int SecondTexturePosY);
+
+	Rectangle m_screenRect;
 
 private:
 	std::unordered_map<std::string, Sprite*> m_spritemap;
 
-	Rectangle m_screenRect;
+	//Rectangle m_screenRect; //CREATE GETTER FOR THIS
 
 	BYTE *m_screenPnter;
 };

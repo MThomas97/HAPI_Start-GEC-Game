@@ -25,14 +25,14 @@ void Visualisation::ClearToColour(BYTE* screen, int width, int height, HAPI_TCol
 	}
 }
 
-bool Visualisation::CreateSprite(const std::string & name, const  std::string & filename, int numFrames)
+bool Visualisation::CreateSprite(const std::string & name, const  std::string & filename, int numFramesX, int numFramesY)
 {
 	if (m_spritemap.find(name) != m_spritemap.end()) // Checks if there isnt a sprite already
 		std::cerr << "Already exists" << name << std::endl;
 
 	Sprite *newSprite = new Sprite;
 	
-	if (!newSprite->Load(filename, numFrames))
+	if (!newSprite->Load(filename, numFramesX, numFramesY))
 	{
 		return false;
 	}
@@ -53,14 +53,26 @@ bool Visualisation::initialise(int width, int height, std::string name)
 	return true;
 }
 
-void Visualisation::RenderSprite(const std::string &name, int posX, int posY, int curFrame)
+void Visualisation::RenderSprite(const std::string &name, int posX, int posY, int curFrameX, int curFrameY)
 {
-	m_spritemap.at(name)->Render(this->m_screenPnter, this->m_screenRect, posX, posY, curFrame);
+	m_spritemap.at(name)->Render(this->m_screenPnter, this->m_screenRect, posX, posY, curFrameX, curFrameY);
 }
 
 void Visualisation::RenderNoAlphaSprite(const std::string &name, int posX, int posY)
 {
 	m_spritemap.at(name)->RenderNoAlpha(this->m_screenPnter, this->m_screenRect, posX, posY);
+}
+
+void Visualisation::ScrollingBackground(int FirstTexturePosX, int FirstTexturePosY, int SecondTexturePosX, int SecondTexturePosY)
+{
+	int tempPosY = SecondTexturePosY;
+	FirstTexturePosY += 1;
+	SecondTexturePosY += 1;
+	if (FirstTexturePosY > m_screenRect.bottom)
+	{
+		FirstTexturePosY = 0;
+		SecondTexturePosY = -tempPosY;
+	}
 }
 
 Visualisation::~Visualisation()
