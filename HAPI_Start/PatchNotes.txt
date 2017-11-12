@@ -6,7 +6,7 @@ New Functionality
 -----------------
 Added animation to visualisation class
 Added Scrolling background to World class
-Fixed CompletelyOutside() function
+CompletelyOutside() and CompletelyInside function is fully working as intended
 
 
 Code Additions

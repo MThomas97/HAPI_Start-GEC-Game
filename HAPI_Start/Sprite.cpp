@@ -35,12 +35,8 @@ void Sprite::Render(BYTE* screen, const Rectangle &screenRect, int posX, int pos
 	if (clippedRect.CompletelyOutside(screenRect) == true) //Checks if completely outside the screen and exits the code if true
 		return;
 
-	//if (clippedRect.CompletelyInside(screenRect) == false) //Checks if completely contained if so then don't clipTo
-	//{
-	//	clippedRect.ClipTo(screenRect); //clip rectangle is clipped against screen rectangle ////////////////////FIX THIS!!! <----
-	//}
-
-	clippedRect.ClipTo(screenRect);
+	if (clippedRect.CompletelyInside(screenRect) == false) //Checks if completely contained if so then don't clipTo
+		clippedRect.ClipTo(screenRect); //clip rectangle is clipped against screen rectangle ////////////////////FIX THIS!!! <----
 
 	clippedRect.Translate(-posX, -posY); //Translates clippedRect back into screen space by subtracting
 
@@ -95,27 +91,15 @@ void Sprite::Render(BYTE* screen, const Rectangle &screenRect, int posX, int pos
 void Sprite::RenderNoAlpha(BYTE* screen, const Rectangle &screenRect, int posX, int posY) //Makes sprite visual onscreen with RBG values for sprites that don't need alpha value
 {
 	Rectangle clippedRect(m_textureRect);
-
-	/*if (clippedRect.ClipToReset(screenRect))
-	{
-		posX = 0;
-		posY = 0;
-
-	}*/
 	
-
 	clippedRect.Translate(posX, posY); //Translates clippedRect into screen space by adding posX and posY
 
 	if (clippedRect.CompletelyOutside(screenRect) == true)
 		return;
 
-	//if (clippedRect.CompletelyInside(screenRect) == false) //Checks if completely contained if so then don't clipTo
-	//{
-	//	clippedRect.ClipTo(screenRect); //clip rectangle is clipped against screen rectangle ////////////////////FIX THIS!!! <----
-	//}
+	if (clippedRect.CompletelyInside(screenRect) == false) //Checks if completely contained if so then don't clipTo
+		clippedRect.ClipTo(screenRect); //clip rectangle is clipped against screen rectangle
 	
-	clippedRect.ClipTo(screenRect); //clip rectangle is clipped against screen rectangle
-
 	clippedRect.Translate(-posX, -posY); //Translates clippedRect back into screen space by subtracting
 
 	if (posX < 0)

@@ -35,7 +35,7 @@ bool Rectangle::ClipToReset(const Rectangle & other)
 	if (top > other.bottom)
 		return true;
 
-		return false;
+	return false;
 }
 
 bool Rectangle::CompletelyOutside(const Rectangle &other)
@@ -58,21 +58,10 @@ bool Rectangle::CompletelyOutside(const Rectangle &other)
 
 bool Rectangle::CompletelyInside(const Rectangle &other)
 { //Checks if completely Inside the screen and returns true or false
-	
-	
-	if (right > other.left  && left  < other.right && top < other.bottom && bottom > other.top)
-	{
-	
-		std::cout << "ALL INSIDE!" << std::endl;
+	if (right < other.right  && left  > other.left && top > other.top && bottom < other.bottom)
 		return true;
-	}
-	else
-	{
-		return false;
-	}
 	
-	
-	
+	return false;
 }
 
 
