@@ -15,8 +15,8 @@ public:
 	void Update(int width, int height, std::string name);
 
 private:
-	int playerPosX = { 0 };
-	int playerPosY = { 0 };
+	int playerPosX = { 5 };
+	int playerPosY = { 5 };
 	int SecondScrollPosX = { 0 };
 	int SecondScrollPosY = { -800 };
 	int ScrollPosX = { 0 };
@@ -26,5 +26,7 @@ private:
 	int numFramesY = { 3 };
 	int curFrameX = { 0 };
 	int curFrameY = { 0 };
+
+	int prevTime = 0;
 };
 

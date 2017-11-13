@@ -23,7 +23,7 @@ void World::Update(int width, int height, std::string name)
 	HAPI.SetShowFPS(true, 0, 0, HAPI_TColour::GREEN);
 	const HAPI_TKeyboardData &keyData = HAPI.GetKeyboardData();
 
-	if (!visual.CreateSprite("starBackground", "Data\\FullStarBackground.jpg"))
+	if (!visual.CreateSprite("starBackground", "Data\\FullStarBackground.png"))
 		return;
 
 	if (!visual.CreateSprite("player", "Data\\player.png"))
@@ -52,31 +52,35 @@ void World::Update(int width, int height, std::string name)
 		visual.RenderNoAlphaSprite("starBackground", 0, 768);
 		visual.RenderNoAlphaSprite("starBackground", 254, 768);
 		visual.RenderNoAlphaSprite("starBackground", 508, 768);*/
-		//visual.RenderSprite("horse", 100, 100, curFrameX, curFrameY);
+		visual.RenderSprite("horse", 100, 100, curFrameX, curFrameY);
 		visual.RenderSprite("player", playerPosX, playerPosY);
-		int prevTime = HAPI.GetTime();
+		
 		
 		int elapsedTime = HAPI.GetTime() - prevTime;
 
-		prevTime = prevTime + elapsedTime;
 
 		ScrollPosY += 1;
 		SecondScrollPosY += 1;
 
-		if(prevTime > 1000)
+		//Wait for clocktick
+		if(prevTime +  1000/30 < elapsedTime)
 		{
 			prevTime = elapsedTime;
 
 			curFrameX += 1;
-			elapsedTime = 0;
+		
 
-			if (curFrameY >= 2)
-				curFrameY = 0;
 
-			if (curFrameX > numFramesX)
+			if (curFrameX >= numFramesX)
 			{
 				curFrameX = 0;
 				curFrameY += 1;
+			}
+
+			if (curFrameY >= numFramesY)
+			{
+				curFrameY = 0;
+				curFrameX = 0;
 			}
 		}
 
@@ -116,19 +120,40 @@ void World::Update(int width, int height, std::string name)
 			//Gets the values of left thumb x, y and deadzone
 			int LeftThumbX = controllerData.analogueButtons[HK_ANALOGUE_LEFT_THUMB_X];
 			int LeftThumbY = controllerData.analogueButtons[HK_ANALOGUE_LEFT_THUMB_Y];
-			int Deadzone = controllerData.analogueButtons[HK_GAMEPAD_LEFT_THUMB_DEADZONE];
+			int Deadzone = HK_GAMEPAD_LEFT_THUMB_DEADZONE;
 
-			if (Deadzone + 7849 < LeftThumbX)
-				playerPosX++;
+			float speed = 5;
 
-			if (Deadzone + 7849 < LeftThumbY)
-				playerPosY--;
+			float translateX = 0;
+			float translateY = 0;
 
-			if (Deadzone - 7849 > LeftThumbX)
-				playerPosX--;
+			if (Deadzone < LeftThumbX)
+				translateX +=speed;
 
-			if (Deadzone - 7849 > LeftThumbY)
-				playerPosY++;
+			if (-Deadzone > LeftThumbX)
+				translateX -= speed;
+
+			if (-Deadzone > LeftThumbY)
+				translateY += speed;
+
+			if (Deadzone < LeftThumbY)
+				translateY -= speed;
+
+			if (!(translateX == 0 && translateY == 0))
+			{
+
+				float sqrRoot = sqrt((translateX*translateX) + (translateY*translateY));
+
+				translateX = speed*(translateX / sqrRoot);
+				translateY = speed*( translateY / sqrRoot);
+
+				playerPosX += translateX;
+				playerPosY += translateY;
+
+				std::cout << LeftThumbX << LeftThumbY << std::endl;
+			}
 		}
+
+	
 	}
 }
