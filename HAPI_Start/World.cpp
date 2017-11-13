@@ -1,5 +1,6 @@
 #include "World.h"
 #include "Visualisation.h"
+#include "UI.h"
 #include <HAPI_lib.h>
 
 #if defined(DEBUG) | defined(_DEBUG)
@@ -13,6 +14,8 @@ using namespace HAPISPACE;
 void World::Update(int width, int height, std::string name)
 {
 	Visualisation visual;
+
+	UI ui;
 
 	if (!visual.initialise(width, height, name))
 		return;
@@ -41,28 +44,15 @@ void World::Update(int width, int height, std::string name)
 
 		visual.RenderNoAlphaSprite("starBackground", ScrollPosX, ScrollPosY);
 		visual.RenderNoAlphaSprite("starBackground", SecondScrollPosX, SecondScrollPosY);
-		/*visual.RenderNoAlphaSprite("starBackground", 254, 256);
-		visual.RenderNoAlphaSprite("starBackground", 254, 0);
-		visual.RenderNoAlphaSprite("starBackground", 0, 256);
-		visual.RenderNoAlphaSprite("starBackground", 508, 512);
-		visual.RenderNoAlphaSprite("starBackground", 508, 0);
-		visual.RenderNoAlphaSprite("starBackground", 0, 512);
-		visual.RenderNoAlphaSprite("starBackground", 254, 512);
-		visual.RenderNoAlphaSprite("starBackground", 508, 256);
-		visual.RenderNoAlphaSprite("starBackground", 0, 768);
-		visual.RenderNoAlphaSprite("starBackground", 254, 768);
-		visual.RenderNoAlphaSprite("starBackground", 508, 768);*/
 		visual.RenderSprite("horse", 100, 100, curFrameX, curFrameY);
 		visual.RenderSprite("player", playerPosX, playerPosY);
 		
-		
+		//int elapsedTime = HAPI.GetTime() - prevTime;
+		int playerElapsedTime = HAPI.GetTime() - playerPrevTime;
 		int elapsedTime = HAPI.GetTime() - prevTime;
-
-
 		ScrollPosY += 1;
 		SecondScrollPosY += 1;
 
-		//Wait for clocktick
 		if(prevTime +  1000/30 < elapsedTime)
 		{
 			prevTime = elapsedTime;
@@ -92,19 +82,29 @@ void World::Update(int width, int height, std::string name)
 			SecondScrollPosY = -800;
 		}
 		
+		//ui.KeyboardInput(keyData, playerPosX, playerPosY, elapsedTime, prevTime);
 
-		//Moves sprite with WASD keys
-		if (keyData.scanCode['W'])
-			playerPosY--;
+		
 
-		if (keyData.scanCode['S'])
-			playerPosY++;
+		if (playerPrevTime + 10 < playerElapsedTime)
+		{
+			playerPrevTime = playerElapsedTime;
+			float playerSpeed = 5;
 
-		if (keyData.scanCode['A'])
-			playerPosX--;
+			//Moves sprite with WASD keys
+			if (keyData.scanCode['W'])
+				playerPosY-= playerSpeed;
 
-		if (keyData.scanCode['D'])
-			playerPosX++;
+			if (keyData.scanCode['S'])
+				playerPosY+= playerSpeed;
+
+			if (keyData.scanCode['A'])
+				playerPosX-= playerSpeed;
+
+			if (keyData.scanCode['D'])
+				playerPosX+= playerSpeed;
+		}
+		
 
 		if (playerPosY < height - 200 && playerPosX < width - 200 && playerPosY > 200 && playerPosX > 200)
 		{

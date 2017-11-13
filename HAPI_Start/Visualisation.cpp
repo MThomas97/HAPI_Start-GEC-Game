@@ -65,6 +65,7 @@ void Visualisation::RenderNoAlphaSprite(const std::string &name, int posX, int p
 
 void Visualisation::ScrollingBackground(int FirstTexturePosX, int FirstTexturePosY, int SecondTexturePosX, int SecondTexturePosY)
 {
+	
 	int tempPosY = SecondTexturePosY;
 	FirstTexturePosY += 1;
 	SecondTexturePosY += 1;
