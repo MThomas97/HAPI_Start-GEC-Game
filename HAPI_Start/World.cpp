@@ -1,6 +1,8 @@
 #include "World.h"
 #include "Visualisation.h"
+#include "EntityPlayer.h"
 #include "UI.h"
+#include "Vector2.h"
 #include <HAPI_lib.h>
 
 #if defined(DEBUG) | defined(_DEBUG)
@@ -15,51 +17,59 @@ void World::Update(int width, int height, std::string name)
 {
 	Visualisation visual;
 
+	Vector2 vect;
+
+	EntityPlayer playerEntity;
+
 	UI ui;
 
 	if (!visual.initialise(width, height, name))
 		return;
 
-	
-
 	//Sets the FPS counter on screen
 	HAPI.SetShowFPS(true, 0, 0, HAPI_TColour::GREEN);
 	const HAPI_TKeyboardData &keyData = HAPI.GetKeyboardData();
 
+	//playerEntity.GraphicID("player");
+	
+	if (!visual.CreateSprite("player", playerEntity.GetGraphicID()))
+		return;
+
 	if (!visual.CreateSprite("starBackground", "Data\\FullStarBackground.png"))
 		return;
 
-	if (!visual.CreateSprite("player", "Data\\player.png"))
-		return;
+	/*if (!visual.CreateSprite("player", "Data\\plyer.png"))
+		return;*/
 
-	if (!visual.CreateSprite("horse", "Data\\HorseSpriteSheetWhite.png", numFramesX, numFramesY))
+	if (!visual.CreateSprite("horse", "Data\\HorseSpriteSheetWhite.png", playerEntity.numFramesX, playerEntity.numFramesY))
 		return;
 
 	while (HAPI.Update()) //Game loop
 	{	//calls functions from classes
 
-		const HAPI_TControllerData &controllerData = HAPI.GetControllerData(0);
+		//const HAPI_TControllerData &controllerData = HAPI.GetControllerData(0);
 
 		visual.ClearToColour(HAPI.GetScreenPointer(), width, height, HAPI_TColour(0, 0, 0));
 
 		visual.RenderNoAlphaSprite("starBackground", ScrollPosX, ScrollPosY);
 		visual.RenderNoAlphaSprite("starBackground", SecondScrollPosX, SecondScrollPosY);
-		visual.RenderSprite("horse", 100, 100, curFrameX, curFrameY);
-		visual.RenderSprite("player", playerPosX, playerPosY);
+		visual.RenderSprite("horse", 100, 100, playerEntity.curFrameX, playerEntity.curFrameY);
+		//playerEntity.Update("player");
+		visual.RenderSprite("player", playerEntity.playerPosX, playerEntity.playerPosY);
 		
+		playerEntity.Update();
+
 		//int elapsedTime = HAPI.GetTime() - prevTime;
-		int playerElapsedTime = HAPI.GetTime() - playerPrevTime;
+		//int playerElapsedTime = HAPI.GetTime() - playerPrevTime;
 		int elapsedTime = HAPI.GetTime() - prevTime;
 		ScrollPosY += 1;
 		SecondScrollPosY += 1;
 
-		if(prevTime +  1000/30 < elapsedTime)
+		/*if(prevTime +  1000/30 < elapsedTime)
 		{
 			prevTime = elapsedTime;
 
-			curFrameX += 1;
-		
-
+				curFrameX += 1;
 
 			if (curFrameX >= numFramesX)
 			{
@@ -72,7 +82,7 @@ void World::Update(int width, int height, std::string name)
 				curFrameY = 0;
 				curFrameX = 0;
 			}
-		}
+		}*/
 
 		//visual.ScrollingBackground(ScrollPosX, ScrollPosY, SecondScrollPosX, SecondScrollPosY); /////////GET WORKING
 
@@ -86,27 +96,28 @@ void World::Update(int width, int height, std::string name)
 
 		
 
-		if (playerPrevTime + 10 < playerElapsedTime)
-		{
-			playerPrevTime = playerElapsedTime;
-			float playerSpeed = 5;
+		//if (playerPrevTime + 10 < playerElapsedTime)
+		//{
+		//	playerPrevTime = playerElapsedTime;
+		//	float playerSpeed = 5;
 
-			//Moves sprite with WASD keys
-			if (keyData.scanCode['W'])
-				playerPosY-= playerSpeed;
+		//	//Moves sprite with WASD keys
+		//	if (keyData.scanCode['W'])
+		//		playerEntity.playerPosY -= playerSpeed;
 
-			if (keyData.scanCode['S'])
-				playerPosY+= playerSpeed;
+		//	if (keyData.scanCode['S'])
+		//		playerEntity.playerPosY += playerSpeed;
 
-			if (keyData.scanCode['A'])
-				playerPosX-= playerSpeed;
+		//	if (keyData.scanCode['A'])
+		//		playerEntity.playerPosX-= playerSpeed;
 
-			if (keyData.scanCode['D'])
-				playerPosX+= playerSpeed;
-		}
+		//	if (keyData.scanCode['D'])
+		//		playerEntity.playerPosX += playerSpeed;
+		//}
+		
 		
 
-		if (playerPosY < height - 200 && playerPosX < width - 200 && playerPosY > 200 && playerPosX > 200)
+		if (playerEntity.playerPosY < height - 200 && playerEntity.playerPosX < width - 200 && playerEntity.playerPosY > 200 && playerEntity.playerPosX > 200)
 		{
 			HAPI.SetControllerRumble(0, 40000, 40000);
 		}
@@ -115,44 +126,44 @@ void World::Update(int width, int height, std::string name)
 			HAPI.SetControllerRumble(0, 0, 0);
 		}
 
-		if (controllerData.isAttached)
-		{
-			//Gets the values of left thumb x, y and deadzone
-			int LeftThumbX = controllerData.analogueButtons[HK_ANALOGUE_LEFT_THUMB_X];
-			int LeftThumbY = controllerData.analogueButtons[HK_ANALOGUE_LEFT_THUMB_Y];
-			int Deadzone = HK_GAMEPAD_LEFT_THUMB_DEADZONE;
+		//if (controllerData.isAttached)
+		//{
+		//	//Gets the values of left thumb x, y and deadzone
+		//	int LeftThumbX = controllerData.analogueButtons[HK_ANALOGUE_LEFT_THUMB_X];
+		//	int LeftThumbY = controllerData.analogueButtons[HK_ANALOGUE_LEFT_THUMB_Y];
+		//	int Deadzone = HK_GAMEPAD_LEFT_THUMB_DEADZONE;
 
-			float speed = 5;
+		//	float speed = 5;
 
-			float translateX = 0;
-			float translateY = 0;
+		//	float translateX = 0;
+		//	float translateY = 0;
 
-			if (Deadzone < LeftThumbX)
-				translateX +=speed;
+		//	if (Deadzone < LeftThumbX)
+		//		translateX +=speed;
 
-			if (-Deadzone > LeftThumbX)
-				translateX -= speed;
+		//	if (-Deadzone > LeftThumbX)
+		//		translateX -= speed;
 
-			if (-Deadzone > LeftThumbY)
-				translateY += speed;
+		//	if (-Deadzone > LeftThumbY)
+		//		translateY += speed;
 
-			if (Deadzone < LeftThumbY)
-				translateY -= speed;
+		//	if (Deadzone < LeftThumbY)
+		//		translateY -= speed;
 
-			if (!(translateX == 0 && translateY == 0))
-			{
+		//	if (!(translateX == 0 && translateY == 0))
+		//	{
 
-				float sqrRoot = sqrt((translateX*translateX) + (translateY*translateY));
+		//		float sqrRoot = sqrt((translateX*translateX) + (translateY*translateY));
 
-				translateX = speed*(translateX / sqrRoot);
-				translateY = speed*( translateY / sqrRoot);
+		//		translateX = speed*(translateX / sqrRoot);
+		//		translateY = speed*( translateY / sqrRoot);
 
-				playerPosX += translateX;
-				playerPosY += translateY;
+		//		playerEntity.playerPosX += translateX;
+		//		playerEntity.playerPosY += translateY;
 
-				std::cout << LeftThumbX << LeftThumbY << std::endl;
-			}
-		}
+		//		std::cout << LeftThumbX << LeftThumbY << std::endl;
+		//	}
+		//}
 
 	
 	}

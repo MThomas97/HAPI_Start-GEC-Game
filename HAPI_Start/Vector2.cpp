@@ -11,6 +11,11 @@ inline Vector2 & Vector2::operator-(const Vector2 &rhs) const
 	return Vector2(x - rhs.x, y - rhs.y);
 }
 
+inline Vector2 & Vector2::operator/(const Vector2 &rhs) const
+{
+	return Vector2(x / rhs.x, y / rhs.y);
+}
+
 inline Vector2 & Vector2::operator*(const Vector2 &rhs) const
 {
 	return Vector2(x * rhs.x, y * rhs.y);
@@ -44,16 +49,16 @@ float Vector2::LengthSquared() const
 	return x*x + y*y;
 }
 
-void Vector2::NormaliseInPlace()
-{
-	float len = Length();
-
-	if (len == 0)
-		return;
-
-	x /= len;
-	y /= len;
-}
+//void Vector2::NormaliseInPlace()
+//{
+//	float len = Length();
+//
+//	if (len == 0)
+//		return;
+//	
+//	x /= len;
+//	y /= len;
+//}
 
 float Vector2::Dot(const Vector2 &other) const
 {
@@ -73,6 +78,32 @@ float Vector2::Distance(const Vector2 &rhs) const
 float Vector2::DistanceSquared(const Vector2 &rhs) const
 {
 	return ((x - rhs.x) * (x - rhs.x)) + ((y - rhs.y) * (y - rhs.y));
+}
+
+void Vector2::Set(float SetX, float SetY)
+{
+	x = SetX;
+	y = SetY;
+}
+
+Vector2 & Vector2::Normal()
+{
+	Set(-y, x);
+	return *this;
+}
+
+Vector2 & Vector2::Normalise()
+{
+	if (Length() != 0)
+	{
+		float len = Length();
+		x /= len;
+		y /= len;
+		return *this;
+	}
+	
+	x = y = 0;
+	return *this;
 }
 
 

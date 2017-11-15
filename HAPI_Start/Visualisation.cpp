@@ -1,7 +1,6 @@
 #include "Visualisation.h"
 #include <iostream>
 #include <HAPI_lib.h>
-#include "Rectangle.h"
 #include "Sprite.h"
 
 #if defined(DEBUG) | defined(_DEBUG)
@@ -11,8 +10,6 @@
 
 // HAPI itself is wrapped in the HAPISPACE namespace
 using namespace HAPISPACE;
-
-class Rectangle;
 
 void Visualisation::ClearToColour(BYTE* screen, int width, int height, HAPI_TColour colour) //function clears the screen to a specific colour that is set
 {
@@ -25,7 +22,7 @@ void Visualisation::ClearToColour(BYTE* screen, int width, int height, HAPI_TCol
 	}
 }
 
-bool Visualisation::CreateSprite(const std::string & name, const  std::string & filename, int numFramesX, int numFramesY)
+bool Visualisation::CreateSprite(const std::string &name, const  std::string & filename, int numFramesX, int numFramesY)
 {
 	if (m_spritemap.find(name) != m_spritemap.end()) // Checks if there isnt a sprite already
 		std::cerr << "Already exists" << name << std::endl;
@@ -65,7 +62,6 @@ void Visualisation::RenderNoAlphaSprite(const std::string &name, int posX, int p
 
 void Visualisation::ScrollingBackground(int FirstTexturePosX, int FirstTexturePosY, int SecondTexturePosX, int SecondTexturePosY)
 {
-	
 	int tempPosY = SecondTexturePosY;
 	FirstTexturePosY += 1;
 	SecondTexturePosY += 1;

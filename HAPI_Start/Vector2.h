@@ -16,6 +16,8 @@ public:
 
 	inline Vector2 &operator -(const Vector2 &rhs) const;
 
+	Vector2 & operator/(const Vector2 & rhs) const;
+
 	inline Vector2 &operator *(const Vector2 &rhs) const;
 	
 	inline Vector2 &operator *=(const Vector2 &rhs);
@@ -28,8 +30,8 @@ public:
 
 	float LengthSquared() const;
 
-	void NormaliseInPlace();
-
+	//void NormaliseInPlace();
+	
 	float Dot(const Vector2 &other) const;
 
 	float Cross(const Vector2 &other) const;
@@ -37,6 +39,12 @@ public:
 	float Distance(const Vector2 &rhs) const;
 
 	float DistanceSquared(const Vector2 &rhs) const;
+
+	void Set(float SetX, float SetY);
+
+	Vector2 &Normal();
+
+	Vector2 &Normalise();
 
 };
 
