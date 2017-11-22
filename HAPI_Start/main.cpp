@@ -33,6 +33,8 @@ void HAPI_Main()
 {
 	World world;
 
+	//world.run();
+
 	world.Update(600, 800, "Intergalactic War");
 }
 

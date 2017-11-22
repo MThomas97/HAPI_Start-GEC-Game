@@ -10,19 +10,32 @@
 // HAPI itself is wrapped in the HAPISPACE namespace
 using namespace HAPISPACE;
 
+enum class eSide
+{
+	ePlayer,
+	eEnemy,
+	eNeutral
+};
+
 class Entity
 {
 public:
-	Entity();
+	Entity(std::string spriteID) : Spritename(spriteID) {};
+
+	virtual ~Entity() = 0;
+
+	virtual eSide getSide() const = 0;
 
 	virtual void Update() = 0;
 	
 protected:
 
+	Vector2 m_position;
 	int health{ 100 };
-	float MoveSpeed{ 3 };
-	int curFrameX{ 0 };
-	int curFrameY{ 0 };
+	std::string Spritename;
+	//float MoveSpeed{ 3 };
+	//int curFrameX{ 0 };
+	//int curFrameY{ 0 };
 	//float PrevTime{ 0 };
 	//float ElapsedTime = HAPI.GetTime() - PrevTime;
 };

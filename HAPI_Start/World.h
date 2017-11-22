@@ -8,14 +8,30 @@
 
 // HAPI itself is wrapped in the HAPISPACE namespace
 using namespace HAPISPACE;
+class Visualisation;
+
+class Entity;
 
 class World
 {
 public:
+
+	~World();
+
+	void run(int width, int height, std::string name);
+
 	void Update(int width, int height, std::string name);
+
+	void Render();
+
+	bool LoadLevel();
 
 private:
 	
+	std::vector<Entity*> m_entity;
+
+	Visualisation *m_vis{ nullptr };
+
 	int SecondScrollPosX = { 0 };
 	int SecondScrollPosY = { -800 };
 	int ScrollPosX = { 0 };

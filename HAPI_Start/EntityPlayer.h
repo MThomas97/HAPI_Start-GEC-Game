@@ -1,27 +1,36 @@
 #pragma once
 #include "Entity.h"
+class World;
+
+class Visualisation;
+
 class EntityPlayer : public Entity
 {
 public:
-	EntityPlayer();
+	EntityPlayer(std::string spriteID) : Entity(spriteID) {};
+
+	~EntityPlayer();
 
 	void Update() override;
 
-	int GetPosX() { return playerPosX; }
+	//int GetPosX() { return playerPosX; }
 
-	int GetPosY() { return playerPosY; }
+	//int GetPosY() { return playerPosY; }
 
-	std::string GetGraphicID() const { return PlayerID; }
+	eSide getSide() const override {return eSide::ePlayer; }
+
+	//std::string GetGraphicID() const { return PlayerID; }
 	int playerPosX{ 0 };
 	int playerPosY{ 0 };
-	float numFramesX = { 5 };
-	float numFramesY = { 3 };
-	float curFrameX = { 0 };
-	float curFrameY = { 0 };
-
+	int numFramesX { 5 };
+	int numFramesY { 3 };
+	int curFrameX { 0 };
+	int curFrameY { 0 };
+	int MoveSpeed { 5 };
 private:
-	const std::string PlayerID{ "Data\\player.png" };
-	
+	//const std::string PlayerID{ "Data\\player.png" };
+	//World *m_world{ nullptr };
+	Visualisation *m_visPlayer{ nullptr };
 	const HAPI_TKeyboardData &keyData = HAPI.GetKeyboardData();
 	//Gets the values of left thumb x, y and deadzone
 	float PrevTime = 0;

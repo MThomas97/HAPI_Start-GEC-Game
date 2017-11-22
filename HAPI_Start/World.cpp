@@ -13,18 +13,45 @@
 // HAPI itself is wrapped in the HAPISPACE namespace
 using namespace HAPISPACE;
 
+World::~World()
+{
+	delete m_vis;
+	
+}
+
+void World::run(int width, int height, std::string name)
+{
+	
+}
+
+bool World::LoadLevel()
+{
+	/*EntityPlayer *newEntity = new EntityPlayer("player");
+
+	m_entity.push_back(newEntity);
+
+	for (auto& p: newEntity)
+		p->Update();*/
+
+	return true;
+}
+
 void World::Update(int width, int height, std::string name)
 {
-	Visualisation visual;
 
-	Vector2 vect;
+	m_vis = new Visualisation;
 
-	EntityPlayer playerEntity;
-
-	UI ui;
-
-	if (!visual.initialise(width, height, name))
+	if (!m_vis->initialise(width, height, name))
 		return;
+
+	if (!LoadLevel())
+		return;
+
+	//Vector2 vect;
+	//EntityPlayer playerEntity("player");
+
+	//UI ui;
+
 
 	//Sets the FPS counter on screen
 	HAPI.SetShowFPS(true, 0, 0, HAPI_TColour::GREEN);
@@ -32,32 +59,33 @@ void World::Update(int width, int height, std::string name)
 
 	//playerEntity.GraphicID("player");
 	
-	if (!visual.CreateSprite("player", playerEntity.GetGraphicID()))
-		return;
+//	if (!m_vis->CreateSprite("player", playerEntity.GetGraphicID()))
+//		return;
 
-	if (!visual.CreateSprite("starBackground", "Data\\FullStarBackground.png"))
+	if (!m_vis->CreateSprite("starBackground", "Data\\FullStarBackground.png"))
 		return;
 
 	/*if (!visual.CreateSprite("player", "Data\\plyer.png"))
 		return;*/
 
-	if (!visual.CreateSprite("horse", "Data\\HorseSpriteSheetWhite.png", playerEntity.numFramesX, playerEntity.numFramesY))
-		return;
+	//if (!m_vis->CreateSprite("horse", "Data\\HorseSpriteSheetWhite.png", playerEntity.numFramesX, playerEntity.numFramesY))
+//		return;
 
 	while (HAPI.Update()) //Game loop
 	{	//calls functions from classes
 
 		//const HAPI_TControllerData &controllerData = HAPI.GetControllerData(0);
 
-		visual.ClearToColour(HAPI.GetScreenPointer(), width, height, HAPI_TColour(0, 0, 0));
+		m_vis->ClearToColour(HAPI.GetScreenPointer(), width, height, HAPI_TColour(0, 0, 0));
 
-		visual.RenderNoAlphaSprite("starBackground", ScrollPosX, ScrollPosY);
-		visual.RenderNoAlphaSprite("starBackground", SecondScrollPosX, SecondScrollPosY);
-		visual.RenderSprite("horse", 100, 100, playerEntity.curFrameX, playerEntity.curFrameY);
-		//playerEntity.Update("player");
-		visual.RenderSprite("player", playerEntity.playerPosX, playerEntity.playerPosY);
 		
-		playerEntity.Update();
+		m_vis->RenderNoAlphaSprite("starBackground", ScrollPosX, ScrollPosY);
+		m_vis->RenderNoAlphaSprite("starBackground", SecondScrollPosX, SecondScrollPosY);
+		//m_vis->RenderSprite("horse", 100, 100, playerEntity.curFrameX, playerEntity.curFrameY);
+		//playerEntity.Update("player");
+		//m_vis->RenderSprite("player", playerEntity.playerPosX, playerEntity.playerPosY);
+		
+		//playerEntity.Update();
 
 		//int elapsedTime = HAPI.GetTime() - prevTime;
 		//int playerElapsedTime = HAPI.GetTime() - playerPrevTime;
@@ -86,13 +114,11 @@ void World::Update(int width, int height, std::string name)
 
 		//visual.ScrollingBackground(ScrollPosX, ScrollPosY, SecondScrollPosX, SecondScrollPosY); /////////GET WORKING
 
-		if (ScrollPosY > visual.m_screenRect.bottom)
+		if (ScrollPosY > m_vis->m_screenRect.bottom)
 		{
 			ScrollPosY = 0;
 			SecondScrollPosY = -800;
 		}
-		
-		//ui.KeyboardInput(keyData, playerPosX, playerPosY, elapsedTime, prevTime);
 
 		
 
@@ -117,14 +143,14 @@ void World::Update(int width, int height, std::string name)
 		
 		
 
-		if (playerEntity.playerPosY < height - 200 && playerEntity.playerPosX < width - 200 && playerEntity.playerPosY > 200 && playerEntity.playerPosX > 200)
-		{
-			HAPI.SetControllerRumble(0, 40000, 40000);
-		}
-		else
-		{
-			HAPI.SetControllerRumble(0, 0, 0);
-		}
+		//if (playerEntity.playerPosY < height - 200 && playerEntity.playerPosX < width - 200 && playerEntity.playerPosY > 200 && playerEntity.playerPosX > 200)
+		//{
+		//	HAPI.SetControllerRumble(0, 40000, 40000);
+		//}
+		//else
+		//{
+		//	HAPI.SetControllerRumble(0, 0, 0);
+		//}
 
 		//if (controllerData.isAttached)
 		//{
@@ -167,4 +193,8 @@ void World::Update(int width, int height, std::string name)
 
 	
 	}
+}
+
+void World::Render()
+{
 }

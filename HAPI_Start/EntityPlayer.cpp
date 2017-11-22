@@ -1,15 +1,21 @@
 #include "EntityPlayer.h"
+#include "WorldModel.h"
 
-EntityPlayer::EntityPlayer()
+EntityPlayer::~EntityPlayer()
 {
+	delete m_visPlayer;
 }
 
 void EntityPlayer::Update()
 {
 
-	Vector2 vect;
+	//Vector2 vect;
+	m_visPlayer = new Visualisation;
 
-	const HAPI_TControllerData &controllerData = HAPI.GetControllerData(0);
+	if (!m_visPlayer->CreateSprite("spriteID", "Data\\player.png"))
+		return;
+
+	static const HAPI_TControllerData &controllerData = HAPI.GetControllerData(0);
 
 	int LeftThumbX = controllerData.analogueButtons[HK_ANALOGUE_LEFT_THUMB_X];
 	int LeftThumbY = controllerData.analogueButtons[HK_ANALOGUE_LEFT_THUMB_Y];
@@ -18,55 +24,55 @@ void EntityPlayer::Update()
 	float ElapsedTime = HAPI.GetTime() - PrevTime;
 
 	float HorseElapsedTime = HAPI.GetTime() - PrevTime;
-	
+	//m_position.x = 0;
 	if (PrevTime + 5 < ElapsedTime)
 	{
 		PrevTime = ElapsedTime;
 		//Moves sprite with WASD keys
 		if (keyData.scanCode['W'])
-			vect.y -= MoveSpeed;
+			m_position.y -= MoveSpeed;
 
 		if (keyData.scanCode['S'])
-			vect.y += MoveSpeed;
+			m_position.y += MoveSpeed;
 
 		if (keyData.scanCode['A'])
-			vect.x -= MoveSpeed;
+			m_position.x -= MoveSpeed;
 
 		if (keyData.scanCode['D'])
-			vect.x += MoveSpeed;
+			m_position.x += MoveSpeed;
 
-		if (!(vect.x == 0 && vect.y == 0))
+		if (!(m_position.x == 0 && m_position.y == 0))
 		{
-			vect.x = MoveSpeed*(vect.x / (vect.Length()));
-			vect.y = MoveSpeed*(vect.y / (vect.Length()));
+			m_position.x = MoveSpeed*(m_position.x / (m_position.Length()));
+			m_position.y = MoveSpeed*(m_position.y / (m_position.Length()));
 
-			playerPosX += vect.x;
-			playerPosY += vect.y;
-
+			playerPosX += m_position.x;
+			playerPosY += m_position.y;
+			
 		}
 
 		if (controllerData.isAttached)
 		{
 
 			if (Deadzone < LeftThumbX)
-				vect.x += MoveSpeed;
+				m_position.x += MoveSpeed;
 
 			if (-Deadzone > LeftThumbX)
-				vect.x -= MoveSpeed;
+				m_position.x -= MoveSpeed;
 
 			if (-Deadzone > LeftThumbY)
-				vect.y += MoveSpeed;
+				m_position.y += MoveSpeed;
 
 			if (Deadzone < LeftThumbY)
-				vect.y -= MoveSpeed;
+				m_position.y -= MoveSpeed;
 
-			if (!(vect.x == 0 && vect.y == 0))
+			if (!(m_position.x == 0 && m_position.y == 0))
 			{
-				vect.x = MoveSpeed*(vect.x / (vect.Length()));
-				vect.y = MoveSpeed*(vect.y / (vect.Length()));
+				m_position.x = MoveSpeed*(m_position.x / (m_position.Length()));
+				m_position.y = MoveSpeed*(m_position.y / (m_position.Length()));
 
-				playerPosX += vect.x;
-				playerPosY += vect.y;
+				playerPosX += m_position.x;
+				playerPosY += m_position.y;
 
 			}
 		}
