@@ -16,6 +16,9 @@ using namespace HAPISPACE;
 World::~World()
 {
 	delete m_vis;
+
+	for (auto &p : m_entity)
+		delete p;
 	
 }
 
@@ -24,16 +27,17 @@ void World::run(int width, int height, std::string name)
 	
 }
 
-bool World::LoadLevel()
+void World::LoadLevel()
 {
-	/*EntityPlayer *newEntity = new EntityPlayer("player");
+	if (!m_vis->CreateSprite("player", "Data\\player.png"))
+		return;
+
+	EntityPlayer *newEntity = new EntityPlayer("player");
+
+	newEntity->SetPosition(200, 200);
 
 	m_entity.push_back(newEntity);
 
-	for (auto& p: newEntity)
-		p->Update();*/
-
-	return true;
 }
 
 void World::Update(int width, int height, std::string name)
@@ -44,23 +48,12 @@ void World::Update(int width, int height, std::string name)
 	if (!m_vis->initialise(width, height, name))
 		return;
 
-	if (!LoadLevel())
-		return;
-
-	//Vector2 vect;
-	//EntityPlayer playerEntity("player");
-
-	//UI ui;
+	LoadLevel();
 
 
 	//Sets the FPS counter on screen
 	HAPI.SetShowFPS(true, 0, 0, HAPI_TColour::GREEN);
 	const HAPI_TKeyboardData &keyData = HAPI.GetKeyboardData();
-
-	//playerEntity.GraphicID("player");
-	
-//	if (!m_vis->CreateSprite("player", playerEntity.GetGraphicID()))
-//		return;
 
 	if (!m_vis->CreateSprite("starBackground", "Data\\FullStarBackground.png"))
 		return;
@@ -74,18 +67,23 @@ void World::Update(int width, int height, std::string name)
 	while (HAPI.Update()) //Game loop
 	{	//calls functions from classes
 
-		//const HAPI_TControllerData &controllerData = HAPI.GetControllerData(0);
-
 		m_vis->ClearToColour(HAPI.GetScreenPointer(), width, height, HAPI_TColour(0, 0, 0));
-
 		
 		m_vis->RenderNoAlphaSprite("starBackground", ScrollPosX, ScrollPosY);
 		m_vis->RenderNoAlphaSprite("starBackground", SecondScrollPosX, SecondScrollPosY);
-		//m_vis->RenderSprite("horse", 100, 100, playerEntity.curFrameX, playerEntity.curFrameY);
+		//m_vis->RenderSprite("player",)
+//		m_vis->RenderSprite("horse", 100, 100, playerEntity.curFrameX, playerEntity.curFrameY);
 		//playerEntity.Update("player");
 		//m_vis->RenderSprite("player", playerEntity.playerPosX, playerEntity.playerPosY);
 		
 		//playerEntity.Update();
+
+		for (auto p : m_entity)
+		{
+			p->Render(m_vis);
+			p->Update();
+
+		}
 
 		//int elapsedTime = HAPI.GetTime() - prevTime;
 		//int playerElapsedTime = HAPI.GetTime() - playerPrevTime;
@@ -143,58 +141,5 @@ void World::Update(int width, int height, std::string name)
 		
 		
 
-		//if (playerEntity.playerPosY < height - 200 && playerEntity.playerPosX < width - 200 && playerEntity.playerPosY > 200 && playerEntity.playerPosX > 200)
-		//{
-		//	HAPI.SetControllerRumble(0, 40000, 40000);
-		//}
-		//else
-		//{
-		//	HAPI.SetControllerRumble(0, 0, 0);
-		//}
-
-		//if (controllerData.isAttached)
-		//{
-		//	//Gets the values of left thumb x, y and deadzone
-		//	int LeftThumbX = controllerData.analogueButtons[HK_ANALOGUE_LEFT_THUMB_X];
-		//	int LeftThumbY = controllerData.analogueButtons[HK_ANALOGUE_LEFT_THUMB_Y];
-		//	int Deadzone = HK_GAMEPAD_LEFT_THUMB_DEADZONE;
-
-		//	float speed = 5;
-
-		//	float translateX = 0;
-		//	float translateY = 0;
-
-		//	if (Deadzone < LeftThumbX)
-		//		translateX +=speed;
-
-		//	if (-Deadzone > LeftThumbX)
-		//		translateX -= speed;
-
-		//	if (-Deadzone > LeftThumbY)
-		//		translateY += speed;
-
-		//	if (Deadzone < LeftThumbY)
-		//		translateY -= speed;
-
-		//	if (!(translateX == 0 && translateY == 0))
-		//	{
-
-		//		float sqrRoot = sqrt((translateX*translateX) + (translateY*translateY));
-
-		//		translateX = speed*(translateX / sqrRoot);
-		//		translateY = speed*( translateY / sqrRoot);
-
-		//		playerEntity.playerPosX += translateX;
-		//		playerEntity.playerPosY += translateY;
-
-		//		std::cout << LeftThumbX << LeftThumbY << std::endl;
-		//	}
-		//}
-
-	
 	}
-}
-
-void World::Render()
-{
 }

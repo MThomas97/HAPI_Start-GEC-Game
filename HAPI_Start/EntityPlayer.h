@@ -26,11 +26,11 @@ public:
 	int numFramesY { 3 };
 	int curFrameX { 0 };
 	int curFrameY { 0 };
-	int MoveSpeed { 5 };
+	int MoveSpeed { 2 };
 private:
 	//const std::string PlayerID{ "Data\\player.png" };
 	//World *m_world{ nullptr };
-	Visualisation *m_visPlayer{ nullptr };
+
 	const HAPI_TKeyboardData &keyData = HAPI.GetKeyboardData();
 	//Gets the values of left thumb x, y and deadzone
 	float PrevTime = 0;

@@ -27,6 +27,10 @@ public:
 	virtual eSide getSide() const = 0;
 
 	virtual void Update() = 0;
+
+	void Render(Visualisation *vis);
+
+	void SetPosition(int PosX, int PosY);
 	
 protected:
 

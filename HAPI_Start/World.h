@@ -22,9 +22,7 @@ public:
 
 	void Update(int width, int height, std::string name);
 
-	void Render();
-
-	bool LoadLevel();
+	void LoadLevel();
 
 private:
 	

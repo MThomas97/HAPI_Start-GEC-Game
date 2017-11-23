@@ -8,6 +8,10 @@ https://scm-intranet.tees.ac.uk/users/u0018197/HAPI/HAPI-Reference/hapi-referenc
 
 Last modified by Keith Ditchburn: 27th September 2017
 
+Version 2.31 29/09/17
+=====================
+- Another possible fix for lab / home version mismatch for release mode (the other failed)
+
 Version 2.31 27/09/17
 =====================
 - Possible fix for a Viz versioning problem with release builds

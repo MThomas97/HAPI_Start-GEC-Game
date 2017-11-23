@@ -3,19 +3,17 @@
 
 EntityPlayer::~EntityPlayer()
 {
-	delete m_visPlayer;
+	
 }
 
 void EntityPlayer::Update()
 {
 
-	//Vector2 vect;
-	m_visPlayer = new Visualisation;
+	Vector2 vect;
+	
+	
 
-	if (!m_visPlayer->CreateSprite("spriteID", "Data\\player.png"))
-		return;
-
-	static const HAPI_TControllerData &controllerData = HAPI.GetControllerData(0);
+	const HAPI_TControllerData &controllerData = HAPI.GetControllerData(0);
 
 	int LeftThumbX = controllerData.analogueButtons[HK_ANALOGUE_LEFT_THUMB_X];
 	int LeftThumbY = controllerData.analogueButtons[HK_ANALOGUE_LEFT_THUMB_Y];
@@ -24,55 +22,56 @@ void EntityPlayer::Update()
 	float ElapsedTime = HAPI.GetTime() - PrevTime;
 
 	float HorseElapsedTime = HAPI.GetTime() - PrevTime;
-	//m_position.x = 0;
-	if (PrevTime + 5 < ElapsedTime)
+	if (PrevTime + 20 < ElapsedTime)
 	{
 		PrevTime = ElapsedTime;
 		//Moves sprite with WASD keys
 		if (keyData.scanCode['W'])
-			m_position.y -= MoveSpeed;
+			vect.y -= MoveSpeed;
 
 		if (keyData.scanCode['S'])
-			m_position.y += MoveSpeed;
+			vect.y += MoveSpeed;
 
 		if (keyData.scanCode['A'])
-			m_position.x -= MoveSpeed;
+			vect.x -= MoveSpeed;
 
 		if (keyData.scanCode['D'])
-			m_position.x += MoveSpeed;
+			vect.x += MoveSpeed;
 
-		if (!(m_position.x == 0 && m_position.y == 0))
+		if (!(vect.x == 0 && vect.y == 0))
 		{
-			m_position.x = MoveSpeed*(m_position.x / (m_position.Length()));
-			m_position.y = MoveSpeed*(m_position.y / (m_position.Length()));
+			vect.x = MoveSpeed*(vect.x / (vect.Length()));
+			vect.y = MoveSpeed*(vect.y / (vect.Length()));
 
-			playerPosX += m_position.x;
-			playerPosY += m_position.y;
+			m_position.x += vect.x;
+			m_position.y += vect.y;
 			
 		}
+
+
 
 		if (controllerData.isAttached)
 		{
 
 			if (Deadzone < LeftThumbX)
-				m_position.x += MoveSpeed;
+				vect.x += MoveSpeed;
 
 			if (-Deadzone > LeftThumbX)
-				m_position.x -= MoveSpeed;
+				vect.x -= MoveSpeed;
 
 			if (-Deadzone > LeftThumbY)
-				m_position.y += MoveSpeed;
+				vect.y += MoveSpeed;
 
 			if (Deadzone < LeftThumbY)
-				m_position.y -= MoveSpeed;
+				vect.y -= MoveSpeed;
 
-			if (!(m_position.x == 0 && m_position.y == 0))
+			if (!(vect.x == 0 && vect.y == 0))
 			{
-				m_position.x = MoveSpeed*(m_position.x / (m_position.Length()));
-				m_position.y = MoveSpeed*(m_position.y / (m_position.Length()));
+				vect.x = MoveSpeed*(vect.x / (vect.Length()));
+				vect.y = MoveSpeed*(vect.y / (vect.Length()));
 
-				playerPosX += m_position.x;
-				playerPosY += m_position.y;
+				m_position.x += vect.x;
+				m_position.y += vect.y;
 
 			}
 		}
@@ -114,4 +113,3 @@ void EntityPlayer::Update()
 	}
 	
 }
-
