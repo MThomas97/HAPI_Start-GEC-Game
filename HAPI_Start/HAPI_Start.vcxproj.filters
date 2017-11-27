@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Graphics">
+      <UniqueIdentifier>{d16b5622-6f40-4ea5-b88a-934320af3bea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="World Model">
+      <UniqueIdentifier>{19138e75-ed3d-4c4d-8b87-8440e36122da}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -21,26 +27,26 @@
     <ClCompile Include="Rectangle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Sprite.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Visualisation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="World.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Vector2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="UI.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Visualisation.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>World Model</Filter>
     </ClCompile>
     <ClCompile Include="EntityPlayer.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>World Model</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>World Model</Filter>
+    </ClCompile>
+    <ClCompile Include="World.cpp">
+      <Filter>World Model</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -50,26 +56,26 @@
     <ClInclude Include="Rectangle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Sprite.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Visualisation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="World.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Vector2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Sprite.h">
+      <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="UI.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Visualisation.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>World Model</Filter>
     </ClInclude>
     <ClInclude Include="EntityPlayer.h">
-      <Filter>Header Files</Filter>
+      <Filter>World Model</Filter>
+    </ClInclude>
+    <ClInclude Include="World.h">
+      <Filter>World Model</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>World Model</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

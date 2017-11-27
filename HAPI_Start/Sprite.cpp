@@ -2,6 +2,7 @@
 #include <vector>
 #include <HAPI_lib.h>
 #include "Rectangle.h"
+#include <assert.h>
 
 #if defined(DEBUG) | defined(_DEBUG)
 #include <crtdbg.h>
@@ -28,6 +29,8 @@ bool Sprite::Load(const std::string &filename, int numFramesX, int numFramesY)
 
 void Sprite::Render(BYTE* screen, const Rectangle &screenRect, int posX, int posY, int curFrameX, int curFrameY)
 {
+	assert(screen != nullptr);
+
 	Rectangle clippedRect(m_frameRect);
 
 	clippedRect.Translate(posX, posY); //Translates clippedRect into screen space by adding posX and posY

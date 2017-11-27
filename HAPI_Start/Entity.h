@@ -30,17 +30,19 @@ public:
 
 	void Render(Visualisation *vis);
 
+	void RenderAnimation(Visualisation * vis);
+
 	void SetPosition(int PosX, int PosY);
+
+	void SetFrames(int currentFrameX, int currentFrameY, int numberFramesX, int numberFramesY);
 	
 protected:
-
 	Vector2 m_position;
 	int health{ 100 };
 	std::string Spritename;
-	//float MoveSpeed{ 3 };
-	//int curFrameX{ 0 };
-	//int curFrameY{ 0 };
-	//float PrevTime{ 0 };
-	//float ElapsedTime = HAPI.GetTime() - PrevTime;
+	int curFrameX{ 0 };
+	int curFrameY{ 0 };
+	int numFramesX{ 1 };
+	int numFramesY{ 1 };
 };
 

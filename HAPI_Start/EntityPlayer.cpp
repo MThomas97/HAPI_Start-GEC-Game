@@ -8,11 +8,6 @@ EntityPlayer::~EntityPlayer()
 
 void EntityPlayer::Update()
 {
-
-	Vector2 vect;
-	
-	
-
 	const HAPI_TControllerData &controllerData = HAPI.GetControllerData(0);
 
 	int LeftThumbX = controllerData.analogueButtons[HK_ANALOGUE_LEFT_THUMB_X];
@@ -83,7 +78,7 @@ void EntityPlayer::Update()
 	{
 		HorsePrevTime = HorseElapsedTime;
 		
-		vect1.x ++;
+		curFrameX ++;
 
 		if (curFrameX >= numFramesX)
 		{
