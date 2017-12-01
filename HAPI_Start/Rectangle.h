@@ -29,6 +29,8 @@ public:
 
 	bool CompletelyInside(const Rectangle &other);
 
+	bool CheckCollision(const Rectangle &source, const Rectangle &dest);
+
 	int left, right, top, bottom;
 	int width() const { return right - left; }
 	int height() const { return bottom - top; }

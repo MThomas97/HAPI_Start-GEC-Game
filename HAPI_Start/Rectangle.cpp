@@ -56,6 +56,23 @@ bool Rectangle::CompletelyOutside(const Rectangle &other)
 	return false;
 }
 
+bool Rectangle::CheckCollision(const Rectangle &source, const Rectangle &dest)
+{
+	if (source.left == dest.right)
+		return true;
+
+	if (source.right == dest.left)
+		return true;
+
+	if (source.top == dest.bottom)
+		return true;
+
+	if (source.bottom == dest.bottom)
+		return true;
+
+	return false;
+}
+
 bool Rectangle::CompletelyInside(const Rectangle &other)
 { //Checks if completely Inside the screen and returns true or false
 	if (right < other.right  && left  > other.left && top > other.top && bottom < other.bottom)

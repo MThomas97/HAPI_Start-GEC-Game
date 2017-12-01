@@ -32,13 +32,11 @@ public:
 
 	void ScrollingBackground(int FirstTexturePosX, int FirstTexturePosY, int SecondTexturePosX, int SecondTexturePosY);
 
-	Rectangle m_screenRect;
-
 private:
 	std::unordered_map<std::string, Sprite*> m_spritemap;
 
-	//Rectangle m_screenRect; //CREATE GETTER FOR THIS
+	Rectangle m_screenRect;
 
-	BYTE *m_screenPnter;
+	BYTE *m_screenPnter{ nullptr };
 };
 

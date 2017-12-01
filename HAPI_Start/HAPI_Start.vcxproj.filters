@@ -42,10 +42,19 @@
     <ClCompile Include="EntityPlayer.cpp">
       <Filter>World Model</Filter>
     </ClCompile>
-    <ClCompile Include="UI.cpp">
+    <ClCompile Include="EntityBackground.cpp">
+      <Filter>World Model</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityEnemy.cpp">
       <Filter>World Model</Filter>
     </ClCompile>
     <ClCompile Include="World.cpp">
+      <Filter>World Model</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityExplosion.cpp">
+      <Filter>World Model</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityScrollingBackground.cpp">
       <Filter>World Model</Filter>
     </ClCompile>
   </ItemGroup>
@@ -74,7 +83,16 @@
     <ClInclude Include="World.h">
       <Filter>World Model</Filter>
     </ClInclude>
-    <ClInclude Include="UI.h">
+    <ClInclude Include="EntityEnemy.h">
+      <Filter>World Model</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityBackground.h">
+      <Filter>World Model</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityExplosion.h">
+      <Filter>World Model</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityScrollingBackground.h">
       <Filter>World Model</Filter>
     </ClInclude>
   </ItemGroup>

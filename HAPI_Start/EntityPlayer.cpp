@@ -1,13 +1,15 @@
 #include "EntityPlayer.h"
-#include "WorldModel.h"
+#include "Rectangle.h"
+#include "EntityEnemy.h"
 
 EntityPlayer::~EntityPlayer()
 {
 	
 }
 
-void EntityPlayer::Update()
+void EntityPlayer::Update(float deltaTime)
 {
+	static const HAPI_TKeyboardData &keyData = HAPI.GetKeyboardData();
 	const HAPI_TControllerData &controllerData = HAPI.GetControllerData(0);
 
 	int LeftThumbX = controllerData.analogueButtons[HK_ANALOGUE_LEFT_THUMB_X];
@@ -16,95 +18,56 @@ void EntityPlayer::Update()
 
 	float ElapsedTime = HAPI.GetTime() - PrevTime;
 
-	float HorseElapsedTime = HAPI.GetTime() - PrevTime;
-	if (PrevTime + 20 < ElapsedTime)
-	{
+	Rectangle playerRect(m_position.x, m_position.y);
+	
 		PrevTime = ElapsedTime;
 		//Moves sprite with WASD keys
 		if (keyData.scanCode['W'])
-			vect.y -= MoveSpeed;
+			m_position.y -= m_speed * deltaTime;
 
 		if (keyData.scanCode['S'])
-			vect.y += MoveSpeed;
+			m_position.y += m_speed * deltaTime;
 
 		if (keyData.scanCode['A'])
-			vect.x -= MoveSpeed;
+			m_position.x -= m_speed * deltaTime;
 
 		if (keyData.scanCode['D'])
-			vect.x += MoveSpeed;
+			m_position.x += m_speed * deltaTime;
 
 		if (!(vect.x == 0 && vect.y == 0))
 		{
-			vect.x = MoveSpeed*(vect.x / (vect.Length()));
-			vect.y = MoveSpeed*(vect.y / (vect.Length()));
+			vect.x = m_speed * deltaTime * (vect.x / (vect.Length()));
+			vect.y = m_speed *  deltaTime *(vect.y / (vect.Length()));
 
 			m_position.x += vect.x;
 			m_position.y += vect.y;
 			
 		}
 
-
-
 		if (controllerData.isAttached)
 		{
 
 			if (Deadzone < LeftThumbX)
-				vect.x += MoveSpeed;
+				m_position.x += m_speed * deltaTime;
 
 			if (-Deadzone > LeftThumbX)
-				vect.x -= MoveSpeed;
+				m_position.x -= m_speed * deltaTime;
 
 			if (-Deadzone > LeftThumbY)
-				vect.y += MoveSpeed;
+				m_position.y += m_speed * deltaTime;
 
 			if (Deadzone < LeftThumbY)
-				vect.y -= MoveSpeed;
+				m_position.y -= m_speed * deltaTime;
 
 			if (!(vect.x == 0 && vect.y == 0))
 			{
-				vect.x = MoveSpeed*(vect.x / (vect.Length()));
-				vect.y = MoveSpeed*(vect.y / (vect.Length()));
+				vect.x = m_speed*(vect.x / (vect.Length()));
+				vect.y = m_speed*(vect.y / (vect.Length()));
 
 				m_position.x += vect.x;
-				m_position.y += vect.y;
+				m_position.y += vect.y ;
 
 			}
 		}
-	}
-
-	Vector2 vect1;
-
-	if (HorsePrevTime + 50 < HorseElapsedTime)
-	{
-		HorsePrevTime = HorseElapsedTime;
-		
-		curFrameX ++;
-
-		if (curFrameX >= numFramesX)
-		{
-			curFrameX = 0;
-			
-			curFrameY += 1;
-		}
-
-		if (curFrameY >= numFramesY)
-		{
-			curFrameY = 0;
-			curFrameX = 0;
-			
-		}
-
-		if (!(vect1.x == 0 && vect1.y == 0))
-		{
-			vect1.x = 1*(vect1.x / (vect1.Length()));
-			vect1.y = 1*(vect1.y / (vect1.Length()));
-
-			curFrameX += vect1.x;
-			curFrameY += vect1.y;
-
-		}
-
-
-	}
 	
 }

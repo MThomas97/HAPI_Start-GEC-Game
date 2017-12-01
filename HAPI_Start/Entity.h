@@ -1,6 +1,6 @@
 #pragma once
-#include "Visualisation.h"
 #include"Vector2.h"
+#include "Rectangle.h"
 #include <HAPI_lib.h>
 
 #if defined(DEBUG) | defined(_DEBUG)
@@ -17,6 +17,8 @@ enum class eSide
 	eNeutral
 };
 
+class Visualisation;
+
 class Entity
 {
 public:
@@ -26,23 +28,26 @@ public:
 
 	virtual eSide getSide() const = 0;
 
-	virtual void Update() = 0;
+	virtual void Update(float deltaTime) = 0;
 
-	void Render(Visualisation *vis);
+	void Render(Visualisation &vis);
 
-	void RenderAnimation(Visualisation * vis);
+	void SetPosition(Vector2 newPos) { m_position = newPos, tempPos = newPos; }
 
-	void SetPosition(int PosX, int PosY);
-
-	void SetFrames(int currentFrameX, int currentFrameY, int numberFramesX, int numberFramesY);
+	//void SetFrames(Vector2 curFrame) { m_currentFrame = curFrame; }
 	
+	//void SetFrames1(Vector2 numFrames) { m_numFrames = numFrames; }
 protected:
 	Vector2 m_position;
+	Vector2 m_nextPos;
+	Vector2 tempPos;
+	//Vector2 m_currentFrame;
+	//Vector2 m_numFrames;
 	int health{ 100 };
 	std::string Spritename;
+	bool m_alive{ true };
+	float m_speed{ 0.5f };
 	int curFrameX{ 0 };
 	int curFrameY{ 0 };
-	int numFramesX{ 1 };
-	int numFramesY{ 1 };
 };
 

@@ -1,9 +1,13 @@
 #include "World.h"
 #include "Visualisation.h"
 #include "EntityPlayer.h"
-#include "UI.h"
+#include "EntityBackground.h"
+#include "EntityScrollingBackground.h"
+#include "EntityEnemy.h"
+#include "EntityExplosion.h"
 #include "Vector2.h"
 #include <HAPI_lib.h>
+#include <algorithm>
 
 #if defined(DEBUG) | defined(_DEBUG)
 #include <crtdbg.h>
@@ -17,76 +21,93 @@ World::~World()
 {
 	delete m_vis;
 
-	for (auto &p : m_entity)
+	for (auto p : m_entity)
 		delete p;
 	
 }
 
-void World::run(int width, int height, std::string name)
+void World::run()
 {
-	
-}
-
-void World::LoadLevel()
-{
-	
-	if (!m_vis->CreateSprite("player", "Data\\player.png"))
-		return;
-	
-	EntityPlayer *newEntity = new EntityPlayer("player");
-	
-	newEntity->SetPosition(200, 200);
-
-	m_entity.push_back(newEntity);
-
-}
-
-void World::Update(int width, int height, std::string name)
-{
-
 	m_vis = new Visualisation;
 
-	if (!m_vis->initialise(width, height, name))
+	if (!m_vis->initialise(screenWidth, screenHeight, "Intergalactic War"))
 		return;
 
-	LoadLevel();
+	if (!LoadLevel())
+		return;
+
+	Update();
+}
+
+bool World::LoadLevel()
+{
+	//Loads all the sprites
+
+	if (!m_vis->CreateSprite("player", "Data\\player.png"))
+		return false;
+
+	if (!m_vis->CreateSprite("horse", "Data\\HorseSpriteSheetWhite.png", 5, 3))
+		return false;
+
+	if (!m_vis->CreateSprite("background", "Data\\FullStarBackground.png"))
+		return false;
+	
+	EntityBackground *newBackground = new EntityBackground("background");
+	m_entity.push_back(newBackground);
+
+	newBackground->SetPosition(Vector2(0, 0));
+
+	EntityScrollingBackground *newSecondBackground = new EntityScrollingBackground("background");
+	m_entity.push_back(newSecondBackground);
+
+	newSecondBackground->SetPosition(Vector2(0, -800));
+
+	EntityExplosion *horse = new EntityExplosion("horse");
+	m_entity.push_back(horse);
+
+	horse->SetPosition(Vector2(100, 100));
+
+
+	EntityPlayer *newPlayer = new EntityPlayer("player");
+	m_entity.push_back(newPlayer);
+
+	newPlayer->SetPosition(Vector2(200, 200));
+
+	return true;
+
+}
+
+void World::Update()
+{
 
 	//Sets the FPS counter on screen
 	HAPI.SetShowFPS(true, 0, 0, HAPI_TColour::GREEN);
-	const HAPI_TKeyboardData &keyData = HAPI.GetKeyboardData();
 
-	if (!m_vis->CreateSprite("starBackground", "Data\\FullStarBackground.png"))
-		return;
+	double currentTime = HAPI.GetTime();
 
-	//if (!m_vis->CreateSprite("horse", "Data\\HorseSpriteSheetWhite.png", playerEntity.numFramesX, playerEntity.numFramesY))
-//		return;
+	double t = 0.0;
+
+	double dt = 1 / 60.0;
 
 	while (HAPI.Update()) //Game loop
 	{	//calls functions from classes
 
-		m_vis->ClearToColour(HAPI.GetScreenPointer(), width, height, HAPI_TColour(0, 0, 0));
-		
-		m_vis->RenderNoAlphaSprite("starBackground", ScrollPosX, ScrollPosY);
-		m_vis->RenderNoAlphaSprite("starBackground", SecondScrollPosX, SecondScrollPosY);
-//		m_vis->RenderSprite("horse", 100, 100, playerEntity.curFrameX, playerEntity.curFrameY);
-		//m_vis->RenderSprite("player", playerEntity.playerPosX, playerEntity.playerPosY);
+		double newTime = HAPI.GetTime();
+		double frameTime = newTime - currentTime;
+		currentTime = newTime;
 
+		m_vis->ClearToColour(HAPI.GetScreenPointer(), screenWidth, screenHeight, HAPI_TColour(0, 0, 0));
+
+		while (frameTime > 0.0)
+		{
+			float deltaTime = std::min(frameTime, dt);
+			for (auto p : m_entity)
+				p->Update(deltaTime);
+
+			frameTime -= deltaTime;
+			t += deltaTime;
+		}
 		for (auto p : m_entity)
-		{
-			p->Render(m_vis);
-			p->Update();
-		}
-
-		int elapsedTime = HAPI.GetTime() - prevTime;
-		ScrollPosY += 1;
-		SecondScrollPosY += 1;
-
-		//visual.ScrollingBackground(ScrollPosX, ScrollPosY, SecondScrollPosX, SecondScrollPosY); /////////GET WORKING
-
-		if (ScrollPosY > m_vis->m_screenRect.bottom)
-		{
-			ScrollPosY = 0;
-			SecondScrollPosY = -800;
-		}
+			p->Render(*m_vis);
 	}
 }

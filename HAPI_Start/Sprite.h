@@ -2,6 +2,7 @@
 #include <HAPI_lib.h>
 #include <algorithm>
 #include "Rectangle.h"
+#include "Vector2.h"
 
 #if defined(DEBUG) | defined(_DEBUG)
 #include <crtdbg.h>
@@ -29,8 +30,7 @@ private:
 	Rectangle m_textureRect;
 	Rectangle m_frameRect;
 	bool HasAlpha = true;
-	int width; 
-	int height;
+	int width, height;
 
 	
 };
