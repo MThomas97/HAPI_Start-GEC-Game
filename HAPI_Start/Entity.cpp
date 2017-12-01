@@ -1,6 +1,6 @@
 #include "Entity.h"
 #include "Visualisation.h"
-
+#include "Rectangle.h"
 Entity::~Entity()
 {
 }

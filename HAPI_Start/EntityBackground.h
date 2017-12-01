@@ -10,5 +10,7 @@ public:
 
 	eSide getSide() const override final { return eSide::eNeutral; }
 
+	void CheckCollision() override final;
+
 };
 

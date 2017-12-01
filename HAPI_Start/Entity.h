@@ -2,7 +2,6 @@
 #include"Vector2.h"
 #include "Rectangle.h"
 #include <HAPI_lib.h>
-
 #if defined(DEBUG) | defined(_DEBUG)
 #include <crtdbg.h>
 #define new new(_NORMAL_BLOCK,__FILE__, __LINE__)
@@ -19,10 +18,12 @@ enum class eSide
 
 class Visualisation;
 
+class Rectangle;
+
 class Entity
 {
 public:
-	Entity(std::string spriteID) : Spritename(spriteID) {};
+	Entity(std::string spriteID) : Spritename(spriteID) {m_entityRect = Rectangle(m_position.x, m_position.y); };
 
 	virtual ~Entity() = 0;
 
@@ -34,13 +35,17 @@ public:
 
 	void SetPosition(Vector2 newPos) { m_position = newPos, tempPos = newPos; }
 
+	virtual void CheckCollision() = 0;
+
 	//void SetFrames(Vector2 curFrame) { m_currentFrame = curFrame; }
 	
 	//void SetFrames1(Vector2 numFrames) { m_numFrames = numFrames; }
+	
 protected:
 	Vector2 m_position;
 	Vector2 m_nextPos;
 	Vector2 tempPos;
+	Rectangle m_entityRect;
 	//Vector2 m_currentFrame;
 	//Vector2 m_numFrames;
 	int health{ 100 };

@@ -14,12 +14,12 @@ public:
 
 	void run();
 
+private:
+	
 	void Update();
 
 	bool LoadLevel();
 
-private:
-	
 	std::vector<Entity*> m_entity;
 
 	Visualisation *m_vis{ nullptr };

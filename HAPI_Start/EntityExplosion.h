@@ -11,6 +11,8 @@ public:
 
 	eSide getSide() const override final { return eSide::ePlayer; }
 
+	void CheckCollision() override final;
+
 private:
 	int PrevTime = 0;
 	int numFramesX{ 5 };

@@ -9,5 +9,7 @@ public:
 	void Update(float deltaTime) override final;
 
 	eSide getSide() const override final { return eSide::eNeutral; }
+
+	void CheckCollision() override final;
 };
 

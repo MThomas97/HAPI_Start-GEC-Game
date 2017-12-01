@@ -7,6 +7,24 @@ EntityPlayer::~EntityPlayer()
 	
 }
 
+void EntityPlayer::CheckCollision()
+{
+	Rectangle CollisionRect(m_playerRect);
+
+
+	if (CollisionRect.CheckCollision(tempRect) == true)
+	{
+		std::cout << "Collision detected!" << std::endl;
+		//std::min(0, std::max())
+	}
+	//CollisionRect.CheckCollision()
+}
+
+void EntityPlayer::GetenemyRect(const Rectangle & other)
+{
+	tempRect = other;
+}
+
 void EntityPlayer::Update(float deltaTime)
 {
 	static const HAPI_TKeyboardData &keyData = HAPI.GetKeyboardData();
@@ -17,6 +35,8 @@ void EntityPlayer::Update(float deltaTime)
 	int Deadzone = HK_GAMEPAD_LEFT_THUMB_DEADZONE;
 
 	float ElapsedTime = HAPI.GetTime() - PrevTime;
+
+	m_playerRect = Rectangle(m_position.x, m_position.y);
 
 	Rectangle playerRect(m_position.x, m_position.y);
 	

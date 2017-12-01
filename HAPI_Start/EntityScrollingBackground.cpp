@@ -5,6 +5,11 @@ EntityScrollingBackground::~EntityScrollingBackground()
 {
 }
 
+void EntityScrollingBackground::CheckCollision()
+{
+
+}
+
 void EntityScrollingBackground::Update(float deltaTime)
 {
 	m_position.y += 1 * deltaTime;

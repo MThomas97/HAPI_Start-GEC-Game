@@ -67,11 +67,17 @@ bool World::LoadLevel()
 
 	horse->SetPosition(Vector2(100, 100));
 
+	EntityEnemy *enemy = new EntityEnemy("player");
+	m_entity.push_back(enemy);
+
+	enemy->SetPosition(Vector2(400, 400));
 
 	EntityPlayer *newPlayer = new EntityPlayer("player");
 	m_entity.push_back(newPlayer);
 
 	newPlayer->SetPosition(Vector2(200, 200));
+
+	newPlayer->GetenemyRect(enemy->m_enemyRect);
 
 	return true;
 
@@ -89,6 +95,8 @@ void World::Update()
 
 	double dt = 1 / 60.0;
 
+	
+
 	while (HAPI.Update()) //Game loop
 	{	//calls functions from classes
 
@@ -102,8 +110,10 @@ void World::Update()
 		{
 			float deltaTime = std::min(frameTime, dt);
 			for (auto p : m_entity)
+			{
 				p->Update(deltaTime);
-
+				p->CheckCollision();
+			}
 			frameTime -= deltaTime;
 			t += deltaTime;
 		}

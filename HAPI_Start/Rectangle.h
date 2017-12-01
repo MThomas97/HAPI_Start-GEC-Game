@@ -29,7 +29,7 @@ public:
 
 	bool CompletelyInside(const Rectangle &other);
 
-	bool CheckCollision(const Rectangle &source, const Rectangle &dest);
+	bool CheckCollision(const Rectangle &other);
 
 	int left, right, top, bottom;
 	int width() const { return right - left; }

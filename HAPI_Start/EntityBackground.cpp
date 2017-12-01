@@ -4,6 +4,11 @@ EntityBackground::~EntityBackground()
 {
 }
 
+void EntityBackground::CheckCollision()
+{
+
+}
+
 void EntityBackground::Update(float deltaTime)
 {
 	m_position.y += 1 * deltaTime;
