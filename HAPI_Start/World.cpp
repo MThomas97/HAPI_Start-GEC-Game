@@ -67,17 +67,18 @@ bool World::LoadLevel()
 
 	horse->SetPosition(Vector2(100, 100));
 
-	EntityEnemy *enemy = new EntityEnemy("player");
-	m_entity.push_back(enemy);
-
-	enemy->SetPosition(Vector2(400, 400));
-
 	EntityPlayer *newPlayer = new EntityPlayer("player");
 	m_entity.push_back(newPlayer);
 
 	newPlayer->SetPosition(Vector2(200, 200));
 
-	newPlayer->GetenemyRect(enemy->m_enemyRect);
+	EntityEnemy *enemy = new EntityEnemy("player");
+	m_entity.push_back(enemy);
+
+	Rectangle checkRect(400, 400);
+
+	enemy->SetPosition(Vector2(400, 400));
+	newPlayer->GetenemyRect(checkRect);
 
 	return true;
 

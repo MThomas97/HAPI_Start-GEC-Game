@@ -58,16 +58,16 @@ bool Rectangle::CompletelyOutside(const Rectangle &other)
 
 bool Rectangle::CheckCollision(const Rectangle &other)
 {
-	if (left <= other.right)
+	if (left == other.right)
 		return true;
 
-	if (right >= other.left)
+	if (right == other.left)
 		return true;
 
-	if (top <= other.bottom)
+	if (top == other.bottom)
 		return true;
 
-	if (bottom >= other.bottom)
+	if (bottom == other.bottom)
 		return true;
 
 	return false;

@@ -15,8 +15,12 @@ public:
 
 	void CheckCollision() override final;
 
+	Rectangle m_temp;
 	Rectangle m_enemyRect;
+	
 private:
+	//Rectangle m_enemyRect;
 
+	
 };
 

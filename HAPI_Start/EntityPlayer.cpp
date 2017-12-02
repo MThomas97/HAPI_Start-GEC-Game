@@ -9,15 +9,18 @@ EntityPlayer::~EntityPlayer()
 
 void EntityPlayer::CheckCollision()
 {
-	Rectangle CollisionRect(m_playerRect);
+	m_playerRect = Rectangle(m_position.x, m_position.y);
 
+	Rectangle CollisionRect(m_playerRect);
+	
 
 	if (CollisionRect.CheckCollision(tempRect) == true)
 	{
 		std::cout << "Collision detected!" << std::endl;
-		//std::min(0, std::max())
+		m_position.x = std::max(0, std::min((int)m_position.x, 100 - m_playerRect.width() - 1));
+		m_position.y = std::max(0, std::min((int)m_position.y, 100 - m_playerRect.height() - 1));
 	}
-	//CollisionRect.CheckCollision()
+	
 }
 
 void EntityPlayer::GetenemyRect(const Rectangle & other)
@@ -35,10 +38,6 @@ void EntityPlayer::Update(float deltaTime)
 	int Deadzone = HK_GAMEPAD_LEFT_THUMB_DEADZONE;
 
 	float ElapsedTime = HAPI.GetTime() - PrevTime;
-
-	m_playerRect = Rectangle(m_position.x, m_position.y);
-
-	Rectangle playerRect(m_position.x, m_position.y);
 	
 		PrevTime = ElapsedTime;
 		//Moves sprite with WASD keys
@@ -89,5 +88,5 @@ void EntityPlayer::Update(float deltaTime)
 
 			}
 		}
-	
+		
 }

@@ -23,7 +23,7 @@ class Rectangle;
 class Entity
 {
 public:
-	Entity(std::string spriteID) : Spritename(spriteID) {m_entityRect = Rectangle(m_position.x, m_position.y); };
+	Entity(std::string spriteID) : Spritename(spriteID) {};
 
 	virtual ~Entity() = 0;
 
