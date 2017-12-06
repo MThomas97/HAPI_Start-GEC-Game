@@ -26,5 +26,8 @@ private:
 	Rectangle m_playerRect;
 
 	int PrevTime = 0;
+
+	int numFramesX{ 4 };
+	int numFramesY{ 1 };
 };
 

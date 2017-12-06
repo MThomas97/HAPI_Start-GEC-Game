@@ -43,7 +43,7 @@ bool World::LoadLevel()
 {
 	//Loads all the sprites
 
-	if (!m_vis->CreateSprite("player", "Data\\player.png"))
+	if (!m_vis->CreateSprite("player", "Data\\idleSpriteV2.png", 4, 1))
 		return false;
 
 	if (!m_vis->CreateSprite("horse", "Data\\HorseSpriteSheetWhite.png", 5, 3))

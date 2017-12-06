@@ -16,7 +16,7 @@ void EntityPlayer::CheckCollision()
 
 	if (CollisionRect.CheckCollision(tempRect) == true)
 	{
-		std::cout << "Collision detected!" << std::endl;
+		//std::cout << "Collision detected!" << std::endl;
 		m_position.x = std::max(0, std::min((int)m_position.x, 100 - m_playerRect.width() - 1));
 		m_position.y = std::max(0, std::min((int)m_position.y, 100 - m_playerRect.height() - 1));
 	}
@@ -85,6 +85,29 @@ void EntityPlayer::Update(float deltaTime)
 
 				m_position.x += vect.x;
 				m_position.y += vect.y ;
+
+			}
+		}
+
+		float HorseElapsedTime = HAPI.GetTime() - PrevTime;
+
+		if (PrevTime + 150 < HorseElapsedTime)
+		{
+			PrevTime = HorseElapsedTime;
+
+			curFrameX++;
+
+			if (curFrameX >= numFramesX)
+			{
+				curFrameX = 0;
+
+				curFrameY += 1;
+			}
+
+			if (curFrameY >= numFramesY)
+			{
+				curFrameY = 0;
+				curFrameX = 0;
 
 			}
 		}
