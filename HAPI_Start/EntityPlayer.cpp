@@ -26,7 +26,7 @@ bool EntityPlayer::CheckCollision(Vector2 nextPos, Rectangle sourceRect, Rectang
 	
 	if (CollisionRect.CheckCollision(m_enemyRect) == true)
 	{
-		std::cout << "Collision detected!" << std::endl;
+		//std::cout << "Collision detected!" << std::endl;
 		nextPos = m_position;
 		/*m_position.x = std::max(1, std::min((int)m_position.x, 100 - m_playerRect.width() - 1));
 		m_position.y = std::max(1, std::min((int)m_position.y, 100 - m_playerRect.height() - 1));*/
