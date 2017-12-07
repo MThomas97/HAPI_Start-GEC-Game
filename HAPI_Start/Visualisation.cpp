@@ -72,6 +72,11 @@ void Visualisation::ScrollingBackground(int FirstTexturePosX, int FirstTexturePo
 	}
 }
 
+Rectangle Visualisation::GetRect(const std::string &name)
+{
+	return m_spritemap.at(name)->getRect();
+}
+
 Visualisation::~Visualisation()
 {
 	for (auto &p : m_spritemap)

@@ -29,13 +29,13 @@ public:
 
 	virtual eSide getSide() const = 0;
 
-	virtual void Update(float deltaTime) = 0;
+	virtual void Update(Visualisation &vis, float deltaTime) = 0;
 
 	void Render(Visualisation &vis);
 
 	void SetPosition(Vector2 newPos) { m_position = newPos, tempPos = newPos; }
 
-	virtual bool CheckCollision(Vector2 nextPos) = 0;
+	virtual bool CheckCollision(Vector2 nextPos, Rectangle sourceRect, Rectangle destinationRect) = 0;
 
 	//void SetFrames(Vector2 curFrame) { m_currentFrame = curFrame; }
 	

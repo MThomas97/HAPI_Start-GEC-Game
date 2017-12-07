@@ -1,28 +1,42 @@
 #include "EntityPlayer.h"
 #include "Rectangle.h"
 #include "EntityEnemy.h"
+#include "Visualisation.h"
 
 EntityPlayer::~EntityPlayer()
 {
 	
 }
 
-bool EntityPlayer::CheckCollision(Vector2 nextPos)
+bool EntityPlayer::CheckCollision(Vector2 nextPos, Rectangle sourceRect, Rectangle destinationRect)
 {
 
-	m_playerRect = Rectangle(nextPos.x, nextPos.y);
+	m_playerRect = Rectangle(sourceRect.width(), sourceRect.height());
+
+	m_enemyRect = Rectangle(destinationRect.width(), destinationRect.height());
 
 	Rectangle CollisionRect(m_playerRect);
-	
-	
 
-	if (CollisionRect.CheckCollision(tempRect) == true)
+	Rectangle EnemyCollisionRect(m_enemyRect);
+
+	EnemyCollisionRect.Translate(400, 400);
+	
+	CollisionRect.Translate(m_position.x, m_position.y);
+
+	
+	if (CollisionRect.CheckCollision(m_enemyRect) == true)
 	{
-		//std::cout << "Collision detected!" << std::endl;
-		m_position.x = std::max(1, std::min((int)m_position.x, 100 - m_playerRect.width() - 1));
-		m_position.y = std::max(1, std::min((int)m_position.y, 100 - m_playerRect.height() - 1));
+		std::cout << "Collision detected!" << std::endl;
+		nextPos = m_position;
+		/*m_position.x = std::max(1, std::min((int)m_position.x, 100 - m_playerRect.width() - 1));
+		m_position.y = std::max(1, std::min((int)m_position.y, 100 - m_playerRect.height() - 1));*/
+		//CollisionRect.ClipTo(m_enemyRect);
+		return true;
 	}
-	return true;
+	CollisionRect.Translate(-m_position.x, -m_position.y);
+	EnemyCollisionRect.Translate(-400, -400);
+	m_position = nextPos;
+	return false;
 }
 
 void EntityPlayer::GetenemyRect(const Rectangle & other)
@@ -30,9 +44,9 @@ void EntityPlayer::GetenemyRect(const Rectangle & other)
 	tempRect = other;
 }
 
-void EntityPlayer::Update(float deltaTime)
+void EntityPlayer::Update(Visualisation &vis, float deltaTime)
 {
-	
+
 	Vector2 temp;
 	temp = m_position;
 	static const HAPI_TKeyboardData &keyData = HAPI.GetKeyboardData();
@@ -94,7 +108,7 @@ void EntityPlayer::Update(float deltaTime)
 			}
 		}
 
-		CheckCollision(temp);
+		CheckCollision(temp, vis.GetRect("player"), vis.GetRect("enemy"));
 
 		float HorseElapsedTime = HAPI.GetTime() - PrevTime;
 

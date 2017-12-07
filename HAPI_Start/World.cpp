@@ -46,33 +46,36 @@ bool World::LoadLevel()
 	if (!m_vis->CreateSprite("player", "Data\\idleSpriteV2.png", 4, 1))
 		return false;
 
-	if (!m_vis->CreateSprite("horse", "Data\\HorseSpriteSheetWhite.png", 5, 3))
+	if (!m_vis->CreateSprite("enemy", "Data\\player.png"))
 		return false;
+
+	/*if (!m_vis->CreateSprite("horse", "Data\\HorseSpriteSheetWhite.png", 5, 3))
+		return false;*/
 
 	if (!m_vis->CreateSprite("background", "Data\\FullStarBackground.png"))
 		return false;
 	
-	EntityBackground *newBackground = new EntityBackground("background");
+	/*EntityBackground *newBackground = new EntityBackground("background");
 	m_entity.push_back(newBackground);
 
 	newBackground->SetPosition(Vector2(0, 0));
 
 	EntityScrollingBackground *newSecondBackground = new EntityScrollingBackground("background");
-	m_entity.push_back(newSecondBackground);
+	m_entity.push_back(newSecondBackground);*/
 
-	newSecondBackground->SetPosition(Vector2(0, -800));
+	//newSecondBackground->SetPosition(Vector2(0, -800));
 
-	EntityExplosion *horse = new EntityExplosion("horse");
+	/*EntityExplosion *horse = new EntityExplosion("horse");
 	m_entity.push_back(horse);
 
-	horse->SetPosition(Vector2(100, 100));
+	horse->SetPosition(Vector2(100, 100));*/
 
 	EntityPlayer *newPlayer = new EntityPlayer("player");
 	m_entity.push_back(newPlayer);
 
 	newPlayer->SetPosition(Vector2(200, 200));
 
-	EntityEnemy *enemy = new EntityEnemy("player");
+	EntityEnemy *enemy = new EntityEnemy("enemy");
 	m_entity.push_back(enemy);
 
 	Rectangle checkRect(400, 400);
@@ -112,7 +115,7 @@ void World::Update()
 			float deltaTime = std::min(frameTime, dt);
 			for (auto p : m_entity)
 			{
-				p->Update(deltaTime);
+				p->Update(*m_vis, deltaTime);
 				//p->CheckCollision();
 			}
 			frameTime -= deltaTime;

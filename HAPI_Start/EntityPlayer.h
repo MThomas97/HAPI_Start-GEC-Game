@@ -12,11 +12,11 @@ public:
 
 	~EntityPlayer();
 
-	void Update(float deltaTime) override final;
+	void Update(Visualisation &vis, float deltaTime) override final;
 
 	eSide getSide() const override final {return eSide::ePlayer; }
 
-	bool CheckCollision(Vector2 nextPos) override final;
+	bool CheckCollision(Vector2 nextPos, Rectangle sourceRect, Rectangle destinationRect) override final;
 
 	void GetenemyRect(const Rectangle &other);
 
@@ -26,6 +26,8 @@ private:
 	Rectangle tempRect;
 
 	Rectangle m_playerRect;
+
+	Rectangle m_enemyRect;
 
 	int PrevTime = 0;
 

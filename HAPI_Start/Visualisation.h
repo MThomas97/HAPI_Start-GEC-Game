@@ -32,6 +32,8 @@ public:
 
 	void ScrollingBackground(int FirstTexturePosX, int FirstTexturePosY, int SecondTexturePosX, int SecondTexturePosY);
 
+	Rectangle GetRect(const std::string &name);
+
 private:
 	std::unordered_map<std::string, Sprite*> m_spritemap;
 

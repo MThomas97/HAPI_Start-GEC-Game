@@ -25,6 +25,8 @@ public:
 
 	void RenderNoAlpha(BYTE* screen, const Rectangle &screenRect, int posX, int posY);
 
+	Rectangle getRect() { return m_frameRect; }
+
 private:
 	BYTE *texturePnter{ nullptr };
 	Rectangle m_textureRect;

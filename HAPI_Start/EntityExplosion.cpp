@@ -5,12 +5,12 @@ EntityExplosion::~EntityExplosion()
 {
 }
 
-bool EntityExplosion::CheckCollision(Vector2 nextpos)
+bool EntityExplosion::CheckCollision(Vector2 nextpos, Rectangle sourceRect, Rectangle destinationRect)
 {
 	return true;
 }
 
-void EntityExplosion::Update(float deltaTime)
+void EntityExplosion::Update(Visualisation &vis, float deltaTime)
 {
 	float HorseElapsedTime = HAPI.GetTime() - PrevTime;
 
