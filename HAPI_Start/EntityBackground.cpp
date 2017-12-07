@@ -4,12 +4,12 @@ EntityBackground::~EntityBackground()
 {
 }
 
-bool EntityBackground::CheckCollision(Vector2 nextPos, Rectangle sourceRect, Rectangle destinationRect)
+bool EntityBackground::CheckCollision(Vector2 nextPos)
 {
 	return true;
 }
 
-void EntityBackground::Update(Visualisation &vis, float deltaTime)
+void EntityBackground::Update(float deltaTime)
 {
 	m_position.y += 1 * deltaTime;
 

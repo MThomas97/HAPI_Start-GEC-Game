@@ -12,13 +12,15 @@ public:
 
 	~EntityPlayer();
 
-	void Update(Visualisation &vis, float deltaTime) override final;
+	void Update(float deltaTime) override final;
 
 	eSide getSide() const override final {return eSide::ePlayer; }
 
-	bool CheckCollision(Vector2 nextPos, Rectangle sourceRect, Rectangle destinationRect) override final;
+	bool CheckCollision(Vector2 nextPos) override final;
 
 	void GetenemyRect(const Rectangle &other);
+
+	void LoadRectangle(Visualisation &vis);
 
 private:
 	Vector2 vect;

@@ -58,7 +58,7 @@
     <ProjectGuid>{F3EB5DF9-8ECE-4E23-98C7-B8956A9D8315}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>HAPI_Start</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

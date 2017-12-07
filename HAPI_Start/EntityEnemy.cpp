@@ -6,7 +6,7 @@ EntityEnemy::~EntityEnemy()
 {
 }
 
-bool EntityEnemy::CheckCollision(Vector2 nextPos, Rectangle sourceRect, Rectangle destinationRect)
+bool EntityEnemy::CheckCollision(Vector2 nextPos)
 {
 	if (getSide() == eSide::ePlayer)
 	{
@@ -17,7 +17,8 @@ bool EntityEnemy::CheckCollision(Vector2 nextPos, Rectangle sourceRect, Rectangl
 	return true;
 }
 
-void EntityEnemy::Update(Visualisation &vis, float deltaTime)
+void EntityEnemy::Update(float deltaTime)
 {
 	//AI stuff
+
 }

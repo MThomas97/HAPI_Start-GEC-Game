@@ -9,11 +9,11 @@ public:
 	EntityEnemy(std::string spriteID) : Entity(spriteID) {};
 	~EntityEnemy();
 
-	void Update(Visualisation &vis, float deltaTime) override final;
+	void Update(float deltaTime) override final;
 
 	eSide getSide() const override final { return eSide::eEnemy; }
 
-	bool CheckCollision(Vector2 nextPos, Rectangle sourceRect, Rectangle destinationRect) override final;
+	bool CheckCollision(Vector2 nextPos) override final;
 
 	Rectangle m_temp;
 	Rectangle m_enemyRect;

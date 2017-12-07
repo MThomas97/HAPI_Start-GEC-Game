@@ -8,12 +8,17 @@ EntityPlayer::~EntityPlayer()
 	
 }
 
-bool EntityPlayer::CheckCollision(Vector2 nextPos, Rectangle sourceRect, Rectangle destinationRect)
+void EntityPlayer::LoadRectangle(Visualisation &vis)
 {
+	m_playerRect = Rectangle(vis.GetRect("player"));
+	m_enemyRect = Rectangle(vis.GetRect("enemy"));
+}
 
-	m_playerRect = Rectangle(sourceRect.width(), sourceRect.height());
+bool EntityPlayer::CheckCollision(Vector2 nextPos)
+{
+	//m_playerRect = Rectangle(sourceRect.width(), sourceRect.height());
 
-	m_enemyRect = Rectangle(destinationRect.width(), destinationRect.height());
+	//m_enemyRect = Rectangle(destinationRect.width(), destinationRect.height());
 
 	Rectangle CollisionRect(m_playerRect);
 
@@ -23,19 +28,25 @@ bool EntityPlayer::CheckCollision(Vector2 nextPos, Rectangle sourceRect, Rectang
 	
 	CollisionRect.Translate(m_position.x, m_position.y);
 
-	
-	if (CollisionRect.CheckCollision(m_enemyRect) == true)
+	if (CollisionRect.CheckCollision(EnemyCollisionRect) == true)
 	{
 		//std::cout << "Collision detected!" << std::endl;
-		nextPos = m_position;
-		/*m_position.x = std::max(1, std::min((int)m_position.x, 100 - m_playerRect.width() - 1));
-		m_position.y = std::max(1, std::min((int)m_position.y, 100 - m_playerRect.height() - 1));*/
+		nextPos.x = m_position.x;
+		nextPos.y = m_position.y;
+
+		/*nextPos.x = std::max(0, std::min((int)m_position.x, 1000 - m_playerRect.width() - 1));
+		nextPos.y = std::max(0, std::min((int)m_position.y, 100 - m_playerRect.height() - 1));*/
 		//CollisionRect.ClipTo(m_enemyRect);
-		return true;
+		//return true;
 	}
+
+	
+		
+	//m_position = nextPos;
 	CollisionRect.Translate(-m_position.x, -m_position.y);
 	EnemyCollisionRect.Translate(-400, -400);
-	m_position = nextPos;
+	m_position.x = nextPos.x;
+	m_position.y = nextPos.y;
 	return false;
 }
 
@@ -44,7 +55,7 @@ void EntityPlayer::GetenemyRect(const Rectangle & other)
 	tempRect = other;
 }
 
-void EntityPlayer::Update(Visualisation &vis, float deltaTime)
+void EntityPlayer::Update(float deltaTime)
 {
 
 	Vector2 temp;
@@ -108,8 +119,6 @@ void EntityPlayer::Update(Visualisation &vis, float deltaTime)
 			}
 		}
 
-		CheckCollision(temp, vis.GetRect("player"), vis.GetRect("enemy"));
-
 		float HorseElapsedTime = HAPI.GetTime() - PrevTime;
 
 		if (PrevTime + 150 < HorseElapsedTime)
@@ -132,5 +141,7 @@ void EntityPlayer::Update(Visualisation &vis, float deltaTime)
 
 			}
 		}
+
+		CheckCollision(temp);
 		
 }

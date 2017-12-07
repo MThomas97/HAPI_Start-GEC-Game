@@ -74,14 +74,12 @@ bool World::LoadLevel()
 	m_entity.push_back(newPlayer);
 
 	newPlayer->SetPosition(Vector2(200, 200));
+	newPlayer->LoadRectangle(*m_vis);
 
 	EntityEnemy *enemy = new EntityEnemy("enemy");
 	m_entity.push_back(enemy);
 
-	Rectangle checkRect(400, 400);
-
 	enemy->SetPosition(Vector2(400, 400));
-	newPlayer->GetenemyRect(checkRect);
 
 	return true;
 
@@ -114,10 +112,8 @@ void World::Update()
 		{
 			float deltaTime = std::min(frameTime, dt);
 			for (auto p : m_entity)
-			{
-				p->Update(*m_vis, deltaTime);
-				//p->CheckCollision();
-			}
+				p->Update(deltaTime);
+				
 			frameTime -= deltaTime;
 			t += deltaTime;
 		}
