@@ -7,12 +7,13 @@ EntityPlayer::~EntityPlayer()
 	
 }
 
-void EntityPlayer::CheckCollision()
+bool EntityPlayer::CheckCollision(Vector2 nextPos)
 {
 
-	//m_playerRect = Rectangle(m_position.x, m_position.y);
+	m_playerRect = Rectangle(nextPos.x, nextPos.y);
 
 	Rectangle CollisionRect(m_playerRect);
+	
 	
 
 	if (CollisionRect.CheckCollision(tempRect) == true)
@@ -21,7 +22,7 @@ void EntityPlayer::CheckCollision()
 		m_position.x = std::max(1, std::min((int)m_position.x, 100 - m_playerRect.width() - 1));
 		m_position.y = std::max(1, std::min((int)m_position.y, 100 - m_playerRect.height() - 1));
 	}
-	
+	return true;
 }
 
 void EntityPlayer::GetenemyRect(const Rectangle & other)
@@ -32,7 +33,8 @@ void EntityPlayer::GetenemyRect(const Rectangle & other)
 void EntityPlayer::Update(float deltaTime)
 {
 	
-
+	Vector2 temp;
+	temp = m_position;
 	static const HAPI_TKeyboardData &keyData = HAPI.GetKeyboardData();
 	const HAPI_TControllerData &controllerData = HAPI.GetControllerData(0);
 
@@ -45,16 +47,16 @@ void EntityPlayer::Update(float deltaTime)
 		PrevTime = ElapsedTime;
 		//Moves sprite with WASD keys
 		if (keyData.scanCode['W'])
-			m_position.y -= m_speed * deltaTime;
+			temp.y -= m_speed * deltaTime;
 
 		if (keyData.scanCode['S'])
-			m_position.y += m_speed * deltaTime;
+			temp.y += m_speed * deltaTime;
 
 		if (keyData.scanCode['A'])
-			m_position.x -= m_speed * deltaTime;
+			temp.x -= m_speed * deltaTime;
 
 		if (keyData.scanCode['D'])
-			m_position.x += m_speed * deltaTime;
+			temp.x += m_speed * deltaTime;
 
 		if (!(vect.x == 0 && vect.y == 0))
 		{
@@ -91,6 +93,8 @@ void EntityPlayer::Update(float deltaTime)
 
 			}
 		}
+
+		CheckCollision(temp);
 
 		float HorseElapsedTime = HAPI.GetTime() - PrevTime;
 

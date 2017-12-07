@@ -1,4 +1,4 @@
-#include "Sprite.h"
+ #include "Sprite.h"
 #include <vector>
 #include <HAPI_lib.h>
 #include "Rectangle.h"

@@ -5,9 +5,9 @@ EntityScrollingBackground::~EntityScrollingBackground()
 {
 }
 
-void EntityScrollingBackground::CheckCollision()
+bool EntityScrollingBackground::CheckCollision(Vector2 nextPos)
 {
-
+	return true;
 }
 
 void EntityScrollingBackground::Update(float deltaTime)

@@ -113,7 +113,7 @@ void World::Update()
 			for (auto p : m_entity)
 			{
 				p->Update(deltaTime);
-				p->CheckCollision();
+				//p->CheckCollision();
 			}
 			frameTime -= deltaTime;
 			t += deltaTime;

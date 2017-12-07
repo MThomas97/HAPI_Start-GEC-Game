@@ -13,7 +13,7 @@ public:
 
 	eSide getSide() const override final { return eSide::eEnemy; }
 
-	void CheckCollision() override final;
+	bool CheckCollision(Vector2 nextPos) override final;
 
 	Rectangle m_temp;
 	Rectangle m_enemyRect;

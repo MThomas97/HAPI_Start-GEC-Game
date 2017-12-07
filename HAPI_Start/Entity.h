@@ -35,7 +35,7 @@ public:
 
 	void SetPosition(Vector2 newPos) { m_position = newPos, tempPos = newPos; }
 
-	virtual void CheckCollision() = 0;
+	virtual bool CheckCollision(Vector2 nextPos) = 0;
 
 	//void SetFrames(Vector2 curFrame) { m_currentFrame = curFrame; }
 	

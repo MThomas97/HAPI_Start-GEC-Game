@@ -11,7 +11,7 @@ public:
 
 	eSide getSide() const override final { return eSide::ePlayer; }
 
-	void CheckCollision() override final;
+	bool CheckCollision(Vector2 nextPos) override final;
 
 private:
 	int PrevTime = 0;
