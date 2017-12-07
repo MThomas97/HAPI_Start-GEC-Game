@@ -9,7 +9,8 @@ EntityPlayer::~EntityPlayer()
 
 void EntityPlayer::CheckCollision()
 {
-	m_playerRect = Rectangle(m_position.x, m_position.y);
+
+	//m_playerRect = Rectangle(m_position.x, m_position.y);
 
 	Rectangle CollisionRect(m_playerRect);
 	
@@ -17,8 +18,8 @@ void EntityPlayer::CheckCollision()
 	if (CollisionRect.CheckCollision(tempRect) == true)
 	{
 		//std::cout << "Collision detected!" << std::endl;
-		m_position.x = std::max(0, std::min((int)m_position.x, 100 - m_playerRect.width() - 1));
-		m_position.y = std::max(0, std::min((int)m_position.y, 100 - m_playerRect.height() - 1));
+		m_position.x = std::max(1, std::min((int)m_position.x, 100 - m_playerRect.width() - 1));
+		m_position.y = std::max(1, std::min((int)m_position.y, 100 - m_playerRect.height() - 1));
 	}
 	
 }
@@ -30,6 +31,8 @@ void EntityPlayer::GetenemyRect(const Rectangle & other)
 
 void EntityPlayer::Update(float deltaTime)
 {
+	
+
 	static const HAPI_TKeyboardData &keyData = HAPI.GetKeyboardData();
 	const HAPI_TControllerData &controllerData = HAPI.GetControllerData(0);
 
