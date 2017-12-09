@@ -21,7 +21,8 @@ bool Sprite::Load(const std::string &filename, int numFramesX, int numFramesY)
 		HAPI.UserMessage("File Not Found!", "Error");
 		return false;
 	}
-
+	tempNumFramesX = numFramesX;
+	tempNumFramesY = numFramesY;
 	m_textureRect = Rectangle(width, height); //gets the width and height of the texture
 	m_frameRect = Rectangle(m_textureRect.width() / numFramesX, m_textureRect.height() / numFramesY);
 	return true;

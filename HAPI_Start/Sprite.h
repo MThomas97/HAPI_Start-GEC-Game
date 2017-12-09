@@ -27,13 +27,17 @@ public:
 
 	Rectangle getRect() { return m_frameRect; }
 
+	int getNumFramesX() { return tempNumFramesX; }
+
+	int getNumFramesY() { return tempNumFramesY; }
+
 private:
 	BYTE *texturePnter{ nullptr };
 	Rectangle m_textureRect;
 	Rectangle m_frameRect;
 	bool HasAlpha = true;
 	int width, height;
-
+	int tempNumFramesX, tempNumFramesY;
 	
 };
 

@@ -1,5 +1,5 @@
 #include "EntityScrollingBackground.h"
-
+#include "Visualisation.h"
 
 EntityScrollingBackground::~EntityScrollingBackground()
 {
@@ -10,7 +10,7 @@ void EntityScrollingBackground::CheckCollision(Visualisation &vis, Entity &other
 	
 }
 
-void EntityScrollingBackground::Update(float deltaTime)
+void EntityScrollingBackground::Update(Visualisation &vis, float deltaTime)
 {
 	m_position.y += 1 * deltaTime;
 

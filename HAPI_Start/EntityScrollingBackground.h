@@ -6,7 +6,7 @@ public:
 	EntityScrollingBackground(std::string spriteID) : Entity(spriteID) {};
 	~EntityScrollingBackground();
 
-	void Update(float deltaTime) override final;
+	void Update(Visualisation &vis, float deltaTime) override final;
 
 	eSide getSide() const override final { return eSide::eNeutral; }
 

@@ -34,6 +34,10 @@ public:
 
 	Rectangle GetRect(const std::string &name);
 
+	int GetNumframesX(const std::string & name);
+
+	int GetNumframesY(const std::string & name);
+
 private:
 	std::unordered_map<std::string, Sprite*> m_spritemap;
 

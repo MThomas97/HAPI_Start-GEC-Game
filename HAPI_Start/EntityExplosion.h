@@ -7,7 +7,7 @@ public:
 	EntityExplosion(std::string spriteID) : Entity(spriteID) {};
 	~EntityExplosion();
 
-	void Update(float deltaTime) override final;
+	void Update(Visualisation & vis, float deltaTime) override final;
 
 	eSide getSide() const override final { return eSide::eEnemy; }
 
@@ -15,7 +15,6 @@ public:
 
 private:
 	int PrevTime = 0;
-	int numFramesX{ 5 };
-	int numFramesY{ 3 };
+	
 };
 

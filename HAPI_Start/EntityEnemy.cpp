@@ -1,5 +1,5 @@
 #include "EntityEnemy.h"
-
+#include "Visualisation.h"
 
 
 EntityEnemy::~EntityEnemy()
@@ -17,7 +17,7 @@ void EntityEnemy::CheckCollision(Visualisation &vis, Entity &other)
 	
 }
 
-void EntityEnemy::Update(float deltaTime)
+void EntityEnemy::Update(Visualisation &vis, float deltaTime)
 {
 	//AI stuff
 

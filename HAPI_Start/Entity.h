@@ -29,7 +29,7 @@ public:
 
 	virtual eSide getSide() const = 0;
 
-	virtual void Update(float deltaTime) = 0;
+	virtual void Update(Visualisation &vis, float deltaTime) = 0;
 
 	void Render(Visualisation &vis);
 
@@ -42,18 +42,20 @@ public:
 	//void SetFrames1(Vector2 numFrames) { m_numFrames = numFrames; }
 
 	bool IsEnemyOf(eSide a, eSide b);
-	//CREATE GETTER FOR THESE!!!
-	std::string Spritename;
-	Vector2 m_position;
+
+	std::string GetSpritename() const { return Spritename; }
+	
+	Vector2 GetPosition() const { return m_position; }
+
 protected:
-//	Vector2 m_position;
-	Vector2 m_nextPos;
+	Vector2 m_position;
+	//Vector2 m_nextPos;
 	Vector2 tempPos;
 	Rectangle m_entityRect;
 	//Vector2 m_currentFrame;
 	//Vector2 m_numFrames;
 	int health{ 100 };
-	//std::string Spritename; //create getter? make private again
+	std::string Spritename; //create getter? make private again
 	bool m_alive{ true };
 	float m_speed{ 0.5f };
 	int curFrameX{ 0 };

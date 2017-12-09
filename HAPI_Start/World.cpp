@@ -112,7 +112,7 @@ void World::Update()
 		{
 			float deltaTime = std::min(frameTime, dt);
 			for (auto p : m_entity)
-				p->Update(deltaTime);
+				p->Update(*m_vis, deltaTime);
 				
 			frameTime -= deltaTime;
 			t += deltaTime;

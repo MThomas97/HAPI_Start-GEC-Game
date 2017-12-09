@@ -1,5 +1,5 @@
 #include "EntityExplosion.h"
-
+#include "Visualisation.h"
 
 EntityExplosion::~EntityExplosion()
 {
@@ -10,7 +10,7 @@ void EntityExplosion::CheckCollision(Visualisation &vis, Entity &other)
 	
 }
 
-void EntityExplosion::Update(float deltaTime)
+void EntityExplosion::Update(Visualisation &vis, float deltaTime)
 {
 	float HorseElapsedTime = HAPI.GetTime() - PrevTime;
 
@@ -19,15 +19,15 @@ void EntityExplosion::Update(float deltaTime)
 		PrevTime = HorseElapsedTime;
 
 		curFrameX++;
-
-		if (curFrameX >= numFramesX)
+		
+		if (curFrameX >= vis.GetNumframesX(Spritename))
 		{
 			curFrameX = 0;
 
 			curFrameY += 1;
 		}
 
-		if (curFrameY >= numFramesY)
+		if (curFrameY >= vis.GetNumframesY(Spritename))
 		{
 			curFrameY = 0;
 			curFrameX = 0;

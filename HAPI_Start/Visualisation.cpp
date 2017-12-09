@@ -77,6 +77,16 @@ Rectangle Visualisation::GetRect(const std::string &name)
 	return m_spritemap.at(name)->getRect();
 }
 
+int Visualisation::GetNumframesX(const std::string &name)
+{
+	return m_spritemap.at(name)->getNumFramesX();
+}
+
+int Visualisation::GetNumframesY(const std::string &name)
+{
+	return m_spritemap.at(name)->getNumFramesY();
+}
+
 Visualisation::~Visualisation()
 {
 	for (auto &p : m_spritemap)

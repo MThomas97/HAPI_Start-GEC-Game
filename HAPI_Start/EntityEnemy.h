@@ -9,7 +9,7 @@ public:
 	EntityEnemy(std::string spriteID) : Entity(spriteID) {};
 	~EntityEnemy();
 
-	void Update(float deltaTime) override final;
+	void Update(Visualisation &vis, float deltaTime) override final;
 
 	eSide getSide() const override final { return eSide::eEnemy; }
 
