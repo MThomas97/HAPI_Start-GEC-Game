@@ -5,9 +5,9 @@ EntityExplosion::~EntityExplosion()
 {
 }
 
-bool EntityExplosion::CheckCollision(Vector2 nextpos)
+void EntityExplosion::CheckCollision(Visualisation &vis, Entity &other)
 {
-	return true;
+	
 }
 
 void EntityExplosion::Update(float deltaTime)

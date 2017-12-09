@@ -14,28 +14,60 @@ void EntityPlayer::LoadRectangle(Visualisation &vis)
 	m_enemyRect = Rectangle(vis.GetRect("enemy"));
 }
 
-bool EntityPlayer::CheckCollision(Vector2 nextPos)
+void EntityPlayer::CheckCollision(Visualisation &vis, Entity &other)
 {
+	if (!IsEnemyOf(getSide(), other.getSide()))
+		return;
+
+	Rectangle thisRect (vis.GetRect(Spritename));
+	Rectangle otherRect(vis.GetRect(other.Spritename));
+
 	//m_playerRect = Rectangle(sourceRect.width(), sourceRect.height());
 
 	//m_enemyRect = Rectangle(destinationRect.width(), destinationRect.height());
 
-	Rectangle CollisionRect(m_playerRect);
+	//Rectangle CollisionRect(m_playerRect);
 
-	Rectangle EnemyCollisionRect(m_enemyRect);
+	//Rectangle EnemyCollisionRect(m_enemyRect);
 
-	EnemyCollisionRect.Translate(400, 400);
+	Rectangle CollisionRect(thisRect);
+
+	Rectangle EnemyCollisionRect(otherRect);
+
+	int w{ thisRect.width() };
+
+	thisRect.left += w / 10;
+
+	thisRect.right += w / 10;
+
+	w;
+
+	int h{ thisRect.height() };
+
+	thisRect.top += h / 10;
+
+	thisRect.bottom += h / 10;
+
+	EnemyCollisionRect.Translate(other.m_position.x, other.m_position.y);
 	
 	CollisionRect.Translate(m_position.x, m_position.y);
 
+	Vector2 temp;
+
+	temp.x = m_position.x - w;
+
+	temp.y = m_position.y - h;
+
 	if (CollisionRect.CheckCollision(EnemyCollisionRect) == true)
 	{
-		//std::cout << "Collision detected!" << std::endl;
-		nextPos.x = m_position.x;
-		nextPos.y = m_position.y;
+		std::cout << "Collision detected!" << std::endl;
+		//nextPos.x = temp.x;
+		//nextPos.y = temp.y;
+		nextPos = m_position;
 
-		/*nextPos.x = std::max(0, std::min((int)m_position.x, 1000 - m_playerRect.width() - 1));
-		nextPos.y = std::max(0, std::min((int)m_position.y, 100 - m_playerRect.height() - 1));*/
+
+		//nextPos.x = std::max(0, std::min((int)m_position.x, 1000 - thisRect.width() - 1));
+		//nextPos.y = std::max(0, std::min((int)m_position.y, 1000 - thisRect.height() - 1));
 		//CollisionRect.ClipTo(m_enemyRect);
 		//return true;
 	}
@@ -44,10 +76,10 @@ bool EntityPlayer::CheckCollision(Vector2 nextPos)
 		
 	//m_position = nextPos;
 	CollisionRect.Translate(-m_position.x, -m_position.y);
-	EnemyCollisionRect.Translate(-400, -400);
+	EnemyCollisionRect.Translate(-other.m_position.x, -other.m_position.y);
 	m_position.x = nextPos.x;
 	m_position.y = nextPos.y;
-	return false;
+	//return false;
 }
 
 void EntityPlayer::GetenemyRect(const Rectangle & other)
@@ -57,9 +89,8 @@ void EntityPlayer::GetenemyRect(const Rectangle & other)
 
 void EntityPlayer::Update(float deltaTime)
 {
-
-	Vector2 temp;
-	temp = m_position;
+	//m_position = nextPos;
+	//nextPos = m_position;
 	static const HAPI_TKeyboardData &keyData = HAPI.GetKeyboardData();
 	const HAPI_TControllerData &controllerData = HAPI.GetControllerData(0);
 
@@ -72,24 +103,24 @@ void EntityPlayer::Update(float deltaTime)
 		PrevTime = ElapsedTime;
 		//Moves sprite with WASD keys
 		if (keyData.scanCode['W'])
-			temp.y -= m_speed * deltaTime;
+			nextPos.y -= m_speed * deltaTime;
 
 		if (keyData.scanCode['S'])
-			temp.y += m_speed * deltaTime;
+			nextPos.y += m_speed * deltaTime;
 
 		if (keyData.scanCode['A'])
-			temp.x -= m_speed * deltaTime;
+			nextPos.x -= m_speed * deltaTime;
 
 		if (keyData.scanCode['D'])
-			temp.x += m_speed * deltaTime;
+			nextPos.x += m_speed * deltaTime;
 
 		if (!(vect.x == 0 && vect.y == 0))
 		{
 			vect.x = m_speed * deltaTime * (vect.x / (vect.Length()));
 			vect.y = m_speed *  deltaTime *(vect.y / (vect.Length()));
 
-			m_position.x += vect.x;
-			m_position.y += vect.y;
+			nextPos.x += vect.x;
+			nextPos.y += vect.y;
 			
 		}
 
@@ -142,6 +173,6 @@ void EntityPlayer::Update(float deltaTime)
 			}
 		}
 
-		CheckCollision(temp);
+		//CheckCollision(temp);
 		
 }

@@ -49,8 +49,8 @@ bool World::LoadLevel()
 	if (!m_vis->CreateSprite("enemy", "Data\\player.png"))
 		return false;
 
-	/*if (!m_vis->CreateSprite("horse", "Data\\HorseSpriteSheetWhite.png", 5, 3))
-		return false;*/
+	if (!m_vis->CreateSprite("horse", "Data\\HorseSpriteSheetWhite.png", 5, 3))
+		return false;
 
 	if (!m_vis->CreateSprite("background", "Data\\FullStarBackground.png"))
 		return false;
@@ -65,21 +65,21 @@ bool World::LoadLevel()
 
 	//newSecondBackground->SetPosition(Vector2(0, -800));
 
-	/*EntityExplosion *horse = new EntityExplosion("horse");
-	m_entity.push_back(horse);
-
-	horse->SetPosition(Vector2(100, 100));*/
-
 	EntityPlayer *newPlayer = new EntityPlayer("player");
 	m_entity.push_back(newPlayer);
 
-	newPlayer->SetPosition(Vector2(200, 200));
-	newPlayer->LoadRectangle(*m_vis);
+	newPlayer->SetPosition(Vector2(0, 0));
+	//newPlayer->LoadRectangle(*m_vis);
 
 	EntityEnemy *enemy = new EntityEnemy("enemy");
 	m_entity.push_back(enemy);
 
-	enemy->SetPosition(Vector2(400, 400));
+	enemy->SetPosition(Vector2(400, 600));
+
+	EntityExplosion *horse = new EntityExplosion("horse");
+	m_entity.push_back(horse);
+
+	horse->SetPosition(Vector2(100, 100));
 
 	return true;
 
@@ -117,6 +117,15 @@ void World::Update()
 			frameTime -= deltaTime;
 			t += deltaTime;
 		}
+
+		for (size_t i = 0; i < m_entity.size(); i++)
+		{
+			for (size_t j = i + 1; j < m_entity.size(); j++)
+			{
+				m_entity[i]->CheckCollision(*m_vis, *m_entity[j]);
+			}
+		}
+
 		for (auto p : m_entity)
 			p->Render(*m_vis);
 	}

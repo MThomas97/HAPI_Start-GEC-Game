@@ -9,9 +9,9 @@ public:
 
 	void Update(float deltaTime) override final;
 
-	eSide getSide() const override final { return eSide::ePlayer; }
+	eSide getSide() const override final { return eSide::eEnemy; }
 
-	bool CheckCollision(Vector2 nextPos) override final;
+	void CheckCollision(Visualisation &vis, Entity &other) override final;
 
 private:
 	int PrevTime = 0;

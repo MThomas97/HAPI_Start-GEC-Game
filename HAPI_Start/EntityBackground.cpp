@@ -4,9 +4,9 @@ EntityBackground::~EntityBackground()
 {
 }
 
-bool EntityBackground::CheckCollision(Vector2 nextPos)
+void EntityBackground::CheckCollision(Visualisation &vis, Entity &other)
 {
-	return true;
+	
 }
 
 void EntityBackground::Update(float deltaTime)

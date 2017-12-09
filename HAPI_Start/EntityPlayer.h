@@ -16,7 +16,7 @@ public:
 
 	eSide getSide() const override final {return eSide::ePlayer; }
 
-	bool CheckCollision(Vector2 nextPos) override final;
+	void CheckCollision(Visualisation &vis, Entity &other) override final;
 
 	void GetenemyRect(const Rectangle &other);
 
@@ -25,6 +25,8 @@ public:
 private:
 	Vector2 vect;
 	
+	Vector2 nextPos;
+
 	Rectangle tempRect;
 
 	Rectangle m_playerRect;

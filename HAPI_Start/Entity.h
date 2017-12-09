@@ -35,21 +35,25 @@ public:
 
 	void SetPosition(Vector2 newPos) { m_position = newPos, tempPos = newPos; }
 
-	virtual bool CheckCollision(Vector2 nextPos) = 0;
+	virtual void CheckCollision(Visualisation &vis, Entity &other) = 0;
 
 	//void SetFrames(Vector2 curFrame) { m_currentFrame = curFrame; }
 	
 	//void SetFrames1(Vector2 numFrames) { m_numFrames = numFrames; }
-	
-protected:
+
+	bool IsEnemyOf(eSide a, eSide b);
+	//CREATE GETTER FOR THESE!!!
+	std::string Spritename;
 	Vector2 m_position;
+protected:
+//	Vector2 m_position;
 	Vector2 m_nextPos;
 	Vector2 tempPos;
 	Rectangle m_entityRect;
 	//Vector2 m_currentFrame;
 	//Vector2 m_numFrames;
 	int health{ 100 };
-	std::string Spritename;
+	//std::string Spritename; //create getter? make private again
 	bool m_alive{ true };
 	float m_speed{ 0.5f };
 	int curFrameX{ 0 };

@@ -6,7 +6,7 @@ EntityEnemy::~EntityEnemy()
 {
 }
 
-bool EntityEnemy::CheckCollision(Vector2 nextPos)
+void EntityEnemy::CheckCollision(Visualisation &vis, Entity &other)
 {
 	if (getSide() == eSide::ePlayer)
 	{
@@ -14,7 +14,7 @@ bool EntityEnemy::CheckCollision(Vector2 nextPos)
 	}
 	m_enemyRect = Rectangle(m_position.x, m_position.y);
 	m_temp = m_enemyRect;
-	return true;
+	
 }
 
 void EntityEnemy::Update(float deltaTime)
