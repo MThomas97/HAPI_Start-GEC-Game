@@ -8,6 +8,7 @@
 #include "Vector2.h"
 #include <HAPI_lib.h>
 #include <algorithm>
+#include <assert.h>
 
 #if defined(DEBUG) | defined(_DEBUG)
 #include <crtdbg.h>
@@ -16,6 +17,8 @@
 
 // HAPI itself is wrapped in the HAPISPACE namespace
 using namespace HAPISPACE;
+
+constexpr DWORD TickTime{ 50 };
 
 World::~World()
 {
@@ -68,18 +71,19 @@ bool World::LoadLevel()
 	EntityPlayer *newPlayer = new EntityPlayer("player");
 	m_entity.push_back(newPlayer);
 
-	newPlayer->SetPosition(Vector2(0, 0));
+	newPlayer->SetPosition(Vector2(10, 10));
 	//newPlayer->LoadRectangle(*m_vis);
 
 	EntityEnemy *enemy = new EntityEnemy("enemy");
 	m_entity.push_back(enemy);
 
-	enemy->SetPosition(Vector2(400, 600));
+	enemy->SetPosition(Vector2(300, 600));
+	
 
-	EntityExplosion *horse = new EntityExplosion("horse");
+	/*EntityExplosion *horse = new EntityExplosion("horse");
 	m_entity.push_back(horse);
 
-	horse->SetPosition(Vector2(100, 100));
+	horse->SetPosition(Vector2(300, 300));*/
 
 	return true;
 
@@ -91,42 +95,34 @@ void World::Update()
 	//Sets the FPS counter on screen
 	HAPI.SetShowFPS(true, 0, 0, HAPI_TColour::GREEN);
 
-	double currentTime = HAPI.GetTime();
-
-	double t = 0.0;
-
-	double dt = 1 / 60.0;
-
-	
+	DWORD lastTick{ 0 };
 
 	while (HAPI.Update()) //Game loop
 	{	//calls functions from classes
 
-		double newTime = HAPI.GetTime();
-		double frameTime = newTime - currentTime;
-		currentTime = newTime;
+		DWORD TimeSinceLastTick{ HAPI.GetTime() - lastTick };
+		
+		if(TimeSinceLastTick >= TickTime)
+		{
+			for (auto p : m_entity)
+				p->Update(*m_vis);
+
+			for (size_t i = 0; i < m_entity.size(); i++)
+			{
+				for (size_t j = i + 1; j < m_entity.size(); j++)
+				{
+					m_entity[i]->CheckCollision(*m_vis, *m_entity[j]);
+				}
+			}
+			TimeSinceLastTick = 0;
+		}
+
+		float s = TimeSinceLastTick / TickTime;
+		assert(s >= 0 && s <= 1.0f);
 
 		m_vis->ClearToColour(HAPI.GetScreenPointer(), screenWidth, screenHeight, HAPI_TColour(0, 0, 0));
 
-		while (frameTime > 0.0)
-		{
-			float deltaTime = std::min(frameTime, dt);
-			for (auto p : m_entity)
-				p->Update(*m_vis, deltaTime);
-				
-			frameTime -= deltaTime;
-			t += deltaTime;
-		}
-
-		for (size_t i = 0; i < m_entity.size(); i++)
-		{
-			for (size_t j = i + 1; j < m_entity.size(); j++)
-			{
-				m_entity[i]->CheckCollision(*m_vis, *m_entity[j]);
-			}
-		}
-
 		for (auto p : m_entity)
-			p->Render(*m_vis);
+			p->Render(*m_vis, s);
 	}
 }

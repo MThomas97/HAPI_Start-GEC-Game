@@ -29,11 +29,15 @@ public:
 
 	virtual eSide getSide() const = 0;
 
-	virtual void Update(Visualisation &vis, float deltaTime) = 0;
+	virtual void Update(Visualisation &vis) = 0;
 
-	void Render(Visualisation &vis);
+	void Render(Visualisation &vis, float s);
 
-	void SetPosition(Vector2 newPos) { m_position = newPos, tempPos = newPos; }
+	void SetPosition(Vector2 newPos) { m_oldPosition = m_position; m_position = newPos; }
+
+	Vector2 GetPosition() const { return m_position; }
+
+	Vector2 GetOldPosition() const { return m_oldPosition; }
 
 	virtual void CheckCollision(Visualisation &vis, Entity &other) = 0;
 
@@ -44,21 +48,23 @@ public:
 	bool IsEnemyOf(eSide a, eSide b);
 
 	std::string GetSpritename() const { return Spritename; }
-	
-	Vector2 GetPosition() const { return m_position; }
 
 protected:
-	Vector2 m_position;
+	//Vector2 m_position;
 	//Vector2 m_nextPos;
-	Vector2 tempPos;
-	Rectangle m_entityRect;
+	//Vector2 tempPos;
+	//Rectangle m_entityRect;
 	//Vector2 m_currentFrame;
 	//Vector2 m_numFrames;
 	int health{ 100 };
 	std::string Spritename; //create getter? make private again
 	bool m_alive{ true };
-	float m_speed{ 0.5f };
+	float m_speed{ 6.0f };
 	int curFrameX{ 0 };
 	int curFrameY{ 0 };
+
+private:
+	Vector2 m_position;
+	Vector2 m_oldPosition;
 };
 

@@ -1,39 +1,39 @@
 #include "Vector2.h"
 
 
-inline Vector2 & Vector2::operator+(const Vector2 &rhs) const
+Vector2 Vector2::operator+(const Vector2 &rhs) const
 {
 	return Vector2(x+rhs.x, y+rhs.y);
 }
 
-inline Vector2 & Vector2::operator-(const Vector2 &rhs) const
+Vector2 Vector2::operator-(const Vector2 &rhs) const
 {
 	return Vector2(x - rhs.x, y - rhs.y);
 }
 
-inline Vector2 & Vector2::operator/(const Vector2 &rhs) const
+inline Vector2 Vector2::operator/(const Vector2 &rhs) const
 {
 	return Vector2(x / rhs.x, y / rhs.y);
 }
 
-inline Vector2 & Vector2::operator*(const Vector2 &rhs) const
+inline Vector2 Vector2::operator*(const Vector2 &rhs) const
 {
 	return Vector2(x * rhs.x, y * rhs.y);
 }
 
-inline Vector2 & Vector2::operator*=(const Vector2 &rhs) 
+inline Vector2 Vector2::operator*=(const Vector2 &rhs) 
 {
 	 x *= rhs.x, y *= rhs.y;
 	 return *this;
 }
 
-inline Vector2 & Vector2::operator+=(const Vector2 &rhs)
+inline Vector2 Vector2::operator+=(const Vector2 &rhs)
 {
 	x += rhs.x, y += rhs.y;
 	return *this;
 }
 
-inline Vector2 & Vector2::operator-=(const Vector2 &rhs)
+inline Vector2 Vector2::operator-=(const Vector2 &rhs)
 {
 	x -= rhs.x, y -= rhs.y;
 	return *this;

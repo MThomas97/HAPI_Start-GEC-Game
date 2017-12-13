@@ -35,20 +35,20 @@ void EntityPlayer::CheckCollision(Visualisation &vis, Entity &other)
 
 	EnemyCollisionRect.Translate(other.GetPosition().x, other.GetPosition().y);
 	
-	CollisionRect.Translate(m_position.x, m_position.y);
+	CollisionRect.Translate(GetPosition().x, GetPosition().y);
 
 	Vector2 temp;
 
-	temp.x = m_position.x - w;
+	//temp.x = m_position.x - w;
 
-	temp.y = m_position.y - h;
+	//temp.y = m_position.y - h;
 
 	if (CollisionRect.CheckCollision(EnemyCollisionRect) == true)
 	{
 		std::cout << "Collision detected!" << std::endl;
 		//nextPos.x = temp.x;
 		//nextPos.y = temp.y;
-		m_position = nextPos;
+		//GetPosition() = GetOldPosition();
 
 
 		//nextPos.x = std::max(0, std::min((int)m_position.x, 1000 - thisRect.width() - 1));
@@ -60,16 +60,18 @@ void EntityPlayer::CheckCollision(Visualisation &vis, Entity &other)
 	
 		
 	//m_position = nextPos;
-	CollisionRect.Translate(-m_position.x, -m_position.y);
+	CollisionRect.Translate(-GetPosition().x, -GetPosition().y);
 	EnemyCollisionRect.Translate(-other.GetPosition().x, -other.GetPosition().y);
-	m_position.x = nextPos.x;
-	m_position.y = nextPos.y;
+	//m_position.x = nextPos.x;
+	//m_position.y = nextPos.y;
 }
 
-void EntityPlayer::Update(Visualisation &vis, float deltaTime)
+void EntityPlayer::Update(Visualisation &vis)
 {
 	//m_position = nextPos;
-	nextPos = m_position;
+	Vector2 pos{ GetPosition() };
+
+	//oldPos = m_position;
 	static const HAPI_TKeyboardData &keyData = HAPI.GetKeyboardData();
 	const HAPI_TControllerData &controllerData = HAPI.GetControllerData(0);
 
@@ -80,54 +82,60 @@ void EntityPlayer::Update(Visualisation &vis, float deltaTime)
 	float ElapsedTime = HAPI.GetTime() - PrevTime;
 	
 		PrevTime = ElapsedTime;
-		//Moves sprite with WASD keys
-		if (keyData.scanCode['W'])
-			m_position.y -= m_speed * deltaTime;
-
-		if (keyData.scanCode['S'])
-			m_position.y += m_speed * deltaTime;
-
-		if (keyData.scanCode['A'])
-			m_position.x -= m_speed * deltaTime;
-
-		if (keyData.scanCode['D'])
-			m_position.x += m_speed * deltaTime;
-
-		if (!(vect.x == 0 && vect.y == 0))
+		if (HAPI.GetTime() - m_lastTimeUpdated >= m_time)
 		{
-			vect.x = m_speed * deltaTime * (vect.x / (vect.Length()));
-			vect.y = m_speed *  deltaTime *(vect.y / (vect.Length()));
+			//Moves sprite with WASD keys
+			if (keyData.scanCode['W'])
+				pos.y -= m_speed;
 
-			m_position.x += vect.x;
-			m_position.y += vect.y;
-			
-		}
+			if (keyData.scanCode['S'])
+				pos.y += m_speed;
 
-		if (controllerData.isAttached)
-		{
+			if (keyData.scanCode['A'])
+				pos.x -= m_speed;
 
-			if (Deadzone < LeftThumbX)
-				m_position.x += m_speed * deltaTime;
-
-			if (-Deadzone > LeftThumbX)
-				m_position.x -= m_speed * deltaTime;
-
-			if (-Deadzone > LeftThumbY)
-				m_position.y += m_speed * deltaTime;
-
-			if (Deadzone < LeftThumbY)
-				m_position.y -= m_speed * deltaTime;
+			if (keyData.scanCode['D'])
+				pos.x += m_speed;
 
 			if (!(vect.x == 0 && vect.y == 0))
 			{
-				vect.x = m_speed*(vect.x / (vect.Length()));
-				vect.y = m_speed*(vect.y / (vect.Length()));
+				vect.x = m_speed * (vect.x / (vect.Length()));
+				vect.y = m_speed * (vect.y / (vect.Length()));
 
-				m_position.x += vect.x;
-				m_position.y += vect.y ;
+				pos.x += vect.x;
+				pos.y += vect.y;
 
 			}
+
+			if (controllerData.isAttached)
+			{
+
+				if (Deadzone < LeftThumbX)
+					pos.x += m_speed;
+
+				if (-Deadzone > LeftThumbX)
+					pos.x -= m_speed;
+
+				if (-Deadzone > LeftThumbY)
+					pos.y += m_speed;
+
+				if (Deadzone < LeftThumbY)
+					pos.y -= m_speed;
+
+				if (!(vect.x == 0 && vect.y == 0))
+				{
+					vect.x = m_speed *(vect.x / (vect.Length()));
+					vect.y = m_speed *(vect.y / (vect.Length()));
+
+					pos.x += vect.x;
+					pos.y += vect.y;
+
+				}
+			}
+			m_lastTimeUpdated = HAPI.GetTime();
 		}
+
+		SetPosition(pos);
 
 		float HorseElapsedTime = HAPI.GetTime() - PrevTime;
 

@@ -12,19 +12,21 @@ public:
 	Vector2()=default;
 	Vector2(float newX, float newY) : x(newX), y(newY){}
 
-	inline Vector2 &operator +(const Vector2 &rhs) const;
+	Vector2 operator +(const Vector2 &rhs) const;
 
-	inline Vector2 &operator -(const Vector2 &rhs) const;
+	Vector2 operator -(const Vector2 &rhs) const;
 
-	Vector2 & operator/(const Vector2 & rhs) const;
+	Vector2  operator/ (const Vector2 & rhs) const;
 
-	inline Vector2 &operator *(const Vector2 &rhs) const;
+	inline Vector2 operator *(const Vector2 &rhs) const;
 	
-	inline Vector2 &operator *=(const Vector2 &rhs);
+	inline Vector2 operator *=(const Vector2 &rhs);
 
-	inline Vector2 &operator +=(const Vector2 &rhs);
+	inline Vector2 operator +=(const Vector2 &rhs);
 
-	inline Vector2 &operator -=(const Vector2 &rhs);
+	inline Vector2 operator -=(const Vector2 &rhs);
+
+	Vector2 operator * (float rhs) const{return Vector2(x * rhs, y * rhs);}
 
 	float Length() const;
 

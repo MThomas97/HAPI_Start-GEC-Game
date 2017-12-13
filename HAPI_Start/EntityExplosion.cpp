@@ -10,7 +10,7 @@ void EntityExplosion::CheckCollision(Visualisation &vis, Entity &other)
 	
 }
 
-void EntityExplosion::Update(Visualisation &vis, float deltaTime)
+void EntityExplosion::Update(Visualisation &vis)
 {
 	float HorseElapsedTime = HAPI.GetTime() - PrevTime;
 

@@ -5,9 +5,14 @@ Entity::~Entity()
 {
 }
 
-void Entity::Render(Visualisation &vis)
+void Entity::Render(Visualisation &vis, float s)
 {
-	vis.RenderSprite(Spritename, (int)m_position.x, (int)m_position.y, curFrameX, curFrameY);
+	if (!m_alive)
+		return;
+
+	Vector2 interPos{ m_oldPosition + (m_position - m_oldPosition) * s };
+
+	vis.RenderSprite(Spritename, (int)interPos.x, (int)interPos.y, curFrameX, curFrameY);
 }
 
 bool Entity::IsEnemyOf(eSide a, eSide b)
