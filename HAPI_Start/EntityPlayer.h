@@ -19,15 +19,15 @@ public:
 	void CheckCollision(Visualisation &vis, Entity &other) override final;
 
 private:
-	Vector2 vect;
+	//Vector2 vect;
 
-	Vector2 pos{ GetPosition() };
-	
-	Vector2 nextPos;
 
-	Vector2 newPos;
+	//
+	//Vector2 nextPos;
 
-	Vector2 oldPos;
+	//Vector2 newPos;
+
+	//Vector2 oldPos;
 
 	int PrevTime1 = 0;
 	int PrevTime = 0;

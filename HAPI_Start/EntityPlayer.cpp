@@ -12,8 +12,6 @@ void EntityPlayer::CheckCollision(Visualisation &vis, Entity &other)
 	if (!IsEnemyOf(getSide(), other.getSide()))
 		return;
 
-	Vector2 newPos{ GetPosition() };
-
 	Vector2 oldPos{ GetOldPosition() };
 
 	Rectangle thisRect (vis.GetRect(Spritename));
@@ -21,9 +19,17 @@ void EntityPlayer::CheckCollision(Visualisation &vis, Entity &other)
 
 	Rectangle CollisionRect(thisRect);
 
+	float width = thisRect.width() / 10.0f; //Reduces the size of the collider rectangle width by 10%
+
+	float height = thisRect.height() / 10.0f; //Reduces the size of the collider rectangle height by 10%
+
+	CollisionRect.left += width;
+	CollisionRect.right -= width;
+	CollisionRect.top += height;
+	//CollisionRect.bottom -= height;
 	Rectangle EnemyCollisionRect(otherRect);
 
-	int w{ thisRect.width() };
+	/*int w{ thisRect.width() };
 
 	thisRect.left += w / 10;
 
@@ -35,13 +41,12 @@ void EntityPlayer::CheckCollision(Visualisation &vis, Entity &other)
 
 	thisRect.top += h / 10;
 
-	thisRect.bottom += h / 10;
+	thisRect.bottom += h / 10;*/
 
 	EnemyCollisionRect.Translate(other.GetPosition().x, other.GetPosition().y);
 	
 	CollisionRect.Translate(GetPosition().x, GetPosition().y);
 
-	Vector2 temp;
 
 	//temp.x = m_position.x - w;
 
@@ -50,7 +55,9 @@ void EntityPlayer::CheckCollision(Visualisation &vis, Entity &other)
 	if (CollisionRect.CheckCollision(EnemyCollisionRect) == true)
 	{
 		//std::cout << "Collision detected!" << std::endl;
-		pos = oldPos;
+		//m_pos = oldPos;
+		//m_position = m_oldPosition;
+		SetBackPosition(oldPos);
 		//nextPos.x = temp.x;
 		//nextPos.y = temp.y;
 		//GetPosition() = GetOldPosition();
@@ -62,11 +69,12 @@ void EntityPlayer::CheckCollision(Visualisation &vis, Entity &other)
 		//return true;
 	}
 
+
 	
 		
 	//m_position = nextPos;
-	CollisionRect.Translate(-GetPosition().x, -GetPosition().y);
-	EnemyCollisionRect.Translate(-other.GetPosition().x, -other.GetPosition().y);
+	/*CollisionRect.Translate(-GetPosition().x, -GetPosition().y);
+	EnemyCollisionRect.Translate(-other.GetPosition().x, -other.GetPosition().y);*/
 	//m_position.x = nextPos.x;
 	//m_position.y = nextPos.y;
 }
@@ -75,6 +83,9 @@ void EntityPlayer::Update(Visualisation &vis)
 {
 	//m_position = nextPos;
 	
+	Vector2 pos{ GetPosition() };
+
+	Vector2 vect;
 
 	//oldPos = m_position;
 	static const HAPI_TKeyboardData &keyData = HAPI.GetKeyboardData();
@@ -86,7 +97,7 @@ void EntityPlayer::Update(Visualisation &vis)
 
 	float ElapsedTime = HAPI.GetTime() - PrevTime;
 	
-		PrevTime = ElapsedTime;
+		//PrevTime = ElapsedTime;
 		if (HAPI.GetTime() - m_lastTimeUpdated >= m_time)
 		{
 			//Moves sprite with WASD keys

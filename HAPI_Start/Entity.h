@@ -35,6 +35,8 @@ public:
 
 	void SetPosition(Vector2 newPos) { m_oldPosition = m_position; m_position = newPos; }
 
+	void SetBackPosition(Vector2 oldPos) { m_position = m_oldPosition; }
+
 	Vector2 GetPosition() const { return m_position; }
 
 	Vector2 GetOldPosition() const { return m_oldPosition; }
@@ -63,7 +65,7 @@ protected:
 	int curFrameX{ 0 };
 	int curFrameY{ 0 };
 
-private:
+//private:
 	Vector2 m_position;
 	Vector2 m_oldPosition;
 };
