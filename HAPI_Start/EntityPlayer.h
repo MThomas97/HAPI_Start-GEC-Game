@@ -20,6 +20,8 @@ public:
 
 private:
 	Vector2 vect;
+
+	Vector2 pos{ GetPosition() };
 	
 	Vector2 nextPos;
 

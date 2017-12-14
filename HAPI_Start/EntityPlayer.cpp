@@ -12,6 +12,10 @@ void EntityPlayer::CheckCollision(Visualisation &vis, Entity &other)
 	if (!IsEnemyOf(getSide(), other.getSide()))
 		return;
 
+	Vector2 newPos{ GetPosition() };
+
+	Vector2 oldPos{ GetOldPosition() };
+
 	Rectangle thisRect (vis.GetRect(Spritename));
 	Rectangle otherRect(vis.GetRect(other.GetSpritename()));
 
@@ -45,7 +49,8 @@ void EntityPlayer::CheckCollision(Visualisation &vis, Entity &other)
 
 	if (CollisionRect.CheckCollision(EnemyCollisionRect) == true)
 	{
-		std::cout << "Collision detected!" << std::endl;
+		//std::cout << "Collision detected!" << std::endl;
+		pos = oldPos;
 		//nextPos.x = temp.x;
 		//nextPos.y = temp.y;
 		//GetPosition() = GetOldPosition();
@@ -69,7 +74,7 @@ void EntityPlayer::CheckCollision(Visualisation &vis, Entity &other)
 void EntityPlayer::Update(Visualisation &vis)
 {
 	//m_position = nextPos;
-	Vector2 pos{ GetPosition() };
+	
 
 	//oldPos = m_position;
 	static const HAPI_TKeyboardData &keyData = HAPI.GetKeyboardData();
