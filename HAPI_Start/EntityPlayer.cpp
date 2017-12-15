@@ -87,6 +87,12 @@ void EntityPlayer::Update(Visualisation &vis)
 
 	Vector2 vect;
 
+	const float gravity{ 1 };
+	int groundHeight{ 440 };
+	Vector2 velocity(Vector2(0, 0));
+
+	float jumpSpeed{ 10.0f };
+
 	//oldPos = m_position;
 	static const HAPI_TKeyboardData &keyData = HAPI.GetKeyboardData();
 	const HAPI_TControllerData &controllerData = HAPI.GetControllerData(0);
@@ -112,6 +118,18 @@ void EntityPlayer::Update(Visualisation &vis)
 
 			if (keyData.scanCode['D'])
 				pos.x += m_speed;
+
+			if (keyData.scanCode[HK_SPACE])
+				velocity.y = -jumpSpeed;
+			else
+			{
+				velocity.x = 0;
+			}
+
+			if (GetPosition().y + 32 < groundHeight)
+			{
+				velocity.y += gravity;
+			}
 
 			if (!(vect.x == 0 && vect.y == 0))
 			{
@@ -150,8 +168,8 @@ void EntityPlayer::Update(Visualisation &vis)
 			}
 			m_lastTimeUpdated = HAPI.GetTime();
 		}
-
-		SetPosition(pos);
+		SetPosition(velocity);
+		//SetPosition(pos);
 
 		float HorseElapsedTime = HAPI.GetTime() - PrevTime;
 
