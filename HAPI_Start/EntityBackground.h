@@ -6,7 +6,7 @@ public:
 	EntityBackground(std::string spriteID) : Entity(spriteID) {};
 	~EntityBackground();
 
-	void Update(Visualisation &vis) override final;
+	void Update(Visualisation &vis, float dt) override final;
 
 	eSide getSide() const override final { return eSide::eNeutral; }
 

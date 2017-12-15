@@ -11,32 +11,31 @@ Vector2 Vector2::operator-(const Vector2 &rhs) const
 	return Vector2(x - rhs.x, y - rhs.y);
 }
 
-inline Vector2 Vector2::operator/(const Vector2 &rhs) const
+
+
+Vector2 Vector2::operator/(const Vector2 &rhs) const
 {
 	return Vector2(x / rhs.x, y / rhs.y);
 }
 
-inline Vector2 Vector2::operator*(const Vector2 &rhs) const
+Vector2 Vector2::operator*(const Vector2 &rhs) const
 {
 	return Vector2(x * rhs.x, y * rhs.y);
 }
 
-inline Vector2 Vector2::operator*=(const Vector2 &rhs) 
+Vector2 Vector2::operator*=(const Vector2 &rhs) 
 {
-	 x *= rhs.x, y *= rhs.y;
-	 return *this;
+	 return Vector2(x *= rhs.x, y *= rhs.y);
 }
 
-inline Vector2 Vector2::operator+=(const Vector2 &rhs)
+Vector2 Vector2::operator+=(const Vector2 &rhs)
 {
-	x += rhs.x, y += rhs.y;
-	return *this;
+	return Vector2(x += rhs.x, y += rhs.y);
 }
 
-inline Vector2 Vector2::operator-=(const Vector2 &rhs)
+Vector2 Vector2::operator-=(const Vector2 &rhs)
 {
-	x -= rhs.x, y -= rhs.y;
-	return *this;
+	return Vector2(x -= rhs.x, y -= rhs.y);
 }
 
 float Vector2::Length() const

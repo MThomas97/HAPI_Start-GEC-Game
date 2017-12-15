@@ -77,7 +77,7 @@ bool World::LoadLevel()
 	EntityEnemy *enemy = new EntityEnemy("enemy");
 	m_entity.push_back(enemy);
 
-	enemy->SetPosition(Vector2(300, 600));
+	enemy->SetPosition(Vector2(300, 300));
 	
 
 	/*EntityExplosion *horse = new EntityExplosion("horse");
@@ -97,15 +97,26 @@ void World::Update()
 
 	DWORD lastTick{ 0 };
 
+	float PreviousTime = 0;
+	float CurrentTime = HAPI.GetTime();
+
 	while (HAPI.Update()) //Game loop
 	{	//calls functions from classes
+
+		PreviousTime = CurrentTime;
+		CurrentTime = HAPI.GetTime();
+
+		float dt = CurrentTime - PreviousTime;
+
+		if (dt > 0.15f)
+			dt = 0.15f;
 
 		DWORD TimeSinceLastTick{ HAPI.GetTime() - lastTick };
 		
 		if(TimeSinceLastTick >= TickTime)
 		{
 			for (auto p : m_entity)
-				p->Update(*m_vis);
+				p->Update(*m_vis, dt);
 
 			for (size_t i = 0; i < m_entity.size(); i++)
 			{

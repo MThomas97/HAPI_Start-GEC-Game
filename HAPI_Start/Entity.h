@@ -29,7 +29,7 @@ public:
 
 	virtual eSide getSide() const = 0;
 
-	virtual void Update(Visualisation &vis) = 0;
+	virtual void Update(Visualisation &vis, float dt) = 0;
 
 	void Render(Visualisation &vis, float s);
 
