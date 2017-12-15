@@ -68,10 +68,10 @@ void EntityPlayer::CheckCollision(Visualisation &vis, Entity &other)
 		//CollisionRect.ClipTo(m_enemyRect);
 		m_gravity -= 0.1f;
 		isCollided = true;
-		
+		jumping = false;
 	}
 
-
+	//jumping = true;
 	isCollided = false;
 	//m_position = nextPos;
 	/*CollisionRect.Translate(-GetPosition().x, -GetPosition().y);
@@ -106,11 +106,11 @@ void EntityPlayer::Update(Visualisation &vis, float dt)
 	
 
 	
-	if (!isCollided)
+	/*if (!isCollided)
 	{
 		pos.y += m_gravity;
 		m_gravity += 0.1f;
-	}
+	}*/
 		
 
 	if (m_gravity > 0.4f)
@@ -118,7 +118,7 @@ void EntityPlayer::Update(Visualisation &vis, float dt)
 		m_gravity = 0.4f;
 	}
 
-	float jumpSpeed{ 10.0f };
+	//float jumpSpeed{ 10.0f };
 	float acceleration{ 9.8f };
 
 
@@ -132,19 +132,19 @@ void EntityPlayer::Update(Visualisation &vis, float dt)
 
 	float ElapsedTime = HAPI.GetTime() - PrevTime;
 	
-	pos += vel;
+	//pos += vel;
 
 	//determines whether the player is on the ground
 	const bool onground = pos.y >= 480;
 
-	vel += gravity;
+	//vel += gravity;
 
 		//PrevTime = ElapsedTime;
 		if (HAPI.GetTime() - m_lastTimeUpdated >= m_time)
 		{
 			//Moves sprite with WASD keys
-				if (keyData.scanCode['W'])
-					pos.y -= m_speed;
+			if (keyData.scanCode['W'])
+				pos.y -= m_speed;
 
 				if (keyData.scanCode['S'])
 					pos.y += m_speed;
@@ -154,29 +154,51 @@ void EntityPlayer::Update(Visualisation &vis, float dt)
 
 				if (keyData.scanCode['D'])
 					pos.x += m_speed;
-			
-				if (keyData.scanCode[HK_SPACE])
+
+				if (jumping)
 				{
-					velocity = 3.0f;
+					pos.y += jumpSpeed;
+					jumpSpeed += 1;
 					
-						/*vel.y += jumpAccel * 2;
-						jumpcounter = jumpframes;*/
-					
-					/*else if (jumpcounter > 0)
+					if (pos.y >= 300)
 					{
-						vel.y += jumpAccel;
-						jumpcounter--;
-					}*/
+						//pos.y = 300;
+						jumping = false;
+					}
 				}
-				else {
-					jumpcounter = 0;
+				else
+				{
+					if (keyData.scanCode[HK_SPACE])
+					{
+						jumping = true;
+						jumpSpeed = -14;
+					}
 				}
-				
 
+				//if (keyData.scanCode[HK_SPACE])
+				//{
+				//	velocity = 7.0f;
+				//		/*vel.y += jumpAccel * 2;
+				//		jumpcounter = jumpframes;*/
+				//	
+				//	/*else if (jumpcounter > 0)
+				//	{
+				//		vel.y += jumpAccel;
+				//		jumpcounter--;
+				//	}*/
+				//	pos.x += velocity.x;
+				//	pos.y -= velocity.y;
+				//}
+				///*else {
+				//	jumpcounter = 0;
+				//}*/
+				//velocity.y += m_gravity;
+				//pos.x += velocity.x;
+				//pos.y -= velocity.y;
 			
 
-			velocity += acceleration * dt;
-			PlayerPosition += velocity * dt;
+			//velocity += acceleration * dt;
+			//PlayerPosition += velocity * dt;
 
 			if (!(vect.x == 0 && vect.y == 0))
 			{

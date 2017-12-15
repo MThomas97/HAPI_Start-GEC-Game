@@ -71,7 +71,7 @@ bool World::LoadLevel()
 	EntityPlayer *newPlayer = new EntityPlayer("player");
 	m_entity.push_back(newPlayer);
 
-	newPlayer->SetPosition(Vector2(10, 10));
+	newPlayer->SetPosition(Vector2(100, 300));
 	//newPlayer->LoadRectangle(*m_vis);
 
 	EntityEnemy *enemy = new EntityEnemy("enemy");

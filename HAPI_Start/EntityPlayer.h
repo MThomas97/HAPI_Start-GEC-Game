@@ -32,6 +32,10 @@ private:
 	int PrevTime1 = 0;
 	int PrevTime = 0;
 
+	bool jumping{ false };
+	float startY = 300;
+	float jumpSpeed{ 0 };
+
 	bool isCollided{ false };
 
 	float m_gravity{ 0.1f };
