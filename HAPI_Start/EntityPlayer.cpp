@@ -48,24 +48,41 @@ void EntityPlayer::CheckCollision(Visualisation &vis, Entity &other)
 	CollisionRect.Translate(GetPosition().x, GetPosition().y);
 
 
+	Vector2 thisDir{ GetOldPosition() - GetPosition() };
+	Vector2 otherDir{ other.GetOldPosition() = other.GetPosition() };
+
+	float biggestLength = 1.0f / std::max(thisDir.Length(), otherDir.Length());
+
+	thisDir = thisDir * biggestLength;
+	otherDir = otherDir * biggestLength;
+
+	Vector2 newThisPos{ GetPosition() };
+	Vector2 newOtherPos{ other.GetPosition() };
+
+	//do
+	//{
+	thisRect = Rectangle(thisRect);
+	otherRect = Rectangle(otherRect);
+
+	thisRect.left += width;
+	thisRect.right -= width;
+	thisRect.top += height;
+
+	newThisPos = newThisPos + thisDir;
+	newOtherPos = newOtherPos + otherDir;
+
+	thisRect.Translate((int)newThisPos.x, (int)newThisPos.y);
+	otherRect.Translate((int)newOtherPos.x, (int)newOtherPos.y);
+	//} while ();
+
 	//temp.x = m_position.x - w;
 
 	//temp.y = m_position.y - h;
 
-	if (CollisionRect.CheckCollision(EnemyCollisionRect) == true)
+	if (thisRect.CheckCollision(otherRect))
 	{
-		//std::cout << "Collision detected!" << std::endl;
-		//m_pos = oldPos;
-		//m_position = m_oldPosition;
+		
 		SetBackPosition(oldPos);
-		//nextPos.x = temp.x;
-		//nextPos.y = temp.y;
-		//GetPosition() = GetOldPosition();
-
-
-		//nextPos.x = std::max(0, std::min((int)m_position.x, 1000 - thisRect.width() - 1));
-		//nextPos.y = std::max(0, std::min((int)m_position.y, 1000 - thisRect.height() - 1));
-		//CollisionRect.ClipTo(m_enemyRect);
 		m_gravity -= 0.1f;
 		isCollided = true;
 		jumping = false;
@@ -79,6 +96,7 @@ void EntityPlayer::CheckCollision(Visualisation &vis, Entity &other)
 	//m_position.x = nextPos.x;
 	//m_position.y = nextPos.y;
 }
+
 
 void EntityPlayer::Update(Visualisation &vis, float dt)
 {
@@ -139,9 +157,6 @@ void EntityPlayer::Update(Visualisation &vis, float dt)
 
 	//vel += gravity;
 
-		//PrevTime = ElapsedTime;
-		if (HAPI.GetTime() - m_lastTimeUpdated >= m_time)
-		{
 			//Moves sprite with WASD keys
 			if (keyData.scanCode['W'])
 				pos.y -= m_speed;
@@ -235,9 +250,8 @@ void EntityPlayer::Update(Visualisation &vis, float dt)
 
 				}
 			}
-			m_lastTimeUpdated = HAPI.GetTime();
-		}
-		
+
+			SetPosition(pos);
 
 		if (vel.y > max_fall)
 			vel.y = max_fall;
@@ -288,22 +302,13 @@ void EntityPlayer::Update(Visualisation &vis, float dt)
 			pos.x = 624;
 		}*/
 
-		SetPosition(pos);
-		//SetPosition(PlayerPosition);
-		//SetPosition(pos);
 
-		float HorseElapsedTime = HAPI.GetTime() - PrevTime;
-
-		if (PrevTime + 150 < HorseElapsedTime)
+		if (HAPI.GetTime() - m_lastTimeUpdatedAnimation >= m_animationTime)
 		{
-			PrevTime = HorseElapsedTime;
-
 			curFrameX++;
-
 			if (curFrameX >= vis.GetNumframesX(Spritename))
 			{
 				curFrameX = 0;
-
 				curFrameY += 1;
 			}
 
@@ -311,7 +316,7 @@ void EntityPlayer::Update(Visualisation &vis, float dt)
 			{
 				curFrameY = 0;
 				curFrameX = 0;
-
 			}
+			m_lastTimeUpdatedAnimation = HAPI.GetTime();
 		}
 }

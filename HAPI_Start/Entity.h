@@ -65,7 +65,12 @@ protected:
 	int curFrameX{ 0 };
 	int curFrameY{ 0 };
 
-//private:
+	size_t bulletStartIndex{ 0 };
+
+	DWORD m_lastTimeUpdatedAnimation{ 0 };
+	DWORD m_animationTime{ 50 };
+
+private:
 	Vector2 m_position;
 	Vector2 m_oldPosition;
 };

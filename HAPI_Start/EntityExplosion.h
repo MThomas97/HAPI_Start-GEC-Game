@@ -9,7 +9,7 @@ public:
 
 	void Update(Visualisation & vis, float dt) override final;
 
-	eSide getSide() const override final { return eSide::eEnemy; }
+	eSide getSide() const override final { return eSide::eNeutral; }
 
 	void CheckCollision(Visualisation &vis, Entity &other) override final;
 

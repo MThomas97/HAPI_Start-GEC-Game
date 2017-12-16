@@ -56,8 +56,5 @@ private:
 	bool left{ false };
 	bool right{ false };
 	bool jump{ false };
-
-	DWORD m_lastTimeUpdated{ 0 };
-	DWORD m_time{ 20 };
 };
 

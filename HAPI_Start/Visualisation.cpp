@@ -60,18 +60,6 @@ void Visualisation::RenderNoAlphaSprite(const std::string &name, int posX, int p
 	m_spritemap.at(name)->RenderNoAlpha(this->m_screenPnter, this->m_screenRect, posX, posY);
 }
 
-void Visualisation::ScrollingBackground(int FirstTexturePosX, int FirstTexturePosY, int SecondTexturePosX, int SecondTexturePosY)
-{
-	int tempPosY = SecondTexturePosY;
-	FirstTexturePosY += 1;
-	SecondTexturePosY += 1;
-	if (FirstTexturePosY > m_screenRect.bottom)
-	{
-		FirstTexturePosY = 0;
-		SecondTexturePosY = -tempPosY;
-	}
-}
-
 Rectangle Visualisation::GetRect(const std::string &name)
 {
 	return m_spritemap.at(name)->getRect();

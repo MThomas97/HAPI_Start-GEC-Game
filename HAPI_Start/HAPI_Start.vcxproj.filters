@@ -63,6 +63,9 @@
     <ClCompile Include="EntityBackground.cpp">
       <Filter>World Model\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="EntityBullet.cpp">
+      <Filter>World Model\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="PatchNotes.txt" />
@@ -99,6 +102,9 @@
       <Filter>World Model\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="World.h">
+      <Filter>World Model\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityBullet.h">
       <Filter>World Model\Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityBackground.cpp" />
+    <ClCompile Include="EntityBullet.cpp" />
     <ClCompile Include="EntityEnemy.cpp" />
     <ClCompile Include="EntityExplosion.cpp" />
     <ClCompile Include="EntityPlayer.cpp" />
@@ -43,6 +44,7 @@
   <ItemGroup>
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityBackground.h" />
+    <ClInclude Include="EntityBullet.h" />
     <ClInclude Include="EntityEnemy.h" />
     <ClInclude Include="EntityExplosion.h" />
     <ClInclude Include="EntityPlayer.h" />

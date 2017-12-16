@@ -5,6 +5,7 @@
 #include "EntityScrollingBackground.h"
 #include "EntityEnemy.h"
 #include "EntityExplosion.h"
+#include "EntityBullet.h"
 #include "Vector2.h"
 #include <HAPI_lib.h>
 #include <algorithm>
@@ -18,7 +19,8 @@
 // HAPI itself is wrapped in the HAPISPACE namespace
 using namespace HAPISPACE;
 
-constexpr DWORD TickTime{ 50 };
+constexpr DWORD kTickTime{ 50 };
+constexpr int knumBullets{ 10 };
 
 World::~World()
 {
@@ -58,6 +60,14 @@ bool World::LoadLevel()
 	if (!m_vis->CreateSprite("background", "Data\\FullStarBackground.png"))
 		return false;
 	
+	if (!m_vis->CreateSprite("bullet", "Data//laserGreen.png"))
+		return false;
+
+	/*EntityExplosion *horse = new EntityExplosion("horse");
+	m_entity.push_back(horse);
+
+	horse->SetPosition(Vector2(200, 200));*/
+
 	/*EntityBackground *newBackground = new EntityBackground("background");
 	m_entity.push_back(newBackground);
 
@@ -68,22 +78,29 @@ bool World::LoadLevel()
 
 	//newSecondBackground->SetPosition(Vector2(0, -800));
 
+	
+	//newPlayer->LoadRectangle(*m_vis);
+
 	EntityPlayer *newPlayer = new EntityPlayer("player");
 	m_entity.push_back(newPlayer);
 
 	newPlayer->SetPosition(Vector2(100, 300));
-	//newPlayer->LoadRectangle(*m_vis);
 
 	EntityEnemy *enemy = new EntityEnemy("enemy");
 	m_entity.push_back(enemy);
 
 	enemy->SetPosition(Vector2(300, 300));
 	
+	
 
-	/*EntityExplosion *horse = new EntityExplosion("horse");
-	m_entity.push_back(horse);
+	/*for (int i = 0; i < knumBullets; i++)
+	{
+		EntityBullet *newBullet = new EntityBullet("bullet");
+		m_entity.push_back(newBullet);
+	}
+*/
 
-	horse->SetPosition(Vector2(300, 300));*/
+	
 
 	return true;
 
@@ -113,10 +130,12 @@ void World::Update()
 
 		DWORD TimeSinceLastTick{ HAPI.GetTime() - lastTick };
 		
-		if(TimeSinceLastTick >= TickTime)
+		if(TimeSinceLastTick >= kTickTime)
 		{
 			for (auto p : m_entity)
 				p->Update(*m_vis, dt);
+
+			lastTick = HAPI.GetTime();
 
 			for (size_t i = 0; i < m_entity.size(); i++)
 			{
@@ -127,8 +146,8 @@ void World::Update()
 			}
 			TimeSinceLastTick = 0;
 		}
-
-		float s = TimeSinceLastTick / TickTime;
+		
+		float s = TimeSinceLastTick / (float)kTickTime;
 		assert(s >= 0 && s <= 1.0f);
 
 		m_vis->ClearToColour(HAPI.GetScreenPointer(), screenWidth, screenHeight, HAPI_TColour(0, 0, 0));

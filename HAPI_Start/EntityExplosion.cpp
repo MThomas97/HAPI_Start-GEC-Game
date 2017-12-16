@@ -12,26 +12,24 @@ void EntityExplosion::CheckCollision(Visualisation &vis, Entity &other)
 
 void EntityExplosion::Update(Visualisation &vis, float dt)
 {
-	float HorseElapsedTime = HAPI.GetTime() - PrevTime;
+	Vector2 pos{ GetPosition() };
 
-	if (PrevTime + 50 < HorseElapsedTime)
-	{
-		PrevTime = HorseElapsedTime;
-
-		curFrameX++;
-		
-		if (curFrameX >= vis.GetNumframesX(Spritename))
+	if (HAPI.GetTime() - m_lastTimeUpdatedAnimation >= m_animationTime)
 		{
-			curFrameX = 0;
+			curFrameX++;
+			if (curFrameX >= vis.GetNumframesX(Spritename))
+			{
+				curFrameX = 0;
+				curFrameY += 1;
+			}
 
-			curFrameY += 1;
+			if (curFrameY >= vis.GetNumframesY(Spritename))
+			{
+				curFrameY = 0;
+				curFrameX = 0;
+			}
+			m_lastTimeUpdatedAnimation = HAPI.GetTime();
 		}
-
-		if (curFrameY >= vis.GetNumframesY(Spritename))
-		{
-			curFrameY = 0;
-			curFrameX = 0;
-
-		}
-	}
+	
+	SetPosition(pos);
 }

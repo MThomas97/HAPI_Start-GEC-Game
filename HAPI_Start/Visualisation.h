@@ -30,8 +30,6 @@ public:
 
 	void RenderNoAlphaSprite(const std::string & name, int posX, int posY);
 
-	void ScrollingBackground(int FirstTexturePosX, int FirstTexturePosY, int SecondTexturePosX, int SecondTexturePosY);
-
 	Rectangle GetRect(const std::string &name);
 
 	int GetNumframesX(const std::string & name);
