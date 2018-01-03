@@ -6,6 +6,7 @@
 #include "EntityEnemy.h"
 #include "EntityExplosion.h"
 #include "EntityBullet.h"
+#include "EntityAI.h"
 #include "Vector2.h"
 #include <HAPI_lib.h>
 #include <algorithm>
@@ -48,10 +49,10 @@ bool World::LoadLevel()
 {
 	//Loads all the sprites
 
-	if (!m_vis->CreateSprite("player", "Data\\idleSpriteV2.png", 4, 1))
+	if (!m_vis->CreateSprite("player", "Data\\player.png"))
 		return false;
 
-	if (!m_vis->CreateSprite("enemy", "Data\\player.png"))
+	if (!m_vis->CreateSprite("enemy", "Data\\SpaceShooter\\enemyBlack1.png"))
 		return false;
 
 	if (!m_vis->CreateSprite("horse", "Data\\HorseSpriteSheetWhite.png", 5, 3))
@@ -81,15 +82,20 @@ bool World::LoadLevel()
 	
 	//newPlayer->LoadRectangle(*m_vis);
 
+	EntityAI *newAI = new EntityAI("enemy");
+	m_entity.push_back(newAI);
+
+	newAI->SetPosition(Vector2(250, 100));
+
 	EntityPlayer *newPlayer = new EntityPlayer("player");
 	m_entity.push_back(newPlayer);
 
-	newPlayer->SetPosition(Vector2(100, 300));
+	newPlayer->SetPosition(Vector2(200, 300));
 
-	EntityEnemy *enemy = new EntityEnemy("enemy");
+	/*EntityEnemy *enemy = new EntityEnemy("enemy");
 	m_entity.push_back(enemy);
 
-	enemy->SetPosition(Vector2(300, 300));
+	enemy->SetPosition(Vector2(100, 300));*/
 	
 	
 

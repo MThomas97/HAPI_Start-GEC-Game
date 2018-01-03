@@ -175,7 +175,7 @@ void EntityPlayer::Update(Visualisation &vis, float dt)
 					pos.y += jumpSpeed;
 					jumpSpeed += 1;
 					
-					if (pos.y >= 300)
+					if (pos.y >= 400)
 					{
 						//pos.y = 300;
 						jumping = false;
