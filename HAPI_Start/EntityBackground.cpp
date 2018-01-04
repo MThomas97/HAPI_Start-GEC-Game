@@ -10,7 +10,7 @@ void EntityBackground::CheckCollision(Visualisation &vis, Entity &other)
 	
 }
 
-void EntityBackground::Update(Visualisation &vis, float dt)
+void EntityBackground::Update(World &world, Visualisation &vis, float dt)
 {
 	/*m_position.y += 1 * deltaTime;
 

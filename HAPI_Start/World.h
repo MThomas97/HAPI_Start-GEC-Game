@@ -1,10 +1,14 @@
 #pragma once
-
+#include "Entity.h"
 #include <vector>
+#include "Vector2.h"
+
+
 
 class Visualisation;
 
 class Entity;
+
 
 class World
 {
@@ -12,7 +16,11 @@ public:
 
 	~World();
 
+	void FireBullet(eSide side, const Vector2 & pos, int damageAmount);
+
 	void run();
+
+	
 
 private:
 	
@@ -26,5 +34,9 @@ private:
 
 	int screenWidth{ 600 };
 	int screenHeight{ 800 };
+
+	size_t bulletStartIndex{ 1 };
+
+	Vector2 bulletPos;
 };
 

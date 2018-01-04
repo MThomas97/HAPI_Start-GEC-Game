@@ -7,7 +7,7 @@ public:
 	EntityExplosion(std::string spriteID) : Entity(spriteID) {};
 	~EntityExplosion();
 
-	void Update(Visualisation & vis, float dt) override final;
+	void Update(World &world, Visualisation &vis, float dt) override final;
 
 	eSide getSide() const override final { return eSide::eNeutral; }
 

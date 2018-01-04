@@ -9,7 +9,7 @@ public:
 
 	void BackToPatrol();
 
-	void Update(Visualisation &vis, float dt) override final;
+	void Update(World &world, Visualisation &vis, float dt) override final;
 
 	void CheckForPlayer(Visualisation & vis, Entity & other);
 
@@ -18,7 +18,7 @@ public:
 	void CheckCollision(Visualisation &vis, Entity &other) override final;
 
 private:
-	int patrol{ 1 };
+	int path{ 1 };
 	bool alert{ false };
 	int attack{ 0 };
 	

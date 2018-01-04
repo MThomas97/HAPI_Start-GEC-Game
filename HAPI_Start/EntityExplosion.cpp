@@ -1,5 +1,6 @@
 #include "EntityExplosion.h"
 #include "Visualisation.h"
+#include "World.h"
 
 EntityExplosion::~EntityExplosion()
 {
@@ -10,7 +11,7 @@ void EntityExplosion::CheckCollision(Visualisation &vis, Entity &other)
 	
 }
 
-void EntityExplosion::Update(Visualisation &vis, float dt)
+void EntityExplosion::Update(World &world, Visualisation &vis, float dt)
 {
 	Vector2 pos{ GetPosition() };
 

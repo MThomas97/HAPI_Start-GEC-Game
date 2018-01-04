@@ -1,5 +1,6 @@
 #pragma once
 #include "Entity.h"
+#include "World.h"
 
 class Rectangle;
 
@@ -8,15 +9,15 @@ class Vector2;
 class EntityPlayer : public Entity
 {
 public:
-	EntityPlayer(std::string spriteID) : Entity(spriteID) {};
+	EntityPlayer(std::string spriteID) : Entity(spriteID) { lives = 3; };
 
 	~EntityPlayer();
 
-	void Update(Visualisation &vis, float dt) override final;
+	void Update(World &world, Visualisation &vis, float dt) override final;
 
 	eSide getSide() const override final {return eSide::ePlayer; }
 
-	void CheckCollision(Visualisation &vis, Entity &other) override final;
+	//void CheckCollision(Visualisation &vis, Entity &other) override final;
 
 private:
 	//Vector2 vect;
@@ -28,6 +29,8 @@ private:
 	//Vector2 newPos;
 
 	//Vector2 oldPos;
+
+
 
 	int PrevTime1 = 0;
 	int PrevTime = 0;

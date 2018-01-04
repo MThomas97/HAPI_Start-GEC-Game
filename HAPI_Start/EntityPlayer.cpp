@@ -2,103 +2,104 @@
 #include "Rectangle.h"
 #include "Visualisation.h"
 
+constexpr DWORD kClockTime{ 2000 };
+
 EntityPlayer::~EntityPlayer()
 {
 	
 }
 
-void EntityPlayer::CheckCollision(Visualisation &vis, Entity &other)
-{
-	if (!IsEnemyOf(getSide(), other.getSide()))
-		return;
+//void EntityPlayer::CheckCollision(Visualisation &vis, Entity &other)
+//{
+//	if (!m_alive)
+//		return;
+//
+//	/*if (!IsEnemyOf(getSide(), other.getSide()))
+//		return;*/
+//
+//	Vector2 oldPos{ GetOldPosition() };
+//
+//	Rectangle thisRect (vis.GetRect(Spritename));
+//	Rectangle otherRect(vis.GetRect(other.GetSpritename()));
+//
+//	Rectangle CollisionRect(thisRect);
+//
+//	float width = thisRect.width() / 10.0f; //Reduces the size of the collider rectangle width by 10%
+//
+//	float height = thisRect.height() / 10.0f; //Reduces the size of the collider rectangle height by 10%
+//
+//	CollisionRect.left += width;
+//	CollisionRect.right -= width;
+//	CollisionRect.top += height;
+//	//CollisionRect.bottom -= height;
+//	Rectangle EnemyCollisionRect(otherRect);
+//
+//	/*int w{ thisRect.width() };
+//
+//	thisRect.left += w / 10;
+//
+//	thisRect.right += w / 10;
+//
+//	w;
+//
+//	int h{ thisRect.height() };
+//
+//	thisRect.top += h / 10;
+//
+//	thisRect.bottom += h / 10;*/
+//
+//	EnemyCollisionRect.Translate(other.GetPosition().x, other.GetPosition().y);
+//	
+//	CollisionRect.Translate(GetPosition().x, GetPosition().y);
+//
+//
+//	Vector2 thisDir{ GetOldPosition() - GetPosition() };
+//	Vector2 otherDir{ other.GetOldPosition() = other.GetPosition() };
+//
+//	float biggestLength = 1.0f / std::max(thisDir.Length(), otherDir.Length());
+//
+//	thisDir = thisDir * biggestLength;
+//	otherDir = otherDir * biggestLength;
+//
+//	Vector2 newThisPos{ GetPosition() };
+//	Vector2 newOtherPos{ other.GetPosition() };
+//
+//	//do
+//	//{
+//	thisRect = Rectangle(thisRect);
+//	otherRect = Rectangle(otherRect);
+//
+//	thisRect.left += width;
+//	thisRect.right -= width;
+//	thisRect.top += height;
+//
+//	newThisPos = newThisPos + thisDir;
+//	newOtherPos = newOtherPos + otherDir;
+//
+//	thisRect.Translate((int)newThisPos.x, (int)newThisPos.y);
+//	otherRect.Translate((int)newOtherPos.x, (int)newOtherPos.y);
+//	//} while ();
+//
+//	//temp.x = m_position.x - w;
+//
+//	//temp.y = m_position.y - h;
+//
+//	if (thisRect.CheckCollision(otherRect))
+//	{
+//		
+//		SetBackPosition(oldPos);
+//		//m_gravity -= 0.1f;
+//		//isCollided = true;
+//		//jumping = false;
+//	}
+//
+//	
+//	//isCollided = false;
+//	
+//}
 
-	Vector2 oldPos{ GetOldPosition() };
 
-	Rectangle thisRect (vis.GetRect(Spritename));
-	Rectangle otherRect(vis.GetRect(other.GetSpritename()));
-
-	Rectangle CollisionRect(thisRect);
-
-	float width = thisRect.width() / 10.0f; //Reduces the size of the collider rectangle width by 10%
-
-	float height = thisRect.height() / 10.0f; //Reduces the size of the collider rectangle height by 10%
-
-	CollisionRect.left += width;
-	CollisionRect.right -= width;
-	CollisionRect.top += height;
-	//CollisionRect.bottom -= height;
-	Rectangle EnemyCollisionRect(otherRect);
-
-	/*int w{ thisRect.width() };
-
-	thisRect.left += w / 10;
-
-	thisRect.right += w / 10;
-
-	w;
-
-	int h{ thisRect.height() };
-
-	thisRect.top += h / 10;
-
-	thisRect.bottom += h / 10;*/
-
-	EnemyCollisionRect.Translate(other.GetPosition().x, other.GetPosition().y);
-	
-	CollisionRect.Translate(GetPosition().x, GetPosition().y);
-
-
-	Vector2 thisDir{ GetOldPosition() - GetPosition() };
-	Vector2 otherDir{ other.GetOldPosition() = other.GetPosition() };
-
-	float biggestLength = 1.0f / std::max(thisDir.Length(), otherDir.Length());
-
-	thisDir = thisDir * biggestLength;
-	otherDir = otherDir * biggestLength;
-
-	Vector2 newThisPos{ GetPosition() };
-	Vector2 newOtherPos{ other.GetPosition() };
-
-	//do
-	//{
-	thisRect = Rectangle(thisRect);
-	otherRect = Rectangle(otherRect);
-
-	thisRect.left += width;
-	thisRect.right -= width;
-	thisRect.top += height;
-
-	newThisPos = newThisPos + thisDir;
-	newOtherPos = newOtherPos + otherDir;
-
-	thisRect.Translate((int)newThisPos.x, (int)newThisPos.y);
-	otherRect.Translate((int)newOtherPos.x, (int)newOtherPos.y);
-	//} while ();
-
-	//temp.x = m_position.x - w;
-
-	//temp.y = m_position.y - h;
-
-	if (thisRect.CheckCollision(otherRect))
-	{
-		
-		SetBackPosition(oldPos);
-		m_gravity -= 0.1f;
-		isCollided = true;
-		jumping = false;
-	}
-
-	//jumping = true;
-	isCollided = false;
-	//m_position = nextPos;
-	/*CollisionRect.Translate(-GetPosition().x, -GetPosition().y);
-	EnemyCollisionRect.Translate(-other.GetPosition().x, -other.GetPosition().y);*/
-	//m_position.x = nextPos.x;
-	//m_position.y = nextPos.y;
-}
-
-
-void EntityPlayer::Update(Visualisation &vis, float dt)
+void EntityPlayer::Update(World &world, Visualisation &vis, float dt)
 {
 	//m_position = nextPos;
 	
@@ -107,6 +108,7 @@ void EntityPlayer::Update(Visualisation &vis, float dt)
 	Vector2 vel(0.0, 0.0);
 	Vector2 gravity(0, 0.5f);
 
+	Vector2 dir;
 
 	Vector2 pos{ GetPosition() };
 
@@ -115,6 +117,12 @@ void EntityPlayer::Update(Visualisation &vis, float dt)
 	Vector2 PlayerOldPosition{ GetOldPosition() };
 
 	Vector2 vect;
+
+	health;
+	float PreviousTime = 0;
+	float CurrentTime = HAPI.GetTime();
+	DWORD lastTick{ 0 };
+	DWORD TimeSinceLastTick{ HAPI.GetTime() - lastTick };
 
 	//const float gravity{ 1 };
 	int groundHeight{ 440 };
@@ -170,50 +178,30 @@ void EntityPlayer::Update(Visualisation &vis, float dt)
 				if (keyData.scanCode['D'])
 					pos.x += m_speed;
 
-				if (jumping)
-				{
-					pos.y += jumpSpeed;
-					jumpSpeed += 1;
-					
-					if (pos.y >= 400)
-					{
-						//pos.y = 300;
-						jumping = false;
-					}
-				}
-				else
-				{
-					if (keyData.scanCode[HK_SPACE])
-					{
-						jumping = true;
-						jumpSpeed = -14;
-					}
-				}
-
-				//if (keyData.scanCode[HK_SPACE])
+				//if (jumping)
 				//{
-				//	velocity = 7.0f;
-				//		/*vel.y += jumpAccel * 2;
-				//		jumpcounter = jumpframes;*/
+				//	pos.y += jumpSpeed;
+				//	jumpSpeed += 1;
 				//	
-				//	/*else if (jumpcounter > 0)
+				//	if (pos.y >= 400)
 				//	{
-				//		vel.y += jumpAccel;
-				//		jumpcounter--;
-				//	}*/
-				//	pos.x += velocity.x;
-				//	pos.y -= velocity.y;
+				//		//pos.y = 300;
+				//		jumping = false;
+				//	}
 				//}
-				///*else {
-				//	jumpcounter = 0;
-				//}*/
-				//velocity.y += m_gravity;
-				//pos.x += velocity.x;
-				//pos.y -= velocity.y;
-			
+				//else
+				//{
+				//	if (keyData.scanCode[HK_SPACE])
+				//	{
+				//		jumping = true;
+				//		jumpSpeed = -14;
+				//	}
+				//}
 
-			//velocity += acceleration * dt;
-			//PlayerPosition += velocity * dt;
+				if (keyData.scanCode[HK_SPACE] )
+				{
+					world.FireBullet(getSide(), Vector2(pos.x, pos.y), 10);
+				}
 
 			if (!(vect.x == 0 && vect.y == 0))
 			{

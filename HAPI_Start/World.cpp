@@ -21,6 +21,7 @@
 using namespace HAPISPACE;
 
 constexpr DWORD kTickTime{ 50 };
+constexpr DWORD kClockTime{ 1000 };
 constexpr int knumBullets{ 10 };
 
 World::~World()
@@ -30,6 +31,30 @@ World::~World()
 	for (auto p : m_entity)
 		delete p;
 	
+}
+
+void World::FireBullet(eSide side, const Vector2 &pos, int damageAmount)
+{
+	float PreviousTime = 0;
+	float CurrentTime = HAPI.GetTime();
+	DWORD lastTick{ 0 };
+	DWORD TimeSinceLastTick{ HAPI.GetTime() - lastTick };
+
+		for (size_t i = bulletStartIndex; i < bulletStartIndex + knumBullets; i++)
+		{
+
+			if (!m_entity[i]->IsAlive())
+			{
+ 				if (TimeSinceLastTick >= kClockTime)
+				{
+					dynamic_cast<EntityBullet*>(m_entity[i])->Spawn(side, pos, damageAmount);
+					lastTick = HAPI.GetTime();
+					TimeSinceLastTick = 0;
+					break;
+				}
+				break;
+			}
+		}
 }
 
 void World::run()
@@ -82,30 +107,32 @@ bool World::LoadLevel()
 	
 	//newPlayer->LoadRectangle(*m_vis);
 
-	EntityAI *newAI = new EntityAI("enemy");
-	m_entity.push_back(newAI);
-
-	newAI->SetPosition(Vector2(250, 100));
+	
 
 	EntityPlayer *newPlayer = new EntityPlayer("player");
 	m_entity.push_back(newPlayer);
 
 	newPlayer->SetPosition(Vector2(200, 300));
 
+	for (int i = 0; i < knumBullets; i++)
+	{
+		EntityBullet *newBullet = new EntityBullet("bullet");
+		m_entity.push_back(newBullet);
+
+	}
+
+	EntityAI *newAI = new EntityAI("enemy");
+	m_entity.push_back(newAI);
+
+	newAI->SetPosition(Vector2(250, -300));
+
+	
 	/*EntityEnemy *enemy = new EntityEnemy("enemy");
 	m_entity.push_back(enemy);
 
 	enemy->SetPosition(Vector2(100, 300));*/
-	
-	
 
-	/*for (int i = 0; i < knumBullets; i++)
-	{
-		EntityBullet *newBullet = new EntityBullet("bullet");
-		m_entity.push_back(newBullet);
-	}
-*/
-
+	
 	
 
 	return true;
@@ -139,7 +166,7 @@ void World::Update()
 		if(TimeSinceLastTick >= kTickTime)
 		{
 			for (auto p : m_entity)
-				p->Update(*m_vis, dt);
+				p->Update(*this, *m_vis, dt);
 
 			lastTick = HAPI.GetTime();
 
@@ -147,6 +174,7 @@ void World::Update()
 			{
 				for (size_t j = i + 1; j < m_entity.size(); j++)
 				{
+					m_entity[j]->CheckCollision(*m_vis, *m_entity[i]);
 					m_entity[i]->CheckCollision(*m_vis, *m_entity[j]);
 				}
 			}

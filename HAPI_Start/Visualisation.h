@@ -36,6 +36,8 @@ public:
 
 	int GetNumframesY(const std::string & name);
 
+	Rectangle GetScreenRect() const { return m_screenRect; }
+
 private:
 	std::unordered_map<std::string, Sprite*> m_spritemap;
 

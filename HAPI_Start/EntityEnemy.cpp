@@ -83,7 +83,7 @@ void EntityEnemy::CheckCollision(Visualisation &vis, Entity &other)
 	
 }
 
-void EntityEnemy::Update(Visualisation &vis, float dt)
+void EntityEnemy::Update(World &world, Visualisation &vis, float dt)
 {
 
 	Vector2 pos{ GetPosition() };
