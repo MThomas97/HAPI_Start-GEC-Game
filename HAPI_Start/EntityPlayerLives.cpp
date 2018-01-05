@@ -8,6 +8,8 @@ EntityPlayerLives::~EntityPlayerLives()
 void EntityPlayerLives::Update(World & world, Visualisation & vis, float dt)
 {
 
+	Vector2 pos{ GetPosition() };
+
 	if (lives1)
 		curFrameY = 2;
 
@@ -20,6 +22,8 @@ void EntityPlayerLives::Update(World & world, Visualisation & vis, float dt)
 
 	if (lives2)
 		curFrameY = 1;
+
+	SetPosition(pos);
 
 }
 

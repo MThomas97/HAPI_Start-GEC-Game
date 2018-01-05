@@ -14,6 +14,8 @@ class World
 {
 public:
 
+	World(int width, int height, std::string name);
+
 	~World();
 
 	void FireBullet(eSide side, const Vector2 & pos, int damageAmount);
@@ -21,6 +23,8 @@ public:
 	void FireExplosion(eSide side, const Vector2 &pos, int damageAmount);
 
 	void SpawnPickup(Vector2 &pos, int damageAmount);
+
+	void SetRestart(bool reset) { IsFinished = reset; }
 
 	void run();
 
@@ -30,9 +34,21 @@ private:
 
 	bool LoadLevel();
 
+	void ResetPositions();
+
+	bool IsFinished{ false };
+
 	std::vector<Entity*> m_entity;
 
+	std::vector<Vector2> m_savePosition;
+
 	Visualisation *m_vis{ nullptr };
+
+	bool LoadOnce{ false };
+
+	bool togglePause{ false };
+
+	int toggletick{ 1 };
 
 	int screenWidth{ 600 };
 	int screenHeight{ 800 };

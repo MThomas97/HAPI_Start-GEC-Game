@@ -16,8 +16,5 @@ public:
 private:
 	eSide m_side{ eSide::eNeutral };
 	Vector2 GetPos;
-
-	int PrevTime = 0;
-	
 };
 

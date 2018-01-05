@@ -16,6 +16,7 @@
 // Include the HAPI header to get access to all of HAPIs interfaces
 #include <HAPI_lib.h>
 #include "World.h"
+#include "Restart.h"
 
 
 #if defined(DEBUG) | defined(_DEBUG)
@@ -26,15 +27,40 @@
 // HAPI itself is wrapped in the HAPISPACE namespace
 using namespace HAPISPACE;
 
+float Restart2{ false };
+int width{ 600 };
+int height{ 800 };
 // Every HAPI program has a HAPI_Main as an entry point
 // When this function exits the program will close down
 
 void HAPI_Main()
 {
-	World world;
 
-	//world.run();
+	World world(width, height, "Space Shooter");
 
 	world.run();
+
+	Restart RestartNow;
+
+	RestartNow.RestartGame();
+
+	
+
+	//HAPI.Initialise(width, height, "Space Shooter");
+
+	static const HAPI_TKeyboardData &keyData = HAPI.GetKeyboardData();
+
+	//if (keyData.scanCode['A'])
+	//{
+	//	Restart = true;
+	//}
+	//else {
+	//	Restart = false;
+	//}
+	//
+	////world.run();
+	//if(Restart)
+		
+	
 }
 

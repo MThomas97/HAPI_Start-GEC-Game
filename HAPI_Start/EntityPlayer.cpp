@@ -17,10 +17,13 @@ void EntityPlayer::Update(World &world, Visualisation &vis, float dt)
 	if (LoadOnce)
 	{
 		LoadSound();
+	
 		LoadOnce = false;
 	}
 
 	Rectangle thisRect(vis.GetRect(Spritename));
+	
+
 	Rectangle ScreenRect(vis.GetScreenRect());
 
 	thisRect.Translate(GetPosition().x, GetPosition().y);
@@ -30,15 +33,14 @@ void EntityPlayer::Update(World &world, Visualisation &vis, float dt)
 
 	if (lives <= 0 && SetOnce)
 	{
-		
 		HAPI_TSoundOptions loop(0.5f, true);
 		HAPI.StopSound(instanceID, true);
-		HAPI.PlaySound("Data\\Sounds\\death.ogg");
+		HAPI.PlaySound("Data\\Sounds\\death.ogg", loop);
 		HAPI.PlaySound("Data\\Sounds\\explosion.wav");
 		world.FireExplosion(getSide(), Vector2(pos.x, pos.y), 10);
 		SetOnce = false;
 	}
-	
+
 	float PreviousTime = 0;
 	float CurrentTime = HAPI.GetTime();
 	DWORD lastTick{ 0 };
@@ -53,9 +55,8 @@ void EntityPlayer::Update(World &world, Visualisation &vis, float dt)
 
 	float ElapsedTime = HAPI.GetTime() - PrevTime;
 	
-	std::string stringScore = std::to_string(Score);
-	HAPI.RenderText(90, 27, HAPI_TColour(0, 255, 0), stringScore, 30);
-		
+	Rectangle playerBulletRect(vis.GetRect(Spritename));
+	playerBulletRect.Translate(GetPosition().x, GetPosition().y);
 	//Moves sprite with WASD keys
 	if (keyData.scanCode['W'] && thisRect.top > ScreenRect.top)
 		pos.y -= m_speed;
@@ -76,7 +77,7 @@ void EntityPlayer::Update(World &world, Visualisation &vis, float dt)
 	}
 
 	if (keyData.scanCode[HK_SPACE] && m_alive == true)
-		world.FireBullet(getSide(), Vector2(pos.x, pos.y), 10);
+		world.FireBullet(getSide(), Vector2(playerBulletRect.left + 45, playerBulletRect.top - 33), 10);
 					
 	if (!keyData.scanCode['A'] && !keyData.scanCode['D'])
 		curFrameX = 1;
@@ -96,17 +97,31 @@ void EntityPlayer::Update(World &world, Visualisation &vis, float dt)
 
 	if (controllerData.isAttached)
 	{
-		if (Deadzone < LeftThumbX)
-				pos.x += m_speed;
+		if (Deadzone < LeftThumbX  && thisRect.right < ScreenRect.right)
+		{
+			pos.x += m_speed;
+			curFrameX = 0;
+		}
+		if (-Deadzone > LeftThumbX && thisRect.left > ScreenRect.left)
+		{
+			pos.x -= m_speed;
+			curFrameX = 2;
+		}
+		if (-Deadzone > LeftThumbY && thisRect.bottom < ScreenRect.bottom)
+			pos.y += m_speed;
 
-		if (-Deadzone > LeftThumbX)
-				pos.x -= m_speed;
+		if (Deadzone < LeftThumbY  && thisRect.top > ScreenRect.top)
+			pos.y -= m_speed;
 
-		if (-Deadzone > LeftThumbY)
-				pos.y += m_speed;
+		if (-Deadzone < LeftThumbX && -Deadzone > LeftThumbX)
+			curFrameX = 1;
 
-		if (Deadzone < LeftThumbY)
-				pos.y -= m_speed;
+
+		if (Deadzone < LeftThumbX && keyData.scanCode['D'])
+			curFrameX = 1;
+
+		if(controllerData.analogueButtons[HK_ANALOGUE_RIGHT_TRIGGER])
+			world.FireBullet(getSide(), Vector2(playerBulletRect.left + 45, playerBulletRect.top - 33), 10);
 
 		if (!(vect.x == 0 && vect.y == 0))
 		{

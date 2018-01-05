@@ -78,6 +78,9 @@
     <ClCompile Include="EntityAIFast.cpp">
       <Filter>World Model\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Restart.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="PatchNotes.txt" />
@@ -130,6 +133,9 @@
     </ClInclude>
     <ClInclude Include="EntityAIFast.h">
       <Filter>World Model\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Restart.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

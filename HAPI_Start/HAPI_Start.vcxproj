@@ -37,6 +37,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Rectangle.cpp" />
+    <ClCompile Include="Restart.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="Visualisation.cpp" />
@@ -58,6 +59,7 @@
     <ClInclude Include="EntityPlayerLives.h" />
     <ClInclude Include="EntityScrollingBackground.h" />
     <ClInclude Include="Rectangle.h" />
+    <ClInclude Include="Restart.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Visualisation.h" />

@@ -55,17 +55,19 @@ public:
 
 	bool IsAlive() const { return m_alive; }
 
+	void SetAlive(bool alive) { m_alive = alive; }
+
 	bool IsEnemyOf(eSide a, eSide b);
 
 	bool IsPickupOf(eSide a, eSide b);
 
 	std::string GetSpritename() const { return Spritename; }
 
+	int GetLives() const { return lives; }
+
 	size_t bulletStartIndex{ 0 };
 
 	void TakeDamage(int damageInflicted);
-
-	int GetLives() const { return lives; }
 
 protected:
 
