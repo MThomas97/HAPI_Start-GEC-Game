@@ -69,6 +69,15 @@
     <ClCompile Include="EntityAI.cpp">
       <Filter>World Model\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="EntityPlayerLives.cpp">
+      <Filter>World Model\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityPickups.cpp">
+      <Filter>World Model\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityAIFast.cpp">
+      <Filter>World Model\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="PatchNotes.txt" />
@@ -111,6 +120,15 @@
       <Filter>World Model\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EntityAI.h">
+      <Filter>World Model\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityPlayerLives.h">
+      <Filter>World Model\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityPickups.h">
+      <Filter>World Model\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityAIFast.h">
       <Filter>World Model\Header Files</Filter>
     </ClInclude>
   </ItemGroup>

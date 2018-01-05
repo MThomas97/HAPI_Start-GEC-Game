@@ -14,7 +14,8 @@ enum class eSide
 {
 	ePlayer,
 	eEnemy,
-	eNeutral
+	eNeutral,
+	eBullet
 };
 
 class Visualisation;
@@ -44,15 +45,19 @@ public:
 
 	Vector2 GetOldPosition() const { return m_oldPosition; }
 
-	virtual void CheckCollision(Visualisation &vis, Entity &other);
+	void AddScore(int addScore) { PrevScore = Score, Score = Score + addScore; }
 
-	//void SetFrames(Vector2 curFrame) { m_currentFrame = curFrame; }
-	
-	//void SetFrames1(Vector2 numFrames) { m_numFrames = numFrames; }
+	int GetScore() const { return Score; }
+
+	int GetPrevScore() const { return PrevScore; }
+
+	virtual void CheckCollision(Visualisation &vis, Entity &other);
 
 	bool IsAlive() const { return m_alive; }
 
 	bool IsEnemyOf(eSide a, eSide b);
+
+	bool IsPickupOf(eSide a, eSide b);
 
 	std::string GetSpritename() const { return Spritename; }
 
@@ -60,14 +65,14 @@ public:
 
 	void TakeDamage(int damageInflicted);
 
+	int GetLives() const { return lives; }
+
 protected:
-	//Vector2 m_position;
-	//Vector2 m_nextPos;
-	//Vector2 tempPos;
-	//Rectangle m_entityRect;
-	//Vector2 m_currentFrame;
-	//Vector2 m_numFrames;
-	int lives{ 1 };
+
+	int PrevScore{ 0 };
+	int Score{ 0 };
+	float NoAlpha{ false };
+	int lives{ 3 };
 	int health{ 100 };
 	std::string Spritename; //create getter? make private again
 	bool m_alive{ true };

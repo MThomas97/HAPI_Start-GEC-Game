@@ -12,10 +12,15 @@ void EntityBackground::CheckCollision(Visualisation &vis, Entity &other)
 
 void EntityBackground::Update(World &world, Visualisation &vis, float dt)
 {
-	/*m_position.y += 1 * deltaTime;
+	Vector2 pos{ GetPosition() };
 
-	if (m_position.y > 800)
+	pos.y += 10;
+
+	if (pos.y > 800)
 	{
-		m_position.y = tempPos.y;
-	}*/
+		pos.y = 0;
+		
+	}
+	
+	SetPosition(pos);
 }

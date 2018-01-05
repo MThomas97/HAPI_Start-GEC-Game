@@ -7,6 +7,9 @@
 #include "EntityExplosion.h"
 #include "EntityBullet.h"
 #include "EntityAI.h"
+#include "EntityPlayerLives.h"
+#include "EntityPickups.h"
+#include "EntityAIFast.h"
 #include "Vector2.h"
 #include <HAPI_lib.h>
 #include <algorithm>
@@ -20,9 +23,11 @@
 // HAPI itself is wrapped in the HAPISPACE namespace
 using namespace HAPISPACE;
 
-constexpr DWORD kTickTime{ 50 };
+constexpr DWORD kTickTime{ 20 };
 constexpr DWORD kClockTime{ 1000 };
 constexpr int knumBullets{ 10 };
+constexpr int knumExplosions{ 10 };
+constexpr int knumPickups{ 5 };
 
 World::~World()
 {
@@ -39,6 +44,8 @@ void World::FireBullet(eSide side, const Vector2 &pos, int damageAmount)
 	float CurrentTime = HAPI.GetTime();
 	DWORD lastTick{ 0 };
 	DWORD TimeSinceLastTick{ HAPI.GetTime() - lastTick };
+	HAPI.LoadSound("Data\\Sounds\\shoot.wav");
+	HAPI_TSoundOptions options(0.5f, false, 1.0f);
 
 		for (size_t i = bulletStartIndex; i < bulletStartIndex + knumBullets; i++)
 		{
@@ -48,6 +55,7 @@ void World::FireBullet(eSide side, const Vector2 &pos, int damageAmount)
  				if (TimeSinceLastTick >= kClockTime)
 				{
 					dynamic_cast<EntityBullet*>(m_entity[i])->Spawn(side, pos, damageAmount);
+					HAPI.PlaySound("Data\\Sounds\\shoot.wav", options);
 					lastTick = HAPI.GetTime();
 					TimeSinceLastTick = 0;
 					break;
@@ -55,6 +63,36 @@ void World::FireBullet(eSide side, const Vector2 &pos, int damageAmount)
 				break;
 			}
 		}
+}
+
+void World::SpawnPickup(Vector2 &pos, int damageAmount)
+{
+	
+
+	for (size_t i = StartIndex + knumBullets + knumExplosions; i < bulletStartIndex + knumBullets + knumExplosions + knumPickups; i++)
+	{
+		
+		if (!m_entity[i]->IsAlive())
+		{
+			
+			dynamic_cast<EntityPickups*>(m_entity[i])->Spawn(pos, damageAmount);
+			break;
+		}
+	}
+}
+
+void World::FireExplosion(eSide side, const Vector2 &pos, int damageAmount)
+{
+	for (size_t i = bulletStartIndex + knumBullets; i < ExplosionStartIndex + knumBullets + knumExplosions; i++)
+	{
+
+		if (!m_entity[i]->IsAlive())
+		{
+			dynamic_cast<EntityExplosion*>(m_entity[i])->Spawn(side, pos, damageAmount);
+	
+			break;
+		}
+	}
 }
 
 void World::run()
@@ -74,10 +112,19 @@ bool World::LoadLevel()
 {
 	//Loads all the sprites
 
-	if (!m_vis->CreateSprite("player", "Data\\player.png"))
+	if (!m_vis->CreateSprite("player", "Data\\playerMoveV3.png", 3, 1))
 		return false;
 
-	if (!m_vis->CreateSprite("enemy", "Data\\SpaceShooter\\enemyBlack1.png"))
+	if (!m_vis->CreateSprite("enemyBlack", "Data\\SpaceShooter\\enemyBlack1.png"))
+		return false;
+
+	if (!m_vis->CreateSprite("enemyBlue", "Data\\SpaceShooter\\enemyBlue2.png"))
+		return false;
+
+	if (!m_vis->CreateSprite("enemyGreen", "Data\\SpaceShooter\\enemyGreen1.png"))
+		return false;
+
+	if (!m_vis->CreateSprite("enemyRed", "Data\\SpaceShooter\\enemyRed1.png"))
 		return false;
 
 	if (!m_vis->CreateSprite("horse", "Data\\HorseSpriteSheetWhite.png", 5, 3))
@@ -86,28 +133,42 @@ bool World::LoadLevel()
 	if (!m_vis->CreateSprite("background", "Data\\FullStarBackground.png"))
 		return false;
 	
-	if (!m_vis->CreateSprite("bullet", "Data//laserGreen.png"))
+	if (!m_vis->CreateSprite("bullet", "Data//laserRed.png"))
 		return false;
 
-	/*EntityExplosion *horse = new EntityExplosion("horse");
-	m_entity.push_back(horse);
+	/*if (!m_vis->CreateSprite("explosion", "Data//laserRedShot.png"))
+		return false;*/
 
-	horse->SetPosition(Vector2(200, 200));*/
+	if (!m_vis->CreateSprite("lives", "Data\\SpaceShooter\\PlayerLivesV2.png", 1, 4))
+		return false;
 
-	/*EntityBackground *newBackground = new EntityBackground("background");
+	if (!m_vis->CreateSprite("pickups", "Data\\SpaceShooter\\powerupRed_star.png"))
+		return false;
+
+	if (!m_vis->CreateSprite("ufoBlue", "Data\\SpaceShooter\\ufoBlue.png"))
+		return false;
+
+	if (!m_vis->CreateSprite("ufoGreen", "Data\\SpaceShooter\\ufoGreen.png"))
+		return false;
+
+	if (!m_vis->CreateSprite("ufoRed", "Data\\SpaceShooter\\ufoRed.png"))
+		return false;
+
+	if (!m_vis->CreateSprite("ufoYellow", "Data\\SpaceShooter\\ufoYellow.png"))
+		return false;
+
+	if (!m_vis->CreateSprite("explosion", "Data\\PlayerExplosion.png", 9, 9))
+		return false;
+
+	EntityBackground *newBackground = new EntityBackground("background");
 	m_entity.push_back(newBackground);
 
 	newBackground->SetPosition(Vector2(0, 0));
 
 	EntityScrollingBackground *newSecondBackground = new EntityScrollingBackground("background");
-	m_entity.push_back(newSecondBackground);*/
+	m_entity.push_back(newSecondBackground);
 
-	//newSecondBackground->SetPosition(Vector2(0, -800));
-
-	
-	//newPlayer->LoadRectangle(*m_vis);
-
-	
+	newSecondBackground->SetPosition(Vector2(0, -800));
 
 	EntityPlayer *newPlayer = new EntityPlayer("player");
 	m_entity.push_back(newPlayer);
@@ -118,33 +179,75 @@ bool World::LoadLevel()
 	{
 		EntityBullet *newBullet = new EntityBullet("bullet");
 		m_entity.push_back(newBullet);
-
 	}
 
-	EntityAI *newAI = new EntityAI("enemy");
+	for (int i = 0; i < knumExplosions; i++)
+	{
+		EntityExplosion *newExplosion = new EntityExplosion("explosion");
+		m_entity.push_back(newExplosion);
+	}
+
+	for (int i = 0; i < knumPickups; i++)
+	{
+		EntityPickups *newPickup = new EntityPickups("pickups");
+		m_entity.push_back(newPickup);
+	}
+
+	EntityAI *newAI = new EntityAI("enemyBlack");
 	m_entity.push_back(newAI);
 
 	newAI->SetPosition(Vector2(250, -300));
 
-	
-	/*EntityEnemy *enemy = new EntityEnemy("enemy");
-	m_entity.push_back(enemy);
+	EntityAI *newAI2 = new EntityAI("enemyBlue");
+	m_entity.push_back(newAI2);
 
-	enemy->SetPosition(Vector2(100, 300));*/
+	newAI2->SetPosition(Vector2(250, -600));
 
-	
-	
+	EntityAI *newAI3 = new EntityAI("enemyGreen");
+	m_entity.push_back(newAI3);
 
+	newAI3->SetPosition(Vector2(250, -900));
+
+	EntityAI *newAI4 = new EntityAI("enemyRed");
+	m_entity.push_back(newAI4);
+
+	newAI4->SetPosition(Vector2(250, -1200));
+
+	EntityAIFast *fastAI = new EntityAIFast("ufoBlue");
+	m_entity.push_back(fastAI);
+	fastAI->SetPosition(Vector2(800, 100));
+
+	EntityAIFast *fastAI2 = new EntityAIFast("ufoGreen");
+	m_entity.push_back(fastAI2);
+	fastAI2->SetPosition(Vector2(800, 300));
+
+	EntityAIFast *fastAI3 = new EntityAIFast("ufoRed");
+	m_entity.push_back(fastAI3);
+	fastAI3->SetPosition(Vector2(800, 500));
+
+	EntityAIFast *fastAI4 = new EntityAIFast("ufoYellow");
+	m_entity.push_back(fastAI4);
+	fastAI4->SetPosition(Vector2(800, 700));
+
+	EntityPlayerLives *newLives = new EntityPlayerLives("lives");
+	m_entity.push_back(newLives);
+
+	newLives->SetPosition(Vector2(0, 0));
+	
 	return true;
-
 }
 
 void World::Update()
 {
 
 	//Sets the FPS counter on screen
-	HAPI.SetShowFPS(true, 0, 0, HAPI_TColour::GREEN);
+	HAPI.SetShowFPS(true, 495, 0, HAPI_TColour::GREEN);
 
+	HAPI_TSoundOptions options(0.5f, false, 1.0f);
+
+	HAPI_TSoundOptions loop(0.5f, true, 1.0f);
+	int instanceID;
+	float finished{ false };
 	DWORD lastTick{ 0 };
 
 	float PreviousTime = 0;
@@ -156,17 +259,17 @@ void World::Update()
 		PreviousTime = CurrentTime;
 		CurrentTime = HAPI.GetTime();
 
-		float dt = CurrentTime - PreviousTime;
-
-		if (dt > 0.15f)
-			dt = 0.15f;
+		double dt = 1 / 60.0;
 
 		DWORD TimeSinceLastTick{ HAPI.GetTime() - lastTick };
-		
+
+
 		if(TimeSinceLastTick >= kTickTime)
 		{
+			float deltaTime = std::min((double)TimeSinceLastTick, dt);
+
 			for (auto p : m_entity)
-				p->Update(*this, *m_vis, dt);
+				p->Update(*this, *m_vis, deltaTime);
 
 			lastTick = HAPI.GetTime();
 
@@ -184,7 +287,11 @@ void World::Update()
 		float s = TimeSinceLastTick / (float)kTickTime;
 		assert(s >= 0 && s <= 1.0f);
 
+		HAPI.RenderText(0, 25, HAPI_TColour(0, 255, 0), "Score:", 30);
+
 		m_vis->ClearToColour(HAPI.GetScreenPointer(), screenWidth, screenHeight, HAPI_TColour(0, 0, 0));
+
+		
 
 		for (auto p : m_entity)
 			p->Render(*m_vis, s);

@@ -4,16 +4,19 @@ class EntityExplosion :
 	public Entity
 {
 public:
-	EntityExplosion(std::string spriteID) : Entity(spriteID) {};
+	EntityExplosion(std::string spriteID) : Entity(spriteID) { m_alive = false, health = 100; };
 	~EntityExplosion();
 
 	void Update(World &world, Visualisation &vis, float dt) override final;
 
-	eSide getSide() const override final { return eSide::eNeutral; }
+	eSide getSide() const override final { return m_side; }
 
-	void CheckCollision(Visualisation &vis, Entity &other) override final;
+	void Spawn(eSide side, const Vector2 &pos, int damageAmount);
 
 private:
+	eSide m_side{ eSide::eNeutral };
+	Vector2 GetPos;
+
 	int PrevTime = 0;
 	
 };

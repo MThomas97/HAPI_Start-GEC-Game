@@ -2,13 +2,10 @@
 #include "Visualisation.h"
 #include "World.h"
 
+constexpr DWORD kClockTime{ 1000 };
+
 EntityExplosion::~EntityExplosion()
 {
-}
-
-void EntityExplosion::CheckCollision(Visualisation &vis, Entity &other)
-{
-	
 }
 
 void EntityExplosion::Update(World &world, Visualisation &vis, float dt)
@@ -26,11 +23,20 @@ void EntityExplosion::Update(World &world, Visualisation &vis, float dt)
 
 			if (curFrameY >= vis.GetNumframesY(Spritename))
 			{
+				
 				curFrameY = 0;
 				curFrameX = 0;
+				m_alive = false;
 			}
 			m_lastTimeUpdatedAnimation = HAPI.GetTime();
 		}
-	
+	SetPosition(GetPos);
+}
+
+void EntityExplosion::Spawn(eSide side, const Vector2 &pos, int damageAmount)
+{
+	GetPos = pos;
+	m_side = eSide::eNeutral;
 	SetPosition(pos);
+	m_alive = true;
 }

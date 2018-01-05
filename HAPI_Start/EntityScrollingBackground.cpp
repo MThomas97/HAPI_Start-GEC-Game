@@ -12,10 +12,14 @@ void EntityScrollingBackground::CheckCollision(Visualisation &vis, Entity &other
 
 void EntityScrollingBackground::Update(World &world, Visualisation &vis, float dt)
 {
-	//m_position.y += 1 * deltaTime;
+	Vector2 pos{ GetPosition() };
+	pos.y += 10;
 
-	//if (m_position.y > 0)
-	//{
-	//	m_position.y = tempPos.y;
-	//}
+	if (pos.y > 0)
+	{
+		pos.y = -800;
+		
+	}
+	
+	SetPosition(pos);
 }

@@ -4,7 +4,7 @@ class EntityAI :
 	public Entity
 {
 public:
-	EntityAI(std::string spriteID) : Entity(spriteID) {};
+	EntityAI(std::string spriteID) : Entity(spriteID) { health = 1; };
 	~EntityAI();
 
 	void BackToPatrol();
@@ -21,6 +21,7 @@ private:
 	int path{ 1 };
 	bool alert{ false };
 	int attack{ 0 };
-	
+	float ResetPosition{ false };
+	float EntityDied{ false };
 };
 

@@ -1,154 +1,49 @@
 #include "EntityPlayer.h"
 #include "Rectangle.h"
 #include "Visualisation.h"
+#include <string>
 
 constexpr DWORD kClockTime{ 2000 };
+
+
 
 EntityPlayer::~EntityPlayer()
 {
 	
 }
 
-//void EntityPlayer::CheckCollision(Visualisation &vis, Entity &other)
-//{
-//	if (!m_alive)
-//		return;
-//
-//	/*if (!IsEnemyOf(getSide(), other.getSide()))
-//		return;*/
-//
-//	Vector2 oldPos{ GetOldPosition() };
-//
-//	Rectangle thisRect (vis.GetRect(Spritename));
-//	Rectangle otherRect(vis.GetRect(other.GetSpritename()));
-//
-//	Rectangle CollisionRect(thisRect);
-//
-//	float width = thisRect.width() / 10.0f; //Reduces the size of the collider rectangle width by 10%
-//
-//	float height = thisRect.height() / 10.0f; //Reduces the size of the collider rectangle height by 10%
-//
-//	CollisionRect.left += width;
-//	CollisionRect.right -= width;
-//	CollisionRect.top += height;
-//	//CollisionRect.bottom -= height;
-//	Rectangle EnemyCollisionRect(otherRect);
-//
-//	/*int w{ thisRect.width() };
-//
-//	thisRect.left += w / 10;
-//
-//	thisRect.right += w / 10;
-//
-//	w;
-//
-//	int h{ thisRect.height() };
-//
-//	thisRect.top += h / 10;
-//
-//	thisRect.bottom += h / 10;*/
-//
-//	EnemyCollisionRect.Translate(other.GetPosition().x, other.GetPosition().y);
-//	
-//	CollisionRect.Translate(GetPosition().x, GetPosition().y);
-//
-//
-//	Vector2 thisDir{ GetOldPosition() - GetPosition() };
-//	Vector2 otherDir{ other.GetOldPosition() = other.GetPosition() };
-//
-//	float biggestLength = 1.0f / std::max(thisDir.Length(), otherDir.Length());
-//
-//	thisDir = thisDir * biggestLength;
-//	otherDir = otherDir * biggestLength;
-//
-//	Vector2 newThisPos{ GetPosition() };
-//	Vector2 newOtherPos{ other.GetPosition() };
-//
-//	//do
-//	//{
-//	thisRect = Rectangle(thisRect);
-//	otherRect = Rectangle(otherRect);
-//
-//	thisRect.left += width;
-//	thisRect.right -= width;
-//	thisRect.top += height;
-//
-//	newThisPos = newThisPos + thisDir;
-//	newOtherPos = newOtherPos + otherDir;
-//
-//	thisRect.Translate((int)newThisPos.x, (int)newThisPos.y);
-//	otherRect.Translate((int)newOtherPos.x, (int)newOtherPos.y);
-//	//} while ();
-//
-//	//temp.x = m_position.x - w;
-//
-//	//temp.y = m_position.y - h;
-//
-//	if (thisRect.CheckCollision(otherRect))
-//	{
-//		
-//		SetBackPosition(oldPos);
-//		//m_gravity -= 0.1f;
-//		//isCollided = true;
-//		//jumping = false;
-//	}
-//
-//	
-//	//isCollided = false;
-//	
-//}
-
-
 void EntityPlayer::Update(World &world, Visualisation &vis, float dt)
 {
-	//m_position = nextPos;
-	
-	Vector2 accel(Vector2(0.0, 0.0));
-	
-	Vector2 vel(0.0, 0.0);
-	Vector2 gravity(0, 0.5f);
+	if (LoadOnce)
+	{
+		LoadSound();
+		LoadOnce = false;
+	}
 
-	Vector2 dir;
+	Rectangle thisRect(vis.GetRect(Spritename));
+	Rectangle ScreenRect(vis.GetScreenRect());
+
+	thisRect.Translate(GetPosition().x, GetPosition().y);
 
 	Vector2 pos{ GetPosition() };
-
-	Vector2 PlayerPosition{ GetPosition() };
-
-	Vector2 PlayerOldPosition{ GetOldPosition() };
-
 	Vector2 vect;
 
-	health;
+	if (lives <= 0 && SetOnce)
+	{
+		
+		HAPI_TSoundOptions loop(0.5f, true);
+		HAPI.StopSound(instanceID, true);
+		HAPI.PlaySound("Data\\Sounds\\death.ogg");
+		HAPI.PlaySound("Data\\Sounds\\explosion.wav");
+		world.FireExplosion(getSide(), Vector2(pos.x, pos.y), 10);
+		SetOnce = false;
+	}
+	
 	float PreviousTime = 0;
 	float CurrentTime = HAPI.GetTime();
 	DWORD lastTick{ 0 };
 	DWORD TimeSinceLastTick{ HAPI.GetTime() - lastTick };
 
-	//const float gravity{ 1 };
-	int groundHeight{ 440 };
-	Vector2 velocity;
-	
-
-	
-
-	
-	/*if (!isCollided)
-	{
-		pos.y += m_gravity;
-		m_gravity += 0.1f;
-	}*/
-		
-
-	if (m_gravity > 0.4f)
-	{
-		m_gravity = 0.4f;
-	}
-
-	//float jumpSpeed{ 10.0f };
-	float acceleration{ 9.8f };
-
-
-	//oldPos = m_position;
 	static const HAPI_TKeyboardData &keyData = HAPI.GetKeyboardData();
 	const HAPI_TControllerData &controllerData = HAPI.GetControllerData(0);
 
@@ -158,153 +53,78 @@ void EntityPlayer::Update(World &world, Visualisation &vis, float dt)
 
 	float ElapsedTime = HAPI.GetTime() - PrevTime;
 	
-	//pos += vel;
+	std::string stringScore = std::to_string(Score);
+	HAPI.RenderText(90, 27, HAPI_TColour(0, 255, 0), stringScore, 30);
+		
+	//Moves sprite with WASD keys
+	if (keyData.scanCode['W'] && thisRect.top > ScreenRect.top)
+		pos.y -= m_speed;
 
-	//determines whether the player is on the ground
-	const bool onground = pos.y >= 480;
+	if (keyData.scanCode['S'] && thisRect.bottom < ScreenRect.bottom)
+		pos.y += m_speed;
 
-	//vel += gravity;
+	if (keyData.scanCode['D'] && thisRect.right < ScreenRect.right)
+	{
+		pos.x += m_speed;
+		curFrameX = 0;
+	}
 
-			//Moves sprite with WASD keys
-			if (keyData.scanCode['W'])
+	if (keyData.scanCode['A'] && thisRect.left > ScreenRect.left)
+	{
+		pos.x -= m_speed;
+		curFrameX = 2;
+	}
+
+	if (keyData.scanCode[HK_SPACE] && m_alive == true)
+		world.FireBullet(getSide(), Vector2(pos.x, pos.y), 10);
+					
+	if (!keyData.scanCode['A'] && !keyData.scanCode['D'])
+		curFrameX = 1;
+
+
+	if (keyData.scanCode['A'] && keyData.scanCode['D'])
+		curFrameX = 1;
+
+	if (!(vect.x == 0 && vect.y == 0))
+	{
+		vect.x = m_speed * (vect.x / (vect.Length()));
+		vect.y = m_speed * (vect.y / (vect.Length()));
+
+		pos.x += vect.x;
+		pos.y += vect.y;
+	}
+
+	if (controllerData.isAttached)
+	{
+		if (Deadzone < LeftThumbX)
+				pos.x += m_speed;
+
+		if (-Deadzone > LeftThumbX)
+				pos.x -= m_speed;
+
+		if (-Deadzone > LeftThumbY)
+				pos.y += m_speed;
+
+		if (Deadzone < LeftThumbY)
 				pos.y -= m_speed;
 
-				if (keyData.scanCode['S'])
-					pos.y += m_speed;
-
-				if (keyData.scanCode['A'])
-					pos.x -= m_speed;
-
-				if (keyData.scanCode['D'])
-					pos.x += m_speed;
-
-				//if (jumping)
-				//{
-				//	pos.y += jumpSpeed;
-				//	jumpSpeed += 1;
-				//	
-				//	if (pos.y >= 400)
-				//	{
-				//		//pos.y = 300;
-				//		jumping = false;
-				//	}
-				//}
-				//else
-				//{
-				//	if (keyData.scanCode[HK_SPACE])
-				//	{
-				//		jumping = true;
-				//		jumpSpeed = -14;
-				//	}
-				//}
-
-				if (keyData.scanCode[HK_SPACE] )
-				{
-					world.FireBullet(getSide(), Vector2(pos.x, pos.y), 10);
-				}
-
-			if (!(vect.x == 0 && vect.y == 0))
-			{
-				vect.x = m_speed * (vect.x / (vect.Length()));
-				vect.y = m_speed * (vect.y / (vect.Length()));
-
-				pos.x += vect.x;
-				pos.y += vect.y;
-
-			}
-
-			if (controllerData.isAttached)
-			{
-
-				if (Deadzone < LeftThumbX)
-					pos.x += m_speed;
-
-				if (-Deadzone > LeftThumbX)
-					pos.x -= m_speed;
-
-				if (-Deadzone > LeftThumbY)
-					pos.y += m_speed;
-
-				if (Deadzone < LeftThumbY)
-					pos.y -= m_speed;
-
-				if (!(vect.x == 0 && vect.y == 0))
-				{
-					vect.x = m_speed *(vect.x / (vect.Length()));
-					vect.y = m_speed *(vect.y / (vect.Length()));
-
-					pos.x += vect.x;
-					pos.y += vect.y;
-
-				}
-			}
-
-			SetPosition(pos);
-
-		if (vel.y > max_fall)
-			vel.y = max_fall;
-
-		if (left)
+		if (!(vect.x == 0 && vect.y == 0))
 		{
-			vel.x -= RunAccel;
-		}
-		else if (right)
-		{
-			vel.x += RunAccel;
-		}
-		else {
-			vel.x *= 0.9;
-		}
+			vect.x = m_speed *(vect.x / (vect.Length()));
+			vect.y = m_speed *(vect.y / (vect.Length()));
 
-		/*if (jump)
-		{
-			if (onground) 
-			{
-				vel.y += jumpAccel * 2;
-				jumpcounter = jumpframes;
-			}
-			else if (jumpcounter > 0)
-			{
-				vel.y += jumpAccel;
-				jumpcounter--;
-			}
+			pos.x += vect.x;
+			pos.y += vect.y;
+
 		}
-		else {
-			jumpcounter = 0;
-		}*/
+	}
+			
+	SetPosition(pos);
+}
 
-		/*if (pos.y > 480)
-		{
-			vel.y = 0;
-			pos.y = 480;
-		}
-
-		if (pos.x < 16)
-		{
-			vel.x = 0;
-			pos.x = 16;
-		}
-		else if (pos.x > 624)
-		{
-			vel.x = 0;
-			pos.x = 624;
-		}*/
-
-
-		if (HAPI.GetTime() - m_lastTimeUpdatedAnimation >= m_animationTime)
-		{
-			curFrameX++;
-			if (curFrameX >= vis.GetNumframesX(Spritename))
-			{
-				curFrameX = 0;
-				curFrameY += 1;
-			}
-
-			if (curFrameY >= vis.GetNumframesY(Spritename))
-			{
-				curFrameY = 0;
-				curFrameX = 0;
-			}
-			m_lastTimeUpdatedAnimation = HAPI.GetTime();
-		}
+void EntityPlayer::LoadSound()
+{
+	HAPI_TSoundOptions loop(0.5f, true);
+	HAPI.LoadSound("Data\\Sounds\\level1.ogg");
+	HAPI.PlaySound("Data\\Sounds\\level1.ogg", loop, instanceID);
 }

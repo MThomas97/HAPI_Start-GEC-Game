@@ -13,12 +13,14 @@ public:
 
 	eSide getSide() const override final { return m_side; }
 
-	void CheckCollision(Visualisation &vis, Entity &other) override final;
-
 	void Spawn(eSide side, const Vector2 &pos, int damageAmount);
+
+	void CheckCollision(Visualisation & vis, Entity & other);
 
 private:
 	eSide m_side{ eSide::eNeutral };
 	Vector2 GetPos;
+
+	float IsCollided{ false };
 };
 

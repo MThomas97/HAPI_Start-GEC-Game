@@ -18,9 +18,11 @@ public:
 
 	void FireBullet(eSide side, const Vector2 & pos, int damageAmount);
 
-	void run();
+	void FireExplosion(eSide side, const Vector2 &pos, int damageAmount);
 
-	
+	void SpawnPickup(Vector2 &pos, int damageAmount);
+
+	void run();
 
 private:
 	
@@ -35,7 +37,11 @@ private:
 	int screenWidth{ 600 };
 	int screenHeight{ 800 };
 
-	size_t bulletStartIndex{ 1 };
+	size_t bulletStartIndex{ 3 };
+
+	size_t StartIndex{ 3 };
+
+	size_t ExplosionStartIndex{ 3 };
 
 	Vector2 bulletPos;
 };

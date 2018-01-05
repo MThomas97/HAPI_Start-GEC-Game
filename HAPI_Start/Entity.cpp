@@ -12,7 +12,14 @@ void Entity::Render(Visualisation &vis, float s)
 
 	Vector2 interPos{ m_oldPosition + (m_position - m_oldPosition) * s };
 
-	vis.RenderSprite(Spritename, (int)interPos.x, (int)interPos.y, curFrameX, curFrameY);
+	if(NoAlpha)
+		vis.RenderNoAlphaSprite(Spritename, (int)interPos.x, (int)interPos.y);
+
+	else if(!NoAlpha) 
+	{
+		vis.RenderSprite(Spritename, (int)interPos.x, (int)interPos.y, curFrameX, curFrameY);
+	}
+	
 }
 
 void Entity::CheckCollision(Visualisation & vis, Entity & other)
@@ -109,6 +116,17 @@ bool Entity::IsEnemyOf(eSide a, eSide b)
 	if (a == eSide::ePlayer && b == eSide::eEnemy || a == eSide::eEnemy && b == eSide::ePlayer)
 		return true;
 
+	if (a == eSide::eBullet && b == eSide::eEnemy || a == eSide::eEnemy && b == eSide::eBullet)
+		return true;
+
+	return false;
+}
+
+bool Entity::IsPickupOf(eSide a, eSide b)
+{
+	if (a == eSide::ePlayer && b == eSide::eNeutral || a == eSide::eNeutral && b == eSide::ePlayer)
+		return true;
+
 	return false;
 }
 
@@ -118,10 +136,16 @@ void Entity::TakeDamage(int damageInflicted)
 
 	if (health <= 0)
 	{
-		//lives - 1;
-		//if(lives <= 0)
-			//m_alive = false;
-			
+		lives = lives - 1;
+		if(lives <= 0)
+			m_alive = false;
+		
+		if(getSide() == eSide::eBullet)
+			health = 1;
+		else
+		{
+			health = 100;
+		}
 	}
 }
 

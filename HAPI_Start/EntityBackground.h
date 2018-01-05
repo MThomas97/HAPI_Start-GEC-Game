@@ -3,7 +3,7 @@
 class EntityBackground : public Entity
 {
 public:
-	EntityBackground(std::string spriteID) : Entity(spriteID) {};
+	EntityBackground(std::string spriteID) : Entity(spriteID) { tempPos = GetPosition(), NoAlpha = true; };
 	~EntityBackground();
 
 	void Update(World &world, Visualisation &vis, float dt) override final;
@@ -12,5 +12,8 @@ public:
 
 	void CheckCollision(Visualisation &vis, Entity &other) override final;
 
+
+private:
+	Vector2 tempPos;
 };
 
