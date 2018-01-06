@@ -31,6 +31,8 @@ World::~World()
 {
 	delete m_vis;
 
+	delete[] iconPnter;
+
 	for (auto p : m_entity)
 		delete p;
 	
@@ -79,8 +81,14 @@ void World::run()
 {
 	m_vis = new Visualisation;
 
+	int width = 98;
+	int height = 75;
+	HAPI.LoadTexture("Data\\SpaceShooter\\playerShip3_red.png", &iconPnter, width, height);
+
 	if (!m_vis->initialise(screenWidth, screenHeight, "Intergalactic War"))
 		return;
+
+	HAPI.SetIcon(iconPnter, width, height);
 
 	if (!LoadLevel())
 		return;
@@ -94,6 +102,7 @@ bool World::LoadLevel()
 
 	if (!LoadOnce)
 	{
+		
 		HAPI.LoadSound("Data\\Sounds\\level1.ogg");
 		HAPI.LoadSound("Data\\Sounds\\death.ogg");
 		HAPI.LoadSound("Data\\Sounds\\explosion.wav");

@@ -43,6 +43,8 @@ private:
 
 	Rectangle m_screenRect;
 
+	BYTE *iconPnter{ nullptr };
+
 	BYTE *m_screenPnter{ nullptr };
 };
 

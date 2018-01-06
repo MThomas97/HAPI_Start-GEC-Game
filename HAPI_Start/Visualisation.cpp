@@ -43,7 +43,7 @@ bool Visualisation::initialise(int width, int height, std::string name)
 	{
 		return false;
 	}
-
+	
 	m_screenRect = Rectangle(width, height);
 
 	m_screenPnter = HAPI.GetScreenPointer();

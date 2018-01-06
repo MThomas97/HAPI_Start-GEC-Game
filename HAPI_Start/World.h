@@ -51,7 +51,7 @@ private:
 	std::vector<Entity*> m_entity;
 
 	Visualisation *m_vis{ nullptr };
-
+	BYTE *iconPnter{ nullptr };
 	size_t bulletStartIndex{ 11 };
 	size_t StartIndex{ 11 };
 	size_t ExplosionStartIndex{ 11 };
