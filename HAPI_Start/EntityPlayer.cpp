@@ -3,60 +3,42 @@
 #include "Visualisation.h"
 #include <string>
 
-constexpr DWORD kClockTime{ 2000 };
-
-
+constexpr DWORD kTickTime{ 300 };
 
 EntityPlayer::~EntityPlayer()
 {
 	
 }
 
-void EntityPlayer::Update(World &world, Visualisation &vis, float dt)
+void EntityPlayer::Update(World &world, Visualisation &vis)
 {
-	if (LoadOnce)
-	{
-		LoadSound();
-	
-		LoadOnce = false;
-	}
+	static const HAPI_TKeyboardData &keyData = HAPI.GetKeyboardData();
+	const HAPI_TControllerData &controllerData = HAPI.GetControllerData(0);
+	DWORD TimeSinceLastTick{ HAPI.GetTime() - lastTick };
 
 	Rectangle thisRect(vis.GetRect(Spritename));
 	
-
 	Rectangle ScreenRect(vis.GetScreenRect());
 
-	thisRect.Translate(GetPosition().x, GetPosition().y);
+	thisRect.Translate((int)GetPosition().x, (int)GetPosition().y);
 
 	Vector2 pos{ GetPosition() };
 	Vector2 vect;
-
+	
 	if (lives <= 0 && SetOnce)
 	{
-		HAPI_TSoundOptions loop(0.5f, true);
-		HAPI.StopSound(instanceID, true);
-		HAPI.PlaySound("Data\\Sounds\\death.ogg", loop);
 		HAPI.PlaySound("Data\\Sounds\\explosion.wav");
 		world.FireExplosion(getSide(), Vector2(pos.x, pos.y), 10);
 		SetOnce = false;
 	}
-
-	float PreviousTime = 0;
-	float CurrentTime = HAPI.GetTime();
-	DWORD lastTick{ 0 };
-	DWORD TimeSinceLastTick{ HAPI.GetTime() - lastTick };
-
-	static const HAPI_TKeyboardData &keyData = HAPI.GetKeyboardData();
-	const HAPI_TControllerData &controllerData = HAPI.GetControllerData(0);
-
+	
 	int LeftThumbX = controllerData.analogueButtons[HK_ANALOGUE_LEFT_THUMB_X];
 	int LeftThumbY = controllerData.analogueButtons[HK_ANALOGUE_LEFT_THUMB_Y];
 	int Deadzone = HK_GAMEPAD_LEFT_THUMB_DEADZONE;
-
-	float ElapsedTime = HAPI.GetTime() - PrevTime;
 	
 	Rectangle playerBulletRect(vis.GetRect(Spritename));
-	playerBulletRect.Translate(GetPosition().x, GetPosition().y);
+	playerBulletRect.Translate((int)GetPosition().x, (int)GetPosition().y);
+
 	//Moves sprite with WASD keys
 	if (keyData.scanCode['W'] && thisRect.top > ScreenRect.top)
 		pos.y -= m_speed;
@@ -76,12 +58,14 @@ void EntityPlayer::Update(World &world, Visualisation &vis, float dt)
 		curFrameX = 2;
 	}
 
-	if (keyData.scanCode[HK_SPACE] && m_alive == true)
-		world.FireBullet(getSide(), Vector2(playerBulletRect.left + 45, playerBulletRect.top - 33), 10);
-					
+	if (keyData.scanCode[HK_SPACE] && m_alive == true && TimeSinceLastTick >= kTickTime)
+	{
+		lastTick = HAPI.GetTime();
+		world.FireBullet(getSide(), Vector2((float)playerBulletRect.left + 45, (float)playerBulletRect.top - 33), 10);
+		TimeSinceLastTick = 0;
+	}
 	if (!keyData.scanCode['A'] && !keyData.scanCode['D'])
 		curFrameX = 1;
-
 
 	if (keyData.scanCode['A'] && keyData.scanCode['D'])
 		curFrameX = 1;
@@ -116,13 +100,15 @@ void EntityPlayer::Update(World &world, Visualisation &vis, float dt)
 		if (-Deadzone < LeftThumbX && -Deadzone > LeftThumbX)
 			curFrameX = 1;
 
-
 		if (Deadzone < LeftThumbX && keyData.scanCode['D'])
 			curFrameX = 1;
 
-		if(controllerData.analogueButtons[HK_ANALOGUE_RIGHT_TRIGGER])
-			world.FireBullet(getSide(), Vector2(playerBulletRect.left + 45, playerBulletRect.top - 33), 10);
-
+		if (controllerData.analogueButtons[HK_ANALOGUE_RIGHT_TRIGGER] && TimeSinceLastTick >= kTickTime)
+		{
+			lastTick = HAPI.GetTime();
+			world.FireBullet(getSide(), Vector2((float)playerBulletRect.left + 45, (float)playerBulletRect.top - 33), 10);
+			TimeSinceLastTick = 0;
+		}
 		if (!(vect.x == 0 && vect.y == 0))
 		{
 			vect.x = m_speed *(vect.x / (vect.Length()));
@@ -130,16 +116,7 @@ void EntityPlayer::Update(World &world, Visualisation &vis, float dt)
 
 			pos.x += vect.x;
 			pos.y += vect.y;
-
 		}
 	}
-			
 	SetPosition(pos);
-}
-
-void EntityPlayer::LoadSound()
-{
-	HAPI_TSoundOptions loop(0.5f, true);
-	HAPI.LoadSound("Data\\Sounds\\level1.ogg");
-	HAPI.PlaySound("Data\\Sounds\\level1.ogg", loop, instanceID);
 }

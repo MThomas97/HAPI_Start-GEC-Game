@@ -12,10 +12,12 @@ void Entity::Render(Visualisation &vis, float s)
 
 	Vector2 interPos{ m_oldPosition + (m_position - m_oldPosition) * s };
 
+
+
 	if(NoAlpha)
 		vis.RenderNoAlphaSprite(Spritename, (int)interPos.x, (int)interPos.y);
 
-	else if(!NoAlpha) 
+	if(!NoAlpha) 
 	{
 		vis.RenderSprite(Spritename, (int)interPos.x, (int)interPos.y, curFrameX, curFrameY);
 	}
@@ -41,30 +43,14 @@ void Entity::CheckCollision(Visualisation & vis, Entity & other)
 
 	float height = thisRect.height() / 10.0f; //Reduces the size of the collider rectangle height by 10%
 
-	CollisionRect.left += width;
-	CollisionRect.right -= width;
-	CollisionRect.top += height;
-	//CollisionRect.bottom -= height;
+	CollisionRect.left += (int)width;
+	CollisionRect.right -= (int)width;
+	CollisionRect.top += (int)height;
 	Rectangle EnemyCollisionRect(otherRect);
 
-	/*int w{ thisRect.width() };
+	EnemyCollisionRect.Translate((int)other.GetPosition().x, (int)other.GetPosition().y);
 
-	thisRect.left += w / 10;
-
-	thisRect.right += w / 10;
-
-	w;
-
-	int h{ thisRect.height() };
-
-	thisRect.top += h / 10;
-
-	thisRect.bottom += h / 10;*/
-
-	EnemyCollisionRect.Translate(other.GetPosition().x, other.GetPosition().y);
-
-	CollisionRect.Translate(GetPosition().x, GetPosition().y);
-
+	CollisionRect.Translate((int)GetPosition().x, (int)GetPosition().y);
 
 	Vector2 thisDir{ GetOldPosition() - GetPosition() };
 	Vector2 otherDir{ other.GetOldPosition() = other.GetPosition() };
@@ -77,38 +63,24 @@ void Entity::CheckCollision(Visualisation & vis, Entity & other)
 	Vector2 newThisPos{ GetPosition() };
 	Vector2 newOtherPos{ other.GetPosition() };
 
-	//do
-	//{
 	thisRect = Rectangle(thisRect);
 	otherRect = Rectangle(otherRect);
 
-	thisRect.left += width;
-	thisRect.right -= width;
-	thisRect.top += height;
+	thisRect.left += (int)width;
+	thisRect.right -= (int)width;
+	thisRect.top += (int)height;
 
 	newThisPos = newThisPos + thisDir;
 	newOtherPos = newOtherPos + otherDir;
 
 	thisRect.Translate((int)newThisPos.x, (int)newThisPos.y);
 	otherRect.Translate((int)newOtherPos.x, (int)newOtherPos.y);
-	//} while ();
-
-	//temp.x = m_position.x - w;
-
-	//temp.y = m_position.y - h;
 
 	if (thisRect.CheckCollision(otherRect))
 	{
 		TakeDamage(m_damageTaken);
 		other.TakeDamage(m_damageTaken);
-		//SetBackPosition(oldPos);
-		//m_gravity -= 0.1f;
-		//isCollided = true;
-		//jumping = false;
 	}
-
-
-	//isCollided = false;
 }
 
 bool Entity::IsEnemyOf(eSide a, eSide b)

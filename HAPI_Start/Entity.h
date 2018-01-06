@@ -1,7 +1,6 @@
 #pragma once
 #include"Vector2.h"
 #include "Rectangle.h"
-
 #include <HAPI_lib.h>
 #if defined(DEBUG) | defined(_DEBUG)
 #include <crtdbg.h>
@@ -33,7 +32,7 @@ public:
 
 	virtual eSide getSide() const = 0;
 
-	virtual void Update(World &world, Visualisation &vis, float dt) = 0;
+	virtual void Update(World &world, Visualisation &vis) = 0;
 
 	void Render(Visualisation &vis, float s);
 
@@ -45,11 +44,9 @@ public:
 
 	Vector2 GetOldPosition() const { return m_oldPosition; }
 
-	void AddScore(int addScore) { PrevScore = Score, Score = Score + addScore; }
+	void AddScore(int addScore) { Score = Score + addScore; }
 
 	int GetScore() const { return Score; }
-
-	int GetPrevScore() const { return PrevScore; }
 
 	virtual void CheckCollision(Visualisation &vis, Entity &other);
 
@@ -69,24 +66,21 @@ public:
 
 	void TakeDamage(int damageInflicted);
 
+	void SetPaused(bool pause) { Paused = pause; }
+
 protected:
 
-	int PrevScore{ 0 };
+	bool Paused{ false };
 	int Score{ 0 };
 	float NoAlpha{ false };
 	int lives{ 3 };
 	int health{ 100 };
 	std::string Spritename; //create getter? make private again
 	bool m_alive{ true };
-	float m_speed{ 6.0f };
+	int m_speed{ 6 };
 	int curFrameX{ 0 };
 	int curFrameY{ 0 };
-
 	int m_damageTaken{ 10 };
-
-	DWORD m_lastTimeUpdatedAnimation{ 0 };
-	DWORD m_animationTime{ 50 };
-
 private:
 	Vector2 m_position;
 	Vector2 m_oldPosition;

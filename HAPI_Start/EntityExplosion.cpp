@@ -8,7 +8,7 @@ EntityExplosion::~EntityExplosion()
 {
 }
 
-void EntityExplosion::Update(World &world, Visualisation &vis, float dt)
+void EntityExplosion::Update(World &world, Visualisation &vis)
 {
 	Vector2 pos{ GetPosition() };
 
@@ -20,7 +20,6 @@ void EntityExplosion::Update(World &world, Visualisation &vis, float dt)
 				curFrameX = 0;
 				curFrameY += 1;
 			}
-			
 			if (curFrameY >= vis.GetNumframesY(Spritename))
 			{
 				curFrameY = 0;
@@ -34,6 +33,7 @@ void EntityExplosion::Update(World &world, Visualisation &vis, float dt)
 void EntityExplosion::Spawn(eSide side, const Vector2 &pos, int damageAmount)
 {
 	GetPos = pos;
+	
 	m_side = eSide::eNeutral;
 	SetPosition(pos);
 	m_alive = true;

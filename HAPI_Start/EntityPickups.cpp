@@ -5,7 +5,7 @@ EntityPickups::~EntityPickups()
 {
 }
 
-void EntityPickups::Update(World &world, Visualisation & vis, float dt)
+void EntityPickups::Update(World &world, Visualisation & vis)
 {
 	Vector2 pos{ GetPosition() };
 	
@@ -13,13 +13,7 @@ void EntityPickups::Update(World &world, Visualisation & vis, float dt)
 	if (!m_alive)
 		world.SpawnPickup(Vector2(pos.x, pos.y), 10);
 
-	
-	//pos.x = 20 * (rand() % ((ScreenRect.left + ScreenRect.right - 40) / 20)) + 20;
-	//pos.x = 20 * (rand() % ((ScreenRect.left + ScreenRect.right - 40) / 20)) + 20;
-
 	SetPosition(getPos);
-
-	//m_alive = true;
 }
 
 void EntityPickups::CheckCollision(Visualisation & vis, Entity & other)
@@ -43,10 +37,9 @@ void EntityPickups::CheckCollision(Visualisation & vis, Entity & other)
 
 	Rectangle EnemyCollisionRect(otherRect);
 
-	EnemyCollisionRect.Translate(other.GetPosition().x, other.GetPosition().y);
+	EnemyCollisionRect.Translate((int)other.GetPosition().x, (int)other.GetPosition().y);
 
-	CollisionRect.Translate(GetPosition().x, GetPosition().y);
-
+	CollisionRect.Translate((int)GetPosition().x, (int)GetPosition().y);
 
 	Vector2 thisDir{ GetOldPosition() - GetPosition() };
 	Vector2 otherDir{ other.GetOldPosition() = other.GetPosition() };
@@ -59,13 +52,12 @@ void EntityPickups::CheckCollision(Visualisation & vis, Entity & other)
 	Vector2 newThisPos{ GetPosition() };
 	Vector2 newOtherPos{ other.GetPosition() };
 
-	
 	thisRect = Rectangle(thisRect);
 	otherRect = Rectangle(otherRect);
 
-	thisRect.left += width;
-	thisRect.right -= width;
-	thisRect.top += height;
+	thisRect.left += (int)width;
+	thisRect.right -= (int)width;
+	thisRect.top += (int)height;
 
 	newThisPos = newThisPos + thisDir;
 	newOtherPos = newOtherPos + otherDir;
@@ -75,17 +67,17 @@ void EntityPickups::CheckCollision(Visualisation & vis, Entity & other)
 
 	if (thisRect.CheckCollision(otherRect))
 	{
-		other.AddScore(1);
+		HAPI.PlaySound("Data\\Sounds\\powerUp9.wav");
+		other.AddScore(5);
 		m_alive = false;
 	}
-
 }
 
 void EntityPickups::Spawn(Vector2 &pos, int damageAmount)
 {
 	
-	pos.x = 20 * (rand() % ((500 - 40) / 20)) + 20;
-	pos.y = 20 * (rand() % ((700 - 40) / 20)) + 20;
+	pos.x = 20 * (float)(rand() % ((500 - 40) / 20)) + 20;
+	pos.y = 20 * (float)(rand() % ((700 - 40) / 20)) + 20;
 
 	getPos = pos;
 

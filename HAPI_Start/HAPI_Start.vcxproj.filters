@@ -54,9 +54,6 @@
     <ClCompile Include="EntityExplosion.cpp">
       <Filter>World Model\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EntityEnemy.cpp">
-      <Filter>World Model\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Entity.cpp">
       <Filter>World Model\Source Files</Filter>
     </ClCompile>
@@ -78,9 +75,6 @@
     <ClCompile Include="EntityAIFast.cpp">
       <Filter>World Model\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Restart.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="PatchNotes.txt" />
@@ -99,9 +93,6 @@
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">
-      <Filter>World Model\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EntityEnemy.h">
       <Filter>World Model\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EntityBackground.h">
@@ -133,9 +124,6 @@
     </ClInclude>
     <ClInclude Include="EntityAIFast.h">
       <Filter>World Model\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Restart.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

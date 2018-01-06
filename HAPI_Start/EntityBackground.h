@@ -6,7 +6,7 @@ public:
 	EntityBackground(std::string spriteID) : Entity(spriteID) { tempPos = GetPosition(), NoAlpha = true; };
 	~EntityBackground();
 
-	void Update(World &world, Visualisation &vis, float dt) override final;
+	void Update(World &world, Visualisation &vis) override final;
 
 	eSide getSide() const override final { return eSide::eNeutral; }
 

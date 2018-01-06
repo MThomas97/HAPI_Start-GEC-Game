@@ -13,28 +13,21 @@ public:
 
 	~EntityPlayer();
 
-	void Update(World &world, Visualisation &vis, float dt) override final;
+	void Update(World &world, Visualisation &vis) override final;
 
 	eSide getSide() const override final {return eSide::ePlayer; }
 
-	void LoadSound();
-
-	//void CheckCollision(Visualisation &vis, Entity &other) override final;
-
 private:
 
-	bool ClipToScreen{ false };
-	float LoadOnce{ true };
+	//bool ClipToScreen{ false };
+	//float LoadOnce{ true };
 	float SetOnce{ true };
 
-	int instanceID;
+	DWORD lastTick{ 0 };
 
-	int PrevTime1 = 0;
-	int PrevTime = 0;
+	
 
-	bool isCollided{ false };
-
-	float playing = false;
+	//float playing = false;
 
 	
 

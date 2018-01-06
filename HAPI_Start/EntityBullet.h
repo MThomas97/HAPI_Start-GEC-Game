@@ -9,7 +9,7 @@ public:
 	EntityBullet(std::string spriteID) : Entity(spriteID) { m_alive = false, health = 1; };
 	~EntityBullet();
 
-	void Update(World &world, Visualisation &vis, float dt) override final;
+	void Update(World &world, Visualisation &vis) override final;
 
 	eSide getSide() const override final { return m_side; }
 
@@ -20,7 +20,6 @@ public:
 private:
 	eSide m_side{ eSide::eNeutral };
 	Vector2 GetPos;
-
 	float IsCollided{ false };
 };
 

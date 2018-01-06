@@ -5,37 +5,24 @@ EntityAI::~EntityAI()
 {
 }
 
-void EntityAI::BackToPatrol()
+void EntityAI::Update(World &world, Visualisation &vis)
 {
-	Vector2 pos{ GetPosition() };
-	
-	if (pos.x >= 400)
-	{
-		path = 1;
-		
-	}
-	else if (pos.x <= 100)
-	{
-		path = 2;
-		
-	}
-	if (pos.x >= 100 && pos.x <= 400 && path == 0) {
-		path = 1;
-		
-	}
-	
-}
-
-void EntityAI::Update(World &world, Visualisation &vis, float dt)
-{
+	Vector2 savePos;
 	Vector2 pos{ GetPosition() };
 
 	//Set the start state of ai
 
+	int a = -rand() % -1200 - 200;
+	float r_float = (float)a;
+
+	if (EntityDied)
+	{
+		world.FireExplosion(getSide(), Vector2(pos.x, pos.y), 10);
+	}
 	if (EntityDied)
 	{
 		m_alive = false;
-		SetPosition(Vector2(250, -rand() % -1200 - 200));
+		SetPosition(Vector2((float)250, r_float));
 		EntityDied = false;
 		ResetPosition = true;
 	}
@@ -43,13 +30,14 @@ void EntityAI::Update(World &world, Visualisation &vis, float dt)
 	if (ResetPosition)
 	{
 		m_alive = false;
-		SetPosition(Vector2(250, -rand() % -1200 - 200));
+		SetPosition(Vector2((float)250, r_float));
 		ResetPosition = false;
 	}
 	else
 	{
 		m_alive = true;
 		switch (path) {
+			
 		case 0:
 			break;
 		case 1:
@@ -72,69 +60,9 @@ void EntityAI::Update(World &world, Visualisation &vis, float dt)
 			pos.x += m_speed;
 			pos.y += m_speed;
 			break;
-		case 3:
-			BackToPatrol();
-			break;
 		}
-			SetPosition(pos);
+		SetPosition(pos);
 	}
-	
-		 
-
-}
-
-void EntityAI::CheckForPlayer(Visualisation &vis, Entity &other)
-{
-	
-
-	/*if (!IsEnemyOf(getSide(), other.getSide()))
-		return false;*/
-
-	Vector2 otherDirPos{ other.GetOldPosition() - other.GetPosition() };
-	Vector2 myPos{ GetPosition() };
-	Vector2 otherPos{ other.GetPosition() };
-
-
-	Rectangle thisRect(vis.GetRect(Spritename));
-	Rectangle otherRect(vis.GetRect(other.GetSpritename()));
-	Rectangle AICollisionRect(thisRect);
-	Rectangle OtherCollisionRect(otherRect);
-	Rectangle ScreenRect(vis.GetScreenRect());
-	OtherCollisionRect.Translate(other.GetPosition().x, other.GetPosition().y);
-
-	AICollisionRect.Translate(GetPosition().x, GetPosition().y);
-
-	if(AICollisionRect.top > ScreenRect.bottom)
-	{ }
-
-	if (OtherCollisionRect.right > AICollisionRect.left && OtherCollisionRect.left < AICollisionRect.right)
-	{
-		if (OtherCollisionRect.bottom > AICollisionRect.top && OtherCollisionRect.top < AICollisionRect.bottom)
-		{
-			alert = true;
-			attack = 1;
-		}
-	}
-	else
-	{
-		alert = false;
-		attack = 0;
-	}
-
-	if (OtherCollisionRect.left > AICollisionRect.right)
-	{
-		if (OtherCollisionRect.bottom > AICollisionRect.top && OtherCollisionRect.top < AICollisionRect.bottom)
-		{
-			alert = true;
-			attack = 2;
-		}
-	}
-	else {
-		alert = false;
-		attack = 0;
-	}
-	//SetPosition(myPos);
-	
 }
 
 void EntityAI::CheckCollision(Visualisation &vis, Entity &other)
@@ -148,6 +76,8 @@ void EntityAI::CheckCollision(Visualisation &vis, Entity &other)
 	if (!IsEnemyOf(getSide(), other.getSide()))
 		return;
 
+	Vector2 pos{ GetPosition() };
+
 	Vector2 oldPos{ GetOldPosition() };
 
 	Rectangle thisRect(vis.GetRect(Spritename));
@@ -159,15 +89,14 @@ void EntityAI::CheckCollision(Visualisation &vis, Entity &other)
 
 	float height = thisRect.height() / 10.0f; //Reduces the size of the collider rectangle height by 10%
 
-	CollisionRect.left += width;
-	CollisionRect.right -= width;
-	CollisionRect.top += height;
+	CollisionRect.left += (int)width;
+	CollisionRect.right -= (int)width;
+	CollisionRect.top += (int)height;
 	Rectangle EnemyCollisionRect(otherRect);
 
-	EnemyCollisionRect.Translate(other.GetPosition().x, other.GetPosition().y);
+	EnemyCollisionRect.Translate((int)other.GetPosition().x, (int)other.GetPosition().y);
 
-	CollisionRect.Translate(GetPosition().x, GetPosition().y);
-
+	CollisionRect.Translate((int)GetPosition().x, (int)GetPosition().y);
 
 	Vector2 thisDir{ GetOldPosition() - GetPosition() };
 	Vector2 otherDir{ other.GetOldPosition() = other.GetPosition() };
@@ -183,9 +112,9 @@ void EntityAI::CheckCollision(Visualisation &vis, Entity &other)
 	thisRect = Rectangle(thisRect);
 	otherRect = Rectangle(otherRect);
 
-	thisRect.left += width;
-	thisRect.right -= width;
-	thisRect.top += height;
+	thisRect.left += (int)width;
+	thisRect.right -= (int)width;
+	thisRect.top += (int)height;
 
 	newThisPos = newThisPos + thisDir;
 	newOtherPos = newOtherPos + otherDir;
@@ -202,6 +131,10 @@ void EntityAI::CheckCollision(Visualisation &vis, Entity &other)
 		HAPI.PlaySound("Data\\Sounds\\invaderkilled.wav", options);
 		TakeDamage(m_damageTaken +40);
 		other.TakeDamage(m_damageTaken+40);
+
+		if (other.getSide() == eSide::eBullet)
+			other.AddScore(1);
+
 		m_speed = m_speed + 1;
 		m_alive = false;
 		EntityDied = true;

@@ -7,7 +7,7 @@ public:
 	EntityExplosion(std::string spriteID) : Entity(spriteID) { m_alive = false, health = 100; };
 	~EntityExplosion();
 
-	void Update(World &world, Visualisation &vis, float dt) override final;
+	void Update(World &world, Visualisation &vis) override final;
 
 	eSide getSide() const override final { return m_side; }
 

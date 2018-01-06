@@ -8,7 +8,7 @@ EntityBullet::~EntityBullet()
 {
 }
 
-void EntityBullet::Update(World &world, Visualisation &vis, float dt)
+void EntityBullet::Update(World &world, Visualisation &vis)
 {
 	Vector2 bulletPos{ GetPosition() };
 
@@ -19,46 +19,24 @@ void EntityBullet::Update(World &world, Visualisation &vis, float dt)
 
 	static const HAPI_TKeyboardData &keyData = HAPI.GetKeyboardData();
 
-	TranslatethisRect.Translate(GetPosition().x, GetPosition().y);
+	TranslatethisRect.Translate((int)GetPosition().x, (int)GetPosition().y);
 
-	
-
-	if (IsCollided == true)
-	{
-		world.FireExplosion(getSide(), Vector2(bulletPos.x, bulletPos.y), 10);
-		IsCollided = false;
-	}
 	if (TranslatethisRect.CompletelyOutside(screenRect))
 		m_alive = false;
 
 	if (m_alive == false)
-		m_side == eSide::eNeutral;
+		m_side = eSide::eNeutral;
 
-	
-
-	float PreviousTime = 0;
-	float CurrentTime = HAPI.GetTime();
-	DWORD lastTick{ 0 };
-	DWORD TimeSinceLastTick{ HAPI.GetTime() - lastTick };
-
-
-	//SetPosition(bulletPos);
-	if (TimeSinceLastTick >= kClockTime)
-	{
-		if(m_alive)
-			bulletPos.y -= m_speed;
+	if(m_alive)
+		bulletPos.y -= m_speed;
 		
-		lastTick = HAPI.GetTime();
-		TimeSinceLastTick = 0;
-	}
-
 	SetPosition(bulletPos);
 }
 
 void EntityBullet::CheckCollision(Visualisation & vis, Entity & other)
 {
-	/*if (!m_alive || !other.IsAlive())
-		return;*/
+	if (!m_alive || !other.IsAlive())
+		return;
 
 	if (!IsEnemyOf(getSide(), other.getSide()))
 		return;
@@ -74,16 +52,14 @@ void EntityBullet::CheckCollision(Visualisation & vis, Entity & other)
 
 	float height = thisRect.height() / 10.0f; //Reduces the size of the collider rectangle height by 10%
 
-	CollisionRect.left += width;
-	CollisionRect.right -= width;
-	CollisionRect.top += height;
-	//CollisionRect.bottom -= height;
+	CollisionRect.left += (int)width;
+	CollisionRect.right -= (int)width;
+	CollisionRect.top += (int)height;
 	Rectangle EnemyCollisionRect(otherRect);
 
-	EnemyCollisionRect.Translate(other.GetPosition().x, other.GetPosition().y);
+	EnemyCollisionRect.Translate((int)other.GetPosition().x, (int)other.GetPosition().y);
 
-	CollisionRect.Translate(GetPosition().x, GetPosition().y);
-
+	CollisionRect.Translate((int)GetPosition().x, (int)GetPosition().y);
 
 	Vector2 thisDir{ GetOldPosition() - GetPosition() };
 	Vector2 otherDir{ other.GetOldPosition() = other.GetPosition() };
@@ -99,9 +75,9 @@ void EntityBullet::CheckCollision(Visualisation & vis, Entity & other)
 	thisRect = Rectangle(thisRect);
 	otherRect = Rectangle(otherRect);
 
-	thisRect.left += width;
-	thisRect.right -= width;
-	thisRect.top += height;
+	thisRect.left += (int)width;
+	thisRect.right -= (int)width;
+	thisRect.top += (int)height;
 
 	newThisPos = newThisPos + thisDir;
 	newOtherPos = newOtherPos + otherDir;
@@ -111,33 +87,17 @@ void EntityBullet::CheckCollision(Visualisation & vis, Entity & other)
 	
 	if (thisRect.CheckCollision(otherRect) == true)
 	{
-		
 		IsCollided = true;
-		
 	}
 	else {
 		IsCollided = false;
 	}
-
-
-	//isCollided = false;
 }
 
 void EntityBullet::Spawn(eSide side, const Vector2 &pos, int damageAmount)
 {
-	float PreviousTime = 0;
-	float CurrentTime = HAPI.GetTime();
-	DWORD lastTick{ 0 };
-	DWORD TimeSinceLastTick{ HAPI.GetTime() - lastTick };
-	
-	//GetPos = pos;
 	m_side = eSide::eBullet;
-	if (TimeSinceLastTick >= kClockTime)
-	{
-		//SetBackPosition(pos);
-		SetPosition(pos);
-		m_alive = true;
-		lastTick = HAPI.GetTime();
-		TimeSinceLastTick = 0;
-	}
+
+	SetPosition(pos);
+	m_alive = true;
 }

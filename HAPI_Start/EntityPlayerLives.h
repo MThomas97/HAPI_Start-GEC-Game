@@ -7,7 +7,7 @@ public:
 	EntityPlayerLives(std::string spriteID) : Entity(spriteID) {};
 	~EntityPlayerLives();
 
-	void Update(World & world, Visualisation &vis, float dt) override final;
+	void Update(World & world, Visualisation &vis) override final;
 
 	eSide getSide() const override final { return eSide::eNeutral; }
 
@@ -15,11 +15,9 @@ public:
 
 
 private:
-	float lives3{ true };
-	float lives2{ false };
-	float lives1{ false };
-	float lives0{ false };
-
-
+	bool lives3{ true };
+	bool lives2{ false };
+	bool lives1{ false };
+	bool lives0{ false };
 };
 

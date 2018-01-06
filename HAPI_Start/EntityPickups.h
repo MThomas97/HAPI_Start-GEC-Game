@@ -8,7 +8,7 @@ public:
 	EntityPickups(std::string spriteID) : Entity(spriteID) { m_alive = false, health = 1; };
 	~EntityPickups();
 
-	void Update(World &world, Visualisation &vis, float dt) override final;
+	void Update(World &world, Visualisation &vis) override final;
 
 	eSide getSide() const override final { return eSide::eNeutral; }
 
