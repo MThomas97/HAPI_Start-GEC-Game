@@ -58,7 +58,7 @@ void EntityPlayer::Update(World &world, Visualisation &vis)
 		curFrameX = 2;
 	}
 
-	if (keyData.scanCode[HK_SPACE] && m_alive == true && TimeSinceLastTick >= kTickTime)
+	if (keyData.scanCode[HK_SPACE] && m_alive && TimeSinceLastTick >= kTickTime)
 	{
 		lastTick = HAPI.GetTime();
 		world.FireBullet(getSide(), Vector2((float)playerBulletRect.left + 45, (float)playerBulletRect.top - 33), 10);
@@ -103,7 +103,7 @@ void EntityPlayer::Update(World &world, Visualisation &vis)
 		if (Deadzone < LeftThumbX && keyData.scanCode['D'])
 			curFrameX = 1;
 
-		if (controllerData.analogueButtons[HK_ANALOGUE_RIGHT_TRIGGER] && TimeSinceLastTick >= kTickTime)
+		if (controllerData.analogueButtons[HK_ANALOGUE_RIGHT_TRIGGER] && m_alive && TimeSinceLastTick >= kTickTime)
 		{
 			lastTick = HAPI.GetTime();
 			world.FireBullet(getSide(), Vector2((float)playerBulletRect.left + 45, (float)playerBulletRect.top - 33), 10);
