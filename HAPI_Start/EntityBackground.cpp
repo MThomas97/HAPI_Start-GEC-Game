@@ -1,13 +1,7 @@
 #include "EntityBackground.h"
 #include "Visualisation.h"
-
 EntityBackground::~EntityBackground()
 {
-}
-
-void EntityBackground::CheckCollision(Visualisation &vis, Entity &other)
-{
-	
 }
 
 void EntityBackground::Update(World &world, Visualisation &vis)

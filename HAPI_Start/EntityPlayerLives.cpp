@@ -1,6 +1,5 @@
 #include "EntityPlayerLives.h"
 
-
 EntityPlayerLives::~EntityPlayerLives()
 {
 }

@@ -1,7 +1,5 @@
 #include "EntityAIFast.h"
 #include "Visualisation.h"
-
-
 EntityAIFast::~EntityAIFast()
 {
 }
@@ -14,9 +12,9 @@ void EntityAIFast::Update(World & world, Visualisation & vis)
 
 	int a = rand() % 750;
 	float r_float = (float)a;
-	//Set the start state of ai
+	
 	if (EntityDied)
-		world.FireExplosion(getSide(), Vector2(pos.x, pos.y), 10);
+		world.FireExplosion(Vector2(pos.x, pos.y), 10);
 
 	if (EntityDied)
 	{
@@ -53,6 +51,7 @@ void EntityAIFast::Update(World & world, Visualisation & vis)
 	else
 	{
 		m_alive = true;
+		//Set the start state of ai
 		switch (path) {
 		case 0:
 			break;
@@ -83,7 +82,7 @@ void EntityAIFast::CheckCollision(Visualisation & vis, Entity & other)
 
 	Rectangle thisRect(vis.GetRect(Spritename));
 	Rectangle otherRect(vis.GetRect(other.GetSpritename()));
-	Rectangle ScreenRect(vis.GetScreenRect());
+	const Rectangle ScreenRect(vis.GetScreenRect());
 	Rectangle CollisionRect(thisRect);
 
 	float width = thisRect.width() / 10.0f; //Reduces the size of the collider rectangle width by 10%
@@ -133,12 +132,12 @@ void EntityAIFast::CheckCollision(Visualisation & vis, Entity & other)
 	{
 		HAPI_TSoundOptions options(0.2f, false);
 		HAPI.PlaySound("Data\\Sounds\\invaderkilled.wav", options);
-		TakeDamage(m_damageTaken + 60);
+		TakeDamage(m_damageTaken + 40);
 
 		if (other.getSide() == eSide::eBullet)
 			other.AddScore(1);
 
-		other.TakeDamage(m_damageTaken + 60);
+		other.TakeDamage(m_damageTaken + 40);
 		m_speed = m_speed + 1;
 		m_alive = false;
 		EntityDied = true;

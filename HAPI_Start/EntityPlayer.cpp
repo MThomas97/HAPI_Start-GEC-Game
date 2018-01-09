@@ -1,7 +1,5 @@
 #include "EntityPlayer.h"
-#include "Rectangle.h"
 #include "Visualisation.h"
-#include <string>
 
 constexpr DWORD kTickTime{ 300 };
 
@@ -28,7 +26,7 @@ void EntityPlayer::Update(World &world, Visualisation &vis)
 	if (lives <= 0 && SetOnce)
 	{
 		HAPI.PlaySound("Data\\Sounds\\explosion.wav");
-		world.FireExplosion(getSide(), Vector2(pos.x, pos.y), 10);
+		world.FireExplosion(Vector2(pos.x, pos.y), 10);
 		SetOnce = false;
 	}
 	
@@ -61,7 +59,7 @@ void EntityPlayer::Update(World &world, Visualisation &vis)
 	if (keyData.scanCode[HK_SPACE] && m_alive && TimeSinceLastTick >= kTickTime)
 	{
 		lastTick = HAPI.GetTime();
-		world.FireBullet(getSide(), Vector2((float)playerBulletRect.left + 45, (float)playerBulletRect.top - 33), 10);
+		world.FireBullet(Vector2((float)playerBulletRect.left + 45, (float)playerBulletRect.top - 33), 10);
 		TimeSinceLastTick = 0;
 	}
 	if (!keyData.scanCode['A'] && !keyData.scanCode['D'])
@@ -106,7 +104,7 @@ void EntityPlayer::Update(World &world, Visualisation &vis)
 		if (controllerData.analogueButtons[HK_ANALOGUE_RIGHT_TRIGGER] && m_alive && TimeSinceLastTick >= kTickTime)
 		{
 			lastTick = HAPI.GetTime();
-			world.FireBullet(getSide(), Vector2((float)playerBulletRect.left + 45, (float)playerBulletRect.top - 33), 10);
+			world.FireBullet(Vector2((float)playerBulletRect.left + 45, (float)playerBulletRect.top - 33), 10);
 			TimeSinceLastTick = 0;
 		}
 		if (!(vect.x == 0 && vect.y == 0))

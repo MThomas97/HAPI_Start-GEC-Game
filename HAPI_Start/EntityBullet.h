@@ -1,8 +1,5 @@
 #pragma once
 #include "Entity.h"
-
-class Visualisation;
-
 class EntityBullet : public Entity
 {
 public:
@@ -13,7 +10,7 @@ public:
 
 	eSide getSide() const override final { return m_side; }
 
-	void Spawn(eSide side, const Vector2 &pos, int damageAmount);
+	void Spawn(const Vector2 &pos, int damageAmount);
 
 	void CheckCollision(Visualisation & vis, Entity & other);
 

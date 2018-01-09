@@ -18,7 +18,6 @@
 #include <crtdbg.h>
 #define new new(_NORMAL_BLOCK,__FILE__, __LINE__)
 #endif
-
 // HAPI itself is wrapped in the HAPISPACE namespace
 using namespace HAPISPACE;
 
@@ -38,7 +37,7 @@ World::~World()
 	
 }
 
-void World::FireBullet(eSide side, const Vector2 &pos, int damageAmount)
+void World::FireBullet(const Vector2 &pos, int damageAmount)
 {
 	HAPI_TSoundOptions options(0.5f, false, 1.0f);
 
@@ -46,14 +45,14 @@ void World::FireBullet(eSide side, const Vector2 &pos, int damageAmount)
 	{
 		if (!m_entity[i]->IsAlive())
 		{
-			dynamic_cast<EntityBullet*>(m_entity[i])->Spawn(side, pos, damageAmount);
+			dynamic_cast<EntityBullet*>(m_entity[i])->Spawn(pos, damageAmount);
 			HAPI.PlaySound("Data\\Sounds\\shoot.wav", options);
 			break;
 		}
 	}
 }
 
-void World::SpawnPickup(Vector2 &pos, int damageAmount)
+void World::SpawnPickup(const Vector2 &pos, int damageAmount)
 {
 	for (size_t i = StartIndex + knumBullets + knumExplosions; i < bulletStartIndex + knumBullets + knumExplosions + knumPickups; i++)
 	{
@@ -65,13 +64,13 @@ void World::SpawnPickup(Vector2 &pos, int damageAmount)
 	}
 }
 
-void World::FireExplosion(eSide side, const Vector2 &pos, int damageAmount)
+void World::FireExplosion(const Vector2 &pos, int damageAmount)
 {
 	for (size_t i = ExplosionStartIndex + knumBullets; i < ExplosionStartIndex + knumBullets + knumExplosions; i++)
 	{
 		if (!m_entity[i]->IsAlive())
 		{
-			dynamic_cast<EntityExplosion*>(m_entity[i])->Spawn(side, pos, damageAmount);
+			dynamic_cast<EntityExplosion*>(m_entity[i])->Spawn(pos, damageAmount);
 			break;
 		}
 	}
@@ -102,7 +101,7 @@ bool World::LoadLevel()
 
 	if (!LoadOnce)
 	{
-		
+		//Loads all the sounds before the game starts
 		HAPI.LoadSound("Data\\Sounds\\level1.ogg");
 		HAPI.LoadSound("Data\\Sounds\\death.ogg");
 		HAPI.LoadSound("Data\\Sounds\\explosion.wav");
@@ -156,7 +155,7 @@ bool World::LoadLevel()
 
 		LoadOnce = true;
 	}
-	
+	//Sets initial position of all the entities using the loaded sprites
 	EntityBackground *newBackground = new EntityBackground("background");
 	m_entity.push_back(newBackground);
 
@@ -170,7 +169,7 @@ bool World::LoadLevel()
 	EntityPlayer *newPlayer = new EntityPlayer("player");
 	m_entity.push_back(newPlayer);
 
-	newPlayer->SetPosition(Vector2(200, 300));
+	newPlayer->SetPosition(Vector2(250, 350));
 
 	EntityAI *newAI = new EntityAI("enemyBlack");
 	m_entity.push_back(newAI);
@@ -245,11 +244,11 @@ void World::Update()
 	while (HAPI.Update()) //Game loop
 	{	//calls functions from classes
 		const HAPI_TControllerData &controllerData = HAPI.GetControllerData(0);
-		if (!IsFinished)
+		if (!IsFinished) //Checks if the game has finished or not
 		{
 			DWORD TimeSinceLastTick{ HAPI.GetTime() - lastTick };
 
-			if (TimeSinceLastTick >= kTickTime)
+			if (TimeSinceLastTick >= kTickTime) //Waits 20 milliseconds before updating all the entities
 			{
 				for (auto p : m_entity)
 					p->Update(*this, *m_vis);
@@ -267,7 +266,7 @@ void World::Update()
 				TimeSinceLastTick = 0;
 			}
 
-			float s = TimeSinceLastTick / (float)kTickTime;
+			float s = TimeSinceLastTick / (float)kTickTime; //Gets the constant speed
 			assert(s >= 0 && s <= 1.0f);
 
 			HAPI.RenderText(0, -7, HAPI_TColour(255, 255, 255), "Score:", 45);
@@ -277,7 +276,7 @@ void World::Update()
 			for (auto p : m_entity)
 				p->Render(*m_vis, s);
 
-			if (m_entity[2]->GetLives() <= 0)
+			if (m_entity[2]->GetLives() <= 0) //If true shows Game over text to indicate the game is over
 			{
 				HAPI.RenderText(150, 300, HAPI_TColour(170, 1, 20), "GAME OVER!", 50);
 				if (OnceSet)
@@ -302,7 +301,7 @@ void World::Update()
 			HAPI.RenderText(175, -11, HAPI_TColour(255, 255, 255), stringScore, 50);
 			SaveScore = PlayerScore;
 		}
-		
+		//Pauses the game if 'P' is pressed and resumes if pressed again
 		if (!keyData.scanCode['P'])
 			toggletick = 1;
 
@@ -315,7 +314,7 @@ void World::Update()
 			else if (!IsFinished)
 				IsFinished = true;
 		}
-
+		//Pauses the game if Start on the controller is pressed and resumes if pressed again
 		if (!controllerData.digitalButtons[HK_DIGITAL_START])
 			controllerToggle = 1;
 
@@ -328,7 +327,7 @@ void World::Update()
 			else if (!IsFinished)
 				IsFinished = true;
 		}
-
+		//Restarts the game if 'R' on the keyboard is pressed and the game is over
 		if (keyData.scanCode['R'] && !m_entity[2]->IsAlive() || controllerData.digitalButtons[HK_DIGITAL_A] && !m_entity[2]->IsAlive())
 		{
 			HAPI.StopSound(deathID);
@@ -336,7 +335,7 @@ void World::Update()
 			OnceSet = true;
 			IsFinished = true;
 			GetIsFinished = IsFinished;
-			for (auto p = m_entity.begin(); p != m_entity.end(); ++p)
+			for (auto p = m_entity.begin(); p != m_entity.end(); ++p) //Deletes all the entities in the vector
 				delete *p;
 			
 			m_entity.clear();
@@ -344,7 +343,7 @@ void World::Update()
 			IsFinished = false;
 			LoadLevel();
 		}
-
+		//Shows paused text if true
 		if (IsFinished)
 		{
 			m_entity[2]->SetPaused(true);

@@ -1,6 +1,5 @@
 #pragma once
 #include "Entity.h"
-#include "World.h"
 class EntityAIFast : public Entity
 {
 public:

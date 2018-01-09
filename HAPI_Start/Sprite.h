@@ -25,17 +25,17 @@ public:
 
 	void RenderNoAlpha(BYTE* screen, const Rectangle &screenRect, int posX, int posY);
 
-	Rectangle getRect() { return m_frameRect; }
+	Rectangle getRect() const { return m_frameRect; }
 
-	int getNumFramesX() { return tempNumFramesX; }
+	int getNumFramesX() const { return tempNumFramesX; }
 
-	int getNumFramesY() { return tempNumFramesY; }
+	int getNumFramesY() const { return tempNumFramesY; }
 
 private:
 	BYTE *texturePnter{ nullptr };
 	Rectangle m_textureRect;
 	Rectangle m_frameRect;
-	bool HasAlpha = true;
+	bool HasAlpha{ true };
 	int width, height;
 	int tempNumFramesX, tempNumFramesY;
 	

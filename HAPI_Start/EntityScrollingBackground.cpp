@@ -5,11 +5,6 @@ EntityScrollingBackground::~EntityScrollingBackground()
 {
 }
 
-void EntityScrollingBackground::CheckCollision(Visualisation &vis, Entity &other)
-{
-	
-}
-
 void EntityScrollingBackground::Update(World &world, Visualisation &vis)
 {
 	Vector2 pos{ GetPosition() };

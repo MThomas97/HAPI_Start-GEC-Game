@@ -3,16 +3,11 @@
 class EntityScrollingBackground : public Entity
 {
 public:
-	EntityScrollingBackground(std::string spriteID) : Entity(spriteID) { tempPos = GetPosition(), NoAlpha = true; };
+	EntityScrollingBackground(std::string spriteID) : Entity(spriteID) {NoAlpha = true; };
 	~EntityScrollingBackground();
 
 	void Update(World &world, Visualisation &vis) override final;
 
 	eSide getSide() const override final { return eSide::eNeutral; }
-
-	void CheckCollision(Visualisation &vis, Entity &other) override final;
-
-private:
-	Vector2 tempPos;
 };
 

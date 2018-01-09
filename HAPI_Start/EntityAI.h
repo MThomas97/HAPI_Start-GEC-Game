@@ -1,8 +1,6 @@
 #pragma once
 #include "Entity.h"
-#include "World.h"
-class EntityAI :
-	public Entity
+class EntityAI : public Entity
 {
 public:
 	EntityAI(std::string spriteID) : Entity(spriteID) { health = 1; };

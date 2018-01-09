@@ -32,8 +32,9 @@ public:
 	bool CheckCollision(const Rectangle &other);
 
 	int left, right, top, bottom;
+
 	int width() const { return right - left; }
+
 	int height() const { return bottom - top; }
-	
 };
 

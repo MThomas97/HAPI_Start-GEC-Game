@@ -1,7 +1,6 @@
 #pragma once
 #include "Entity.h"
-class EntityPlayerLives :
-	public Entity
+class EntityPlayerLives : public Entity
 {
 public:
 	EntityPlayerLives(std::string spriteID) : Entity(spriteID) {};
@@ -12,7 +11,6 @@ public:
 	eSide getSide() const override final { return eSide::eNeutral; }
 
 	void CheckCollision(Visualisation &vis, Entity &other);
-
 
 private:
 	bool lives3{ true };

@@ -3,28 +3,24 @@
 #include <vector>
 #include "Vector2.h"
 
-
-
 class Visualisation;
 
 class Entity;
 
-
 class World
 {
 public:
-
 	~World();
 
-	void FireBullet(eSide side, const Vector2 & pos, int damageAmount);
+	void FireBullet(const Vector2 & pos, int damageAmount);
 
-	void FireExplosion(eSide side, const Vector2 &pos, int damageAmount);
+	void FireExplosion(const Vector2 &pos, int damageAmount);
 
-	void SpawnPickup(Vector2 &pos, int damageAmount);
+	void SpawnPickup(const Vector2 &pos, int damageAmount);
 
 	void SetRestart(bool reset) { IsFinished = reset, GetIsFinished = reset; }
 
-	bool GetRestart() { return GetIsFinished; }
+	bool GetRestart() const { return GetIsFinished; }
 
 	void run();
 

@@ -1,5 +1,5 @@
 #include "EntityPickups.h"
-#include "World.h"
+#include "Visualisation.h"
 
 EntityPickups::~EntityPickups()
 {
@@ -73,15 +73,15 @@ void EntityPickups::CheckCollision(Visualisation & vis, Entity & other)
 	}
 }
 
-void EntityPickups::Spawn(Vector2 &pos, int damageAmount)
+void EntityPickups::Spawn(const Vector2 &pos, int damageAmount)
 {
-	
-	pos.x = 20 * (float)(rand() % ((500 - 40) / 20)) + 20;
-	pos.y = 20 * (float)(rand() % ((700 - 40) / 20)) + 20;
 
 	getPos = pos;
 
-	SetPosition(pos);
+	getPos.x = 20 * (float)(rand() % ((500 - 40) / 20)) + 20;
+	getPos.y = 20 * (float)(rand() % ((700 - 40) / 20)) + 20;
+
+	SetPosition(getPos);
 
 	m_alive = true;
 

@@ -1,7 +1,6 @@
 #pragma once
 #include "Entity.h"
-class EntityExplosion :
-	public Entity
+class EntityExplosion : public Entity
 {
 public:
 	EntityExplosion(std::string spriteID) : Entity(spriteID) { m_alive = false, health = 100; };
@@ -11,7 +10,7 @@ public:
 
 	eSide getSide() const override final { return m_side; }
 
-	void Spawn(eSide side, const Vector2 &pos, int damageAmount);
+	void Spawn(const Vector2 &pos, int damageAmount);
 
 private:
 	eSide m_side{ eSide::eNeutral };

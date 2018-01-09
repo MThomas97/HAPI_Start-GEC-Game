@@ -1,5 +1,4 @@
 #include "EntityBullet.h"
-#include "World.h"
 #include "Visualisation.h"
 
 constexpr DWORD kClockTime{ 1000 };
@@ -12,19 +11,17 @@ void EntityBullet::Update(World &world, Visualisation &vis)
 {
 	Vector2 bulletPos{ GetPosition() };
 
-	Rectangle screenRect(vis.GetScreenRect());
-	Rectangle thisRect(vis.GetRect(Spritename));
+	const Rectangle screenRect(vis.GetScreenRect());
+	const Rectangle thisRect(vis.GetRect(Spritename));
 
 	Rectangle TranslatethisRect(thisRect);
-
-	static const HAPI_TKeyboardData &keyData = HAPI.GetKeyboardData();
 
 	TranslatethisRect.Translate((int)GetPosition().x, (int)GetPosition().y);
 
 	if (TranslatethisRect.CompletelyOutside(screenRect))
 		m_alive = false;
 
-	if (m_alive == false)
+	if (!m_alive)
 		m_side = eSide::eNeutral;
 
 	if(m_alive)
@@ -94,7 +91,7 @@ void EntityBullet::CheckCollision(Visualisation & vis, Entity & other)
 	}
 }
 
-void EntityBullet::Spawn(eSide side, const Vector2 &pos, int damageAmount)
+void EntityBullet::Spawn(const Vector2 &pos, int damageAmount)
 {
 	m_side = eSide::eBullet;
 

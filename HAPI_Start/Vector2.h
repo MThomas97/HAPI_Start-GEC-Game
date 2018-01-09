@@ -18,8 +18,6 @@ public:
 
 	Vector2 operator = (float rhs) { return Vector2(x = rhs, y = rhs); }
 
-	//Vector2 operator+=(float rhs);
-
 	Vector2 operator += (float rhs) { return Vector2(x += rhs, y += rhs); }
 
 	Vector2 operator -= (float rhs) { return Vector2(x -= rhs, y -= rhs); }
@@ -39,8 +37,6 @@ public:
 	float Length() const;
 
 	float LengthSquared() const;
-
-	//void NormaliseInPlace();
 	
 	float Dot(const Vector2 &other) const;
 

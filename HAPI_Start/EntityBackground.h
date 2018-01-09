@@ -10,9 +10,6 @@ public:
 
 	eSide getSide() const override final { return eSide::eNeutral; }
 
-	void CheckCollision(Visualisation &vis, Entity &other) override final;
-
-
 private:
 	Vector2 tempPos;
 };

@@ -1,6 +1,7 @@
 #pragma once
-#include"Vector2.h"
+#include "Vector2.h"
 #include "Rectangle.h"
+#include "World.h"
 #include <HAPI_lib.h>
 #if defined(DEBUG) | defined(_DEBUG)
 #include <crtdbg.h>
@@ -21,8 +22,6 @@ class Visualisation;
 
 class World;
 
-class Rectangle;
-
 class Entity
 {
 public:
@@ -32,23 +31,23 @@ public:
 
 	virtual eSide getSide() const = 0;
 
-	virtual void Update(World &world, Visualisation &vis) = 0;
+	virtual void Update(World &world, Visualisation &vis) = 0; //performs updates on a specific entity
 
-	void Render(Visualisation &vis, float s);
+	void Render(Visualisation &vis, float s); //Renders the sprite
 
-	void SetPosition(Vector2 newPos) { m_oldPosition = m_position; m_position = newPos; }
+	void SetPosition(Vector2 newPos) { m_oldPosition = m_position; m_position = newPos; } //Sets the position of the entity
 
-	void SetBackPosition(Vector2 oldPos) { m_position = m_oldPosition; }
+	void SetBackPosition(Vector2 oldPos) { m_position = m_oldPosition; } //Sets the position back to the old entity
 
-	Vector2 GetPosition() const { return m_position; }
+	Vector2 GetPosition() const { return m_position; } //Gets the position
 
-	Vector2 GetOldPosition() const { return m_oldPosition; }
+	Vector2 GetOldPosition() const { return m_oldPosition; } //Gets the previous position of the entity
 
 	void AddScore(int addScore) { Score = Score + addScore; }
 
 	int GetScore() const { return Score; }
 
-	virtual void CheckCollision(Visualisation &vis, Entity &other);
+	virtual void CheckCollision(Visualisation &vis, Entity &other); //Checks for collision against all other entities
 
 	bool IsAlive() const { return m_alive; }
 
@@ -69,18 +68,18 @@ public:
 	void SetPaused(bool pause) { Paused = pause; }
 
 protected:
-
 	bool Paused{ false };
 	int Score{ 0 };
 	float NoAlpha{ false };
 	int lives{ 3 };
 	int health{ 100 };
-	std::string Spritename; //create getter? make private again
+	std::string Spritename;
 	bool m_alive{ true };
 	int m_speed{ 6 };
 	int curFrameX{ 0 };
 	int curFrameY{ 0 };
 	int m_damageTaken{ 10 };
+
 private:
 	Vector2 m_position;
 	Vector2 m_oldPosition;

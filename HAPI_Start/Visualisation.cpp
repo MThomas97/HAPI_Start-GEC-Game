@@ -22,7 +22,7 @@ void Visualisation::ClearToColour(BYTE* screen, int width, int height, HAPI_TCol
 	}
 }
 
-bool Visualisation::CreateSprite(const std::string &name, const  std::string & filename, int numFramesX, int numFramesY)
+bool Visualisation::CreateSprite(const std::string &name, const  std::string & filename, int numFramesX, int numFramesY) //Creates a new sprite
 {
 	if (m_spritemap.find(name) != m_spritemap.end()) // Checks if there isnt a sprite already
 		std::cerr << "Already exists" << name << std::endl;
@@ -37,7 +37,7 @@ bool Visualisation::CreateSprite(const std::string &name, const  std::string & f
 	return true;
 }
 
-bool Visualisation::initialise(int width, int height, std::string name)
+bool Visualisation::initialise(int width, int height, const std::string name)
 {
 	if (!HAPI.Initialise(width, height, name)) //Creates a window
 	{
@@ -50,32 +50,32 @@ bool Visualisation::initialise(int width, int height, std::string name)
 	return true;
 }
 
-void Visualisation::RenderSprite(const std::string &name, int posX, int posY, int curFrameX, int curFrameY)
+void Visualisation::RenderSprite(const std::string &name, int posX, int posY, int curFrameX, int curFrameY) //Renders the sprite
 {
 	m_spritemap.at(name)->Render(this->m_screenPnter, this->m_screenRect, posX, posY, curFrameX, curFrameY);
 }
 
-void Visualisation::RenderNoAlphaSprite(const std::string &name, int posX, int posY)
+void Visualisation::RenderNoAlphaSprite(const std::string &name, int posX, int posY) //Renders the sprite with no alpha
 {
 	m_spritemap.at(name)->RenderNoAlpha(this->m_screenPnter, this->m_screenRect, posX, posY);
 }
 
-Rectangle Visualisation::GetRect(const std::string &name)
+Rectangle Visualisation::GetRect(const std::string &name) //Gets a rectangle correct to its name
 {
 	return m_spritemap.at(name)->getRect();
 }
 
-int Visualisation::GetNumframesX(const std::string &name)
+int Visualisation::GetNumframesX(const std::string &name) //Gets numFramesX correct to its name
 {
 	return m_spritemap.at(name)->getNumFramesX();
 }
 
-int Visualisation::GetNumframesY(const std::string &name)
+int Visualisation::GetNumframesY(const std::string &name) //Gets numFramesY correct to its name
 {
 	return m_spritemap.at(name)->getNumFramesY();
 }
 
-Visualisation::~Visualisation()
+Visualisation::~Visualisation() //Deletes all the sprites in the unorderd when application closes
 {
 	for (auto &p : m_spritemap)
 		delete p.second;

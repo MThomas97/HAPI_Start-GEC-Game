@@ -1,6 +1,5 @@
 #include "Entity.h"
 #include "Visualisation.h"
-#include "Rectangle.h"
 Entity::~Entity()
 {
 }
@@ -10,9 +9,7 @@ void Entity::Render(Visualisation &vis, float s)
 	if (!m_alive)
 		return;
 
-	Vector2 interPos{ m_oldPosition + (m_position - m_oldPosition) * s };
-
-
+	Vector2 interPos{ m_oldPosition + (m_position - m_oldPosition) * s }; //Interpolates the position to be smooth
 
 	if(NoAlpha)
 		vis.RenderNoAlphaSprite(Spritename, (int)interPos.x, (int)interPos.y);
@@ -21,12 +18,14 @@ void Entity::Render(Visualisation &vis, float s)
 	{
 		vis.RenderSprite(Spritename, (int)interPos.x, (int)interPos.y, curFrameX, curFrameY);
 	}
-	
 }
 
-void Entity::CheckCollision(Visualisation & vis, Entity & other)
+void Entity::CheckCollision(Visualisation & vis, Entity & other) //Checks collision against another entity
 {
-	if (!m_alive || !other.IsAlive())
+	if (!m_alive)
+		return;
+
+	if (!other.IsAlive())
 		return;
 
 	if (!IsEnemyOf(getSide(), other.getSide()))
@@ -83,7 +82,7 @@ void Entity::CheckCollision(Visualisation & vis, Entity & other)
 	}
 }
 
-bool Entity::IsEnemyOf(eSide a, eSide b)
+bool Entity::IsEnemyOf(eSide a, eSide b) //Checks if it is a enemy of the other entity
 {
 	if (a == eSide::ePlayer && b == eSide::eEnemy || a == eSide::eEnemy && b == eSide::ePlayer)
 		return true;
@@ -94,7 +93,7 @@ bool Entity::IsEnemyOf(eSide a, eSide b)
 	return false;
 }
 
-bool Entity::IsPickupOf(eSide a, eSide b)
+bool Entity::IsPickupOf(eSide a, eSide b) //Checks if it is neutral and a pickup
 {
 	if (a == eSide::ePlayer && b == eSide::eNeutral || a == eSide::eNeutral && b == eSide::ePlayer)
 		return true;
@@ -102,7 +101,7 @@ bool Entity::IsPickupOf(eSide a, eSide b)
 	return false;
 }
 
-void Entity::TakeDamage(int damageInflicted)
+void Entity::TakeDamage(int damageInflicted) //inflicts damage onto the entity
 {
 	health = health - damageInflicted;
 

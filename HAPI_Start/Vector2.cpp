@@ -1,6 +1,5 @@
 #include "Vector2.h"
 
-
 Vector2 Vector2::operator+(const Vector2 &rhs) const
 {
 	return Vector2(x+rhs.x, y+rhs.y);
@@ -10,8 +9,6 @@ Vector2 Vector2::operator-(const Vector2 &rhs) const
 {
 	return Vector2(x - rhs.x, y - rhs.y);
 }
-
-
 
 Vector2 Vector2::operator/(const Vector2 &rhs) const
 {
@@ -47,17 +44,6 @@ float Vector2::LengthSquared() const
 {
 	return x*x + y*y;
 }
-
-//void Vector2::NormaliseInPlace()
-//{
-//	float len = Length();
-//
-//	if (len == 0)
-//		return;
-//	
-//	x /= len;
-//	y /= len;
-//}
 
 float Vector2::Dot(const Vector2 &other) const
 {

@@ -1,8 +1,5 @@
 #include "EntityExplosion.h"
 #include "Visualisation.h"
-#include "World.h"
-
-constexpr DWORD kTickTime{ 20 };
 
 EntityExplosion::~EntityExplosion()
 {
@@ -30,7 +27,7 @@ void EntityExplosion::Update(World &world, Visualisation &vis)
 		}
 }
 
-void EntityExplosion::Spawn(eSide side, const Vector2 &pos, int damageAmount)
+void EntityExplosion::Spawn(const Vector2 &pos, int damageAmount)
 {
 	GetPos = pos;
 	
