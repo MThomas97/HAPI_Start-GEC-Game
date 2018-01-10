@@ -13,27 +13,21 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Graphics">
-      <UniqueIdentifier>{d16b5622-6f40-4ea5-b88a-934320af3bea}</UniqueIdentifier>
-    </Filter>
     <Filter Include="World Model">
-      <UniqueIdentifier>{19138e75-ed3d-4c4d-8b87-8440e36122da}</UniqueIdentifier>
+      <UniqueIdentifier>{20e7b97b-ce33-4b3b-a9ee-fcfcfed613e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics">
+      <UniqueIdentifier>{7ec24475-6d73-45e9-8db1-9a7c9b090dd3}</UniqueIdentifier>
     </Filter>
     <Filter Include="World Model\Header Files">
-      <UniqueIdentifier>{e9d4c257-db35-43be-92b5-46ce8e15eaa1}</UniqueIdentifier>
+      <UniqueIdentifier>{bcda8c11-a5e3-4559-8a7f-d428f18d2fba}</UniqueIdentifier>
     </Filter>
     <Filter Include="World Model\Source Files">
-      <UniqueIdentifier>{4bd4ed24-d18e-4787-86be-1ef1bba99ecd}</UniqueIdentifier>
+      <UniqueIdentifier>{5ec1f4a6-8176-4ebe-80bb-dd30fe03ae98}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Rectangle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Vector2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Sprite.cpp">
@@ -42,19 +36,19 @@
     <ClCompile Include="Visualisation.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="World.cpp">
-      <Filter>World Model\Source Files</Filter>
+    <ClCompile Include="Rectangle.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EntityScrollingBackground.cpp">
-      <Filter>World Model\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EntityPlayer.cpp">
-      <Filter>World Model\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EntityExplosion.cpp">
-      <Filter>World Model\Source Files</Filter>
+    <ClCompile Include="Vector2.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entity.cpp">
+      <Filter>World Model\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityAI.cpp">
+      <Filter>World Model\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityAIFast.cpp">
       <Filter>World Model\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="EntityBackground.cpp">
@@ -63,66 +57,69 @@
     <ClCompile Include="EntityBullet.cpp">
       <Filter>World Model\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EntityAI.cpp">
-      <Filter>World Model\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EntityPlayerLives.cpp">
+    <ClCompile Include="EntityExplosion.cpp">
       <Filter>World Model\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="EntityPickups.cpp">
       <Filter>World Model\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EntityAIFast.cpp">
+    <ClCompile Include="EntityPlayer.cpp">
+      <Filter>World Model\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityPlayerLives.cpp">
+      <Filter>World Model\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityScrollingBackground.cpp">
+      <Filter>World Model\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="World.cpp">
       <Filter>World Model\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="PatchNotes.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Rectangle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector2.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Sprite.h">
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Visualisation.h">
       <Filter>Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Rectangle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Entity.h">
+      <Filter>World Model\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityAI.h">
+      <Filter>World Model\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityAIFast.h">
       <Filter>World Model\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EntityBackground.h">
       <Filter>World Model\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EntityPlayer.h">
+    <ClInclude Include="EntityBullet.h">
       <Filter>World Model\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EntityExplosion.h">
+      <Filter>World Model\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityPickups.h">
+      <Filter>World Model\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityPlayer.h">
+      <Filter>World Model\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityPlayerLives.h">
       <Filter>World Model\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EntityScrollingBackground.h">
       <Filter>World Model\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="World.h">
-      <Filter>World Model\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EntityBullet.h">
-      <Filter>World Model\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EntityAI.h">
-      <Filter>World Model\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EntityPlayerLives.h">
-      <Filter>World Model\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EntityPickups.h">
-      <Filter>World Model\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EntityAIFast.h">
       <Filter>World Model\Header Files</Filter>
     </ClInclude>
   </ItemGroup>

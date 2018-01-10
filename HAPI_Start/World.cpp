@@ -123,9 +123,6 @@ bool World::LoadLevel()
 		if (!m_vis->CreateSprite("enemyRed", "Data\\SpaceShooter\\enemyRed1.png"))
 			return false;
 
-		if (!m_vis->CreateSprite("horse", "Data\\HorseSpriteSheetWhite.png", 5, 3))
-			return false;
-
 		if (!m_vis->CreateSprite("background", "Data\\FullStarBackground.png"))
 			return false;
 

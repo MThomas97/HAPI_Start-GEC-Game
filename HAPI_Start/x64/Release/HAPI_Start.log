@@ -1,2 +1,41 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(321,5): error MSB3371: The file "x64\Release\HAPI_Start.tlog\unsuccessfulbuild" cannot be created. There is not enough space on the disk.
-C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(321,5): error MSB3371: 
+﻿  Entity.cpp
+  EntityAI.cpp
+  EntityAIFast.cpp
+  EntityBackground.cpp
+  EntityBullet.cpp
+  EntityExplosion.cpp
+  EntityPickups.cpp
+  EntityPlayer.cpp
+  EntityPlayerLives.cpp
+  EntityScrollingBackground.cpp
+  main.cpp
+  Rectangle.cpp
+  Sprite.cpp
+  Vector2.cpp
+  Visualisation.cpp
+  World.cpp
+  Generating Code...
+     Creating library C:\Users\s6099298\Documents\GitHub\HAPI_Start-GEC-Game\x64\Release\HAPI_Start.lib and object C:\Users\s6099298\Documents\GitHub\HAPI_Start-GEC-Game\x64\Release\HAPI_Start.exp
+HAPI64.lib(Error.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(Error.obj)' or at 'C:\Users\s6099298\Documents\GitHub\HAPI_Start-GEC-Game\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
+HAPI64.lib(HapiCore.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(HapiCore.obj)' or at 'C:\Users\s6099298\Documents\GitHub\HAPI_Start-GEC-Game\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
+HAPI64.lib(HapiMain.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(HapiMain.obj)' or at 'C:\Users\s6099298\Documents\GitHub\HAPI_Start-GEC-Game\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
+HAPI64.lib(HapiOsSFML.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(HapiOsSFML.obj)' or at 'C:\Users\s6099298\Documents\GitHub\HAPI_Start-GEC-Game\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
+HAPI64.lib(HapiRendererSFML.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(HapiRendererSFML.obj)' or at 'C:\Users\s6099298\Documents\GitHub\HAPI_Start-GEC-Game\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
+HAPI64.lib(HapiSoundSFML.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(HapiSoundSFML.obj)' or at 'C:\Users\s6099298\Documents\GitHub\HAPI_Start-GEC-Game\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
+HAPI64.lib(HapiXInput.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(HapiXInput.obj)' or at 'C:\Users\s6099298\Documents\GitHub\HAPI_Start-GEC-Game\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
+HAPI64.lib(PerfCounters.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(PerfCounters.obj)' or at 'C:\Users\s6099298\Documents\GitHub\HAPI_Start-GEC-Game\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
+HAPI64.lib(SFMLFontManager.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(SFMLFontManager.obj)' or at 'C:\Users\s6099298\Documents\GitHub\HAPI_Start-GEC-Game\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
+HAPI64.lib(stdafx.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(stdafx.obj)' or at 'C:\Users\s6099298\Documents\GitHub\HAPI_Start-GEC-Game\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
+HAPI64.lib(Utility.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(Utility.obj)' or at 'C:\Users\s6099298\Documents\GitHub\HAPI_Start-GEC-Game\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
+HAPI64.lib(VideoStream.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(VideoStream.obj)' or at 'C:\Users\s6099298\Documents\GitHub\HAPI_Start-GEC-Game\x64\Release\SfeMovie.pdb'; linking object as if no debug info
+HAPI64.lib(Utilities.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(Utilities.obj)' or at 'C:\Users\s6099298\Documents\GitHub\HAPI_Start-GEC-Game\x64\Release\SfeMovie.pdb'; linking object as if no debug info
+HAPI64.lib(TimerPriorities.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(TimerPriorities.obj)' or at 'C:\Users\s6099298\Documents\GitHub\HAPI_Start-GEC-Game\x64\Release\SfeMovie.pdb'; linking object as if no debug info
+HAPI64.lib(Timer.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(Timer.obj)' or at 'C:\Users\s6099298\Documents\GitHub\HAPI_Start-GEC-Game\x64\Release\SfeMovie.pdb'; linking object as if no debug info
+HAPI64.lib(SubtitleStream.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(SubtitleStream.obj)' or at 'C:\Users\s6099298\Documents\GitHub\HAPI_Start-GEC-Game\x64\Release\SfeMovie.pdb'; linking object as if no debug info
+HAPI64.lib(Stream.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(Stream.obj)' or at 'C:\Users\s6099298\Documents\GitHub\HAPI_Start-GEC-Game\x64\Release\SfeMovie.pdb'; linking object as if no debug info
+HAPI64.lib(MovieImpl.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(MovieImpl.obj)' or at 'C:\Users\s6099298\Documents\GitHub\HAPI_Start-GEC-Game\x64\Release\SfeMovie.pdb'; linking object as if no debug info
+HAPI64.lib(Movie.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(Movie.obj)' or at 'C:\Users\s6099298\Documents\GitHub\HAPI_Start-GEC-Game\x64\Release\SfeMovie.pdb'; linking object as if no debug info
+HAPI64.lib(Log.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(Log.obj)' or at 'C:\Users\s6099298\Documents\GitHub\HAPI_Start-GEC-Game\x64\Release\SfeMovie.pdb'; linking object as if no debug info
+HAPI64.lib(Demuxer.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(Demuxer.obj)' or at 'C:\Users\s6099298\Documents\GitHub\HAPI_Start-GEC-Game\x64\Release\SfeMovie.pdb'; linking object as if no debug info
+HAPI64.lib(AudioStream.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(AudioStream.obj)' or at 'C:\Users\s6099298\Documents\GitHub\HAPI_Start-GEC-Game\x64\Release\SfeMovie.pdb'; linking object as if no debug info
+  HAPI_Start.vcxproj -> C:\Users\s6099298\Documents\GitHub\HAPI_Start-GEC-Game\x64\Release\HAPI_Start.exe
